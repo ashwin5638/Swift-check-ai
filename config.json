@@ -1,0 +1,57 @@
+{
+  "brand": {
+    "name": "Swift Check AI",
+    "tagline": "Marine intelligence, in under a minute.",
+    "handle": "swiftcheckai",
+    "primaryColor": "#041E2E",
+    "accentColor": "#00E5C0",
+    "textColor": "#FFFFFF",
+    "logo": "src/assets/logo.svg"
+  },
+
+  "news": {
+    "googleNewsQueries": [
+      "shipping industry",
+      "maritime shipping",
+      "marine industry news",
+      "port congestion shipping",
+      "container shipping rates",
+      "offshore vessel industry"
+    ],
+    "gdeltEnabled": true,
+    "gdeltQuery": "(shipping OR maritime OR \"port authority\" OR tanker) sourcelang:english",
+    "lookbackDays": 2,
+    "maxCandidates": 15,
+    "minTitleLength": 20
+  },
+
+  "llm": {
+    "rankerModel": "qwen/qwen3.8-27b",
+    "writerModel": "qwen/qwen3.8-27b",
+    "temperature": 0.7,
+    "rankerMaxTokens": 200,
+    "writerMaxTokens": 600
+  },
+
+  "reel": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationSeconds": 15,
+    "kenBurnsZoom": 1.18,
+    "voice": "en-US-GuyNeural",
+    "voicePitch": "-4Hz",
+    "voiceRate": "+18%",
+    "includeMusic": true,
+    "musicVolume": 0.12,
+    "outputFpsFallback": 30
+  },
+
+  "publish": {
+    "requireApproval": true,
+    "autoPostFacebook": false,
+    "autoPostLinkedIn": false,
+    "linkedinFallbackToText": true,
+    "notifyTelegram": true
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+dashboard/node_modules/
+dashboard/dist/
+.env
+.env.local
+.env.example
+output/*
+!output/.gitkeep
+logs/
+*.log
+.DS_Store
+Thumbs.db
+test/tmp/

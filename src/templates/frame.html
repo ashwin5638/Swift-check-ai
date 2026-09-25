@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=JetBrains+Mono:wght@700&display=swap');
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; background: transparent; overflow: hidden; }
+
+      :root {
+        --primary: {{PRIMARY}};
+        --accent: {{ACCENT}};
+        --text: {{TEXT}};
+      }
+
+      .frame {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+
+      /* Top scrim keeps the logo + headline readable over any photo. */
+      .scrim-top {
+        position: absolute; inset: 0 0 auto 0; height: 620px;
+        background: linear-gradient(180deg, var(--primary) 0%, rgba(4,30,46,0.86) 46%, rgba(4,30,46,0) 100%);
+      }
+      .scrim-bottom {
+        position: absolute; inset: auto 0 0 0; height: 780px;
+        background: linear-gradient(0deg, var(--primary) 4%, rgba(4,30,46,0.82) 40%, rgba(4,30,46,0) 100%);
+      }
+
+      .brand {
+        position: absolute; top: 96px; left: 80px;
+        display: flex; align-items: center; gap: 22px;
+      }
+      .brand img { width: 92px; height: 92px; }
+      .brand-text { display: flex; flex-direction: column; gap: 4px; }
+      .brand-name {
+        font-size: 44px; font-weight: 900; letter-spacing: -0.02em; color: var(--text);
+        text-transform: uppercase;
+      }
+      .brand-handle {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 24px; font-weight: 700; letter-spacing: 0.14em;
+        color: var(--accent); text-transform: uppercase;
+      }
+
+      .headline {
+        position: absolute; top: 236px; left: 80px; right: 80px;
+        font-size: 62px; font-weight: 900; line-height: 1.08;
+        letter-spacing: -0.025em; color: var(--text); text-transform: uppercase;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.45);
+      }
+      .headline em { font-style: normal; color: var(--accent); }
+
+      .beat-wrap {
+        position: absolute; left: 80px; right: 80px; top: 900px;
+        display: flex; align-items: flex-start; gap: 26px;
+      }
+      .beat-bar {
+        width: 10px; align-self: stretch; min-height: 120px; border-radius: 6px;
+        background: var(--accent);
+        box-shadow: 0 0 40px rgba(0, 229, 192, 0.55);
+        flex: none;
+      }
+      .beat {
+        font-size: 86px; font-weight: 900; line-height: 1.12;
+        letter-spacing: -0.03em; color: var(--text);
+        text-shadow: 0 6px 34px rgba(0,0,0,0.6);
+        text-wrap: balance;
+      }
+
+      .progress {
+        position: absolute; left: 80px; right: 80px; bottom: 300px;
+        height: 8px; border-radius: 4px;
+        background: rgba(255,255,255,0.18);
+        overflow: hidden;
+      }
+      .progress > i { display: block; height: 100%; width: {{PROGRESS}}%; background: var(--accent); border-radius: 4px; }
+
+      .footer {
+        position: absolute; left: 80px; right: 80px; bottom: 150px;
+        display: flex; justify-content: space-between; align-items: flex-end;
+      }
+      .source {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 22px; letter-spacing: 0.1em; color: rgba(255,255,255,0.62);
+        text-transform: uppercase; max-width: 620px;
+      }
+      .cta {
+        font-size: 26px; font-weight: 700; letter-spacing: 0.06em;
+        color: var(--primary); background: var(--accent);
+        padding: 16px 30px; border-radius: 999px; text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <div class="scrim-top"></div>
+      <div class="scrim-bottom"></div>
+
+      <div class="brand">
+        <img src="{{LOGO_DATA_URI}}" alt="" />
+        <div class="brand-text">
+          <div class="brand-name">Swift Check AI</div>
+          <div class="brand-handle">@{{HANDLE}}</div>
+        </div>
+      </div>
+
+      <div class="headline">{{HEADLINE}}</div>
+
+      <div class="beat-wrap">
+        <div class="beat-bar"></div>
+        <div class="beat">{{BEAT}}</div>
+      </div>
+
+      <div class="progress"><i></i></div>
+
+      <div class="footer">
+        <div class="source">Source: {{SOURCE}}</div>
+        <div class="cta">Follow for daily marine intel</div>
+      </div>
+    </div>
+  </body>
+</html>

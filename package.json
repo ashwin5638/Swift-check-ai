@@ -1,0 +1,35 @@
+{
+  "name": "swift-check-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Marine industry news -> branded 15s reel -> Facebook & LinkedIn. Fully automated on a $0 budget.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "playwright install chromium",
+    "check:models": "node scripts/checkModels.js",
+    "check:keys": "node scripts/checkKeys.js",
+    "run": "node src/orchestrator.js",
+    "run:dry": "node src/orchestrator.js --dry",
+    "server": "node src/server.js",
+    "dev": "concurrently -n api,ui -c cyan,magenta \"npm:server\" \"npm --prefix dashboard run dev\"",
+    "dashboard": "npm --prefix dashboard run dev",
+    "build:dashboard": "npm --prefix dashboard run build",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@andresaya/edge-tts": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "ffmpeg-static": "^5.2.0",
+    "groq-sdk": "^0.9.0",
+    "playwright": "^1.49.0",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
