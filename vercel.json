@@ -1,20 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "//build": "The project root is the repository root, not client/. The Vite build writes to client/dist and api/ becomes the control plane. Roll this back by pointing the Vercel project's Root Directory back at client/ and deleting this file.",
   "buildCommand": "npm --prefix client ci && npm --prefix client run build",
   "outputDirectory": "client/dist",
-
-  "//install": "--ignore-scripts because the root install pulls ffmpeg-static and Playwright, whose install scripts download a 15 MB binary and a 170 MB browser. Neither is reachable from api/ — nothing there imports the pipeline — and ffmpeg-static's postinstall is a common cause of a Vercel build timing out. The client install is separate, in buildCommand, and runs normally.",
   "installCommand": "npm ci --ignore-scripts",
-
   "build": {
     "env": {
       "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
     }
   },
-
-  "//functions": "Listed one by one on purpose. With no `functions` config Vercel merges routes into as few Functions as it can, and which path then reaches the merged Function is not something to discover in production. Naming all ten pins one Function per path. 15s is generous: the slowest route reads Blob and asks GitHub for a run status, and it is far under Hobby's 60s ceiling. Ten of twelve is also the whole Function budget on Hobby, which is why /api/auth serves three methods.",
   "functions": {
     "api/auth.js": { "maxDuration": 15 },
     "api/covered.js": { "maxDuration": 15 },

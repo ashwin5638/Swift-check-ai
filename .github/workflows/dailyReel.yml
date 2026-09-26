@@ -1,9 +1,9 @@
+
+
 name: Daily marine reel
 
 on:
   schedule:
-    # 06:17 UTC daily. Off-the-hour on purpose: GitHub's free cron queue is
-    # heavily oversubscribed at :00, and a stray minute is free insurance.
     - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
@@ -11,10 +11,6 @@ on:
         description: 'Skip publishing (render the reel only)'
         type: boolean
         default: true
-      # Both added for the Vercel console, whose "Run dry" and "Script only"
-      # buttons dispatch this workflow. Without them the dashboard could only ever
-      # start a full publishing run, which is a dangerous thing to be able to do
-      # by accident from a web page.
       skip_render:
         description: 'Stop before rendering — no frames, no audio, no mp4'
         type: boolean
@@ -23,8 +19,6 @@ on:
 permissions:
   contents: write
 
-# Shared with publishReel.yml. See the note there: both jobs rewrite the same
-# state files and GitHub's cache does not lock.
 concurrency:
   group: swift-check-ai
   cancel-in-progress: false
@@ -36,6 +30,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -52,8 +49,6 @@ jobs:
         with:
           path: |
             state
-          # Stable key, not github.run_id: the dedupe log is only useful if the
-          # next run actually restores what the previous one wrote.
           key: swift-check-state-${{ github.run_number }}
           restore-keys: |
             swift-check-state-
@@ -72,12 +67,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: npm run check:keys
 
-      # Here rather than beside the publish step, so a missing token is caught
-      # before the pipeline spends a Groq/TTS/render cycle and posts to two
-      # accounts. Deliberately NOT continue-on-error: unlike a Blob outage, which
-      # is transient and leaves the dashboard merely stale, a token that was never
-      # set means no reel can ever publish, and that must fail loudly rather than
-      # leave a green tick over an empty dashboard.
       - name: Check dashboard credential
         env:
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
@@ -106,14 +95,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           SKIP_RENDER: ${{ inputs.skip_render }}
         run: |
-          # Scheduled runs and dispatches that leave dry_run on must never
-          # publish. A single GitHub expression cannot express this safely
-          # (null == false coerces to true), so decide it in the shell.
-          #
-          # skip_render is passed through the environment rather than spliced into
-          # the command: interpolating a boolean into a shell string is how
-          # `--skip-render ${{ inputs.skip_render }}` ends up passing the literal
-          # word "false" as a flag, which is truthy to the flag parser.
           ARGS="--dry"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ]; then
             ARGS=""
@@ -131,15 +112,6 @@ jobs:
           path: output/*.mp4
           if-no-files-found: warn
 
-      # Feeds the read-only dashboard on Vercel. The reel is already rendered and
-      # published by this point, so a Blob outage must not fail the job — the
-      # dashboard just goes stale until the next run, which is recoverable, while
-      # a red X on the reel job is not. The feed itself is still written when the
-      # store is unreachable; only reel playback is lost.
-      #
-      # `if: always()` so that a red credential check above does not also cost the
-      # run log. The job is still red, so the misconfiguration is not hidden — but
-      # a reel-less feed is more use than no feed at all.
       - name: Publish dashboard data
         if: always()
         continue-on-error: true
@@ -150,19 +122,12 @@ jobs:
       - name: Commit dashboard feed
         if: always()
         run: |
-          # client/public/data is the published dashboard feed, and committing it
-          # is the only thing that triggers the Vercel rebuild.
-          #
-          # state/ is NOT added, and must not be: it is gitignored as runtime
-          # state, and `git add` on an ignored path exits 1, which under `set -e`
-          # killed this step before commit or push ever ran. The dedupe log is
-          # carried between runs by the actions/cache step above, not by git.
-          git config user.name  "swift-check-ai"
+          git config user.name "swift-check-ai"
           git config user.email "actions@github.com"
-          # git add on a pathspec that matches nothing exits 128, which would fail
-          # this step — and with it the job — on exactly the Blob outage the
-          # publish step above is allowed to survive. The directory must exist.
           mkdir -p client/public/data
           git add client/public/data
-          git diff --staged --quiet || git commit -m "chore: dashboard feed $(date -u +%Y-%m-%d)"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: dashboard feed $(date -u +%Y-%m-%d)"
+            git pull --rebase origin main || true
+            git push origin HEAD:main
+          fi
