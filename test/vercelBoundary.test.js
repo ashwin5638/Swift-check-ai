@@ -65,6 +65,50 @@ test('api/ has entry points to check', () => {
   assert.ok(apiFiles.length >= 10, `expected the ten function entry points, found ${apiFiles.length}`);
 });
 
+/**
+ * The Hobby cap, checked the way Vercel counts.
+ *
+ * Vercel turns every file under api/ into its own Function and fails the build
+ * above twelve on Hobby. This shipped as a build error once already: a shared
+ * module sat at api/lib/ instead of api/_lib/, and ten routes plus three lib
+ * files is thirteen. The rename fixed the deployment, but nothing in the suite
+ * noticed the count at all, so the same mistake was one `git mv` away again.
+ *
+ * The exclusions mirror Vercel's own filters rather than a guess at them.
+ * Anything whose path contains a `/_` or `/.` segment, or ends in `.d.ts`, is
+ * not a Function — which is the entire reason the shared modules carry an
+ * underscore, and the reason `checkUnusedFunctions()` will not fail on a glob
+ * that matches only helpers.
+ */
+const FUNCTION_EXTS = /\.(?:m|c)?js|tsx?|\.go|\.py|\.rb|\.rs$/;
+const HOBBY_FUNCTION_LIMIT = 12;
+
+function isVercelFunction(relPath) {
+  if (relPath.includes('/.') || relPath.includes('/_') || relPath.includes('/node_modules/')) return false;
+  if (relPath.endsWith('.d.ts')) return false;
+  return FUNCTION_EXTS.test(relPath);
+}
+
+test('api/ stays inside the Hobby limit of twelve Functions', () => {
+  const functions = apiFiles.map(rel).filter(isVercelFunction);
+  assert.ok(
+    functions.length <= HOBBY_FUNCTION_LIMIT,
+    `api/ would deploy ${functions.length} Functions, over the Hobby limit of ${HOBBY_FUNCTION_LIMIT}:\n` +
+      `  ${functions.join('\n  ')}\n` +
+      '  Move anything that is not a route into an underscore-prefixed file or\n' +
+      '  directory, or fold the route into an existing one.'
+  );
+});
+
+test('shared api modules keep the underscore that hides them', () => {
+  // The specific regression, named. `api/lib/` counted as three endpoints and
+  // also exposed /api/lib/auth publicly, so this asserts the directory name
+  // rather than trusting the count above to catch it.
+  const shared = fs.existsSync(path.join(API, 'lib')) && fs.readdirSync(path.join(API, 'lib')).some((f) => f.endsWith('.js'));
+  assert.equal(shared, false, 'api/lib/ is back; it must be api/_lib/ to stay out of the Function count');
+  assert.ok(fs.existsSync(path.join(API, '_lib')), 'api/_lib/ is missing');
+});
+
 for (const file of apiFiles) {
   test(`${rel(file)} does not reach the filesystem-bound modules`, () => {
     // Walked transitively, since the point is that nobody has to notice the

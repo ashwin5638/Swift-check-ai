@@ -431,6 +431,12 @@ preference: the ten routes plus `api/lib/{auth,blobState,github}.js` came to
 "No more than 12 Serverless Functions". Renaming the directory to `lib` would
 break the deploy and quietly expose `/api/lib/auth` as a public endpoint.
 
+That error names neither the files nor the fix, so the preflight counts what
+Vercel would count - same exclusions, any path with a `/_` or `/.` segment and
+any `.d.ts` skipped - and fails the build listing all of them. The live tree
+deploys **ten**. A thirteenth entry point now fails here and in
+`test/vercelBoundary.test.js` rather than on the next deploy.
+
 ### Environment variables
 
 | Variable | Where | For |
@@ -556,8 +562,8 @@ the other way round.
 | `structure.test.js` | the server/client boundary, stale path literals, asset and logo resolution |
 | `feedContract.test.js` | the published feed against the fields the components read, and caption bytes |
 | `apiAuth.test.js` | the passphrase gate: unset secret, tampered expiry, rotated passphrase, cookie shapes |
-| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module, and every relative import in `api/` resolves |
-| `vercelPreflight.test.js` | the deploy preflight detects a wrong Root Directory, a missing lockfile, and an `api/` with no route table |
+| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module, every relative import in `api/` resolves, and `api/` stays inside the twelve-Function cap |
+| `vercelPreflight.test.js` | the deploy preflight detects a wrong Root Directory, a missing lockfile, an `api/` with no route table, and an `api/` over the Hobby Function limit |
 
 `runHistory.test.js` snapshots and restores the real `state/runs.json`, so
 running the suite does not wipe your history.
@@ -568,7 +574,7 @@ running the suite does not wipe your history.
 |---|---|
 | `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
 | Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the install runs against `client/` instead of the repository and finds no lockfile. It *is* committed, at the root. Clear the Root Directory field - `api/` has to be inside the project or no functions are built at all. If `scripts/vercelPreflight.js` is in the build log, it has already named this for you. |
-| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and `api/lib/{auth,blobState,github}.js` pushed the count to thirteen. It is `api/_lib/` - renaming it back also exposes `/api/lib/auth` publicly. |
+| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and `api/lib/{auth,blobState,github}.js` pushed the count to thirteen. It is `api/_lib/` - renaming it back also exposes `/api/lib/auth` publicly. The count is checked now, so this should never reach Vercel; if it does, the preflight was not in the build log. |
 | Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `test/vercelBoundary.test.js` is meant to catch this before deploy. |
 | `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |
 | UI shows `link lost` in the status strip | the API on :4000 is not answering. `npm run server` and read the error. |

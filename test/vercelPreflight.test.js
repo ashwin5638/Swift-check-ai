@@ -73,3 +73,56 @@ test('an api/ without a route table is caught before it deploys nothing', () => 
   assert.equal(problems.length, 1);
   assert.match(problems[0], /_app\.js is missing/);
 });
+
+test('an api/ over the Hobby limit is reported by name', () => {
+  // The exact build this guards: thirteen Files under api/, which Vercel refuses
+  // with one sentence that names no file and suggests no fix.
+  const dir = scaffold();
+  for (let i = 0; i < 13; i++) fs.writeFileSync(path.join(dir, 'api', `route${i}.js`), '');
+
+  const { problems } = check(dir);
+  const over = problems.find((p) => /Hobby limit of 12/.test(p));
+  assert.ok(over, `expected the Function-count diagnosis, got: ${problems.join(' | ')}`);
+  // It has to be actionable, so the files and the remedy both have to be in it.
+  assert.match(over, /api\/route0\.js/);
+  assert.match(over, /api\/route12\.js/);
+  assert.match(over, /underscore/);
+});
+
+test('an underscore-prefixed module is not counted against the limit', () => {
+  // The fix for the above, and the convention api/_lib/ already follows. If the
+  // count included these, the preflight would report a deployment that Vercel
+  // builds happily, and the operator would be sent chasing a non-problem.
+  const dir = scaffold();
+  fs.mkdirSync(path.join(dir, 'api', '_lib'));
+  for (let i = 0; i < 12; i++) fs.writeFileSync(path.join(dir, 'api', `route${i}.js`), '');
+  for (let i = 0; i < 6; i++) fs.writeFileSync(path.join(dir, 'api', '_lib', `shared${i}.js`), '');
+
+  const { problems, notes } = check(dir);
+  assert.deepEqual(problems, [], 'helpers behind an underscore must not count');
+  assert.ok(
+    notes.some((n) => /deploys 12 Function/.test(n)),
+    `expected a note counting 12 Functions, got: ${notes.join(' | ')}`
+  );
+});
+
+test('a nested helper is excluded too, not just a top-level one', () => {
+  // Vercel filters on the whole path containing /_ , so api/runs/_util.js is
+  // hidden from the count exactly as api/_lib/auth.js is.
+  const dir = scaffold();
+  fs.mkdirSync(path.join(dir, 'api', 'runs'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'api', 'runs', '_util.js'), '');
+  for (let i = 0; i < 12; i++) fs.writeFileSync(path.join(dir, 'api', `route${i}.js`), '');
+
+  assert.deepEqual(check(dir).problems, []);
+});
+
+test('the real api/ is inside the limit', () => {
+  // The count is asserted against the live tree, so this fails the moment a
+  // thirteenth entry point appears rather than on the next deploy.
+  const { notes } = check(ROOT);
+  assert.ok(
+    notes.some((n) => /within the Hobby limit of 12/.test(n)),
+    `expected the Function count to be reported as within the limit, got: ${notes.join(' | ')}`
+  );
+});

@@ -17,6 +17,9 @@ import { pathToFileURL } from 'node:url';
 const ROOT_HINT =
   'Vercel -> your project -> Settings -> General -> Root Directory -> clear the field (it must be the repository root) -> Save, then redeploy.';
 
+/** Hobby allows twelve Functions per deployment; the count is checked, not assumed. */
+const HOBBY_FUNCTION_LIMIT = 12;;
+
 /**
  * @param {string} cwd working directory Vercel would use
  * @returns {{ problems: string[], notes: string[] }}
@@ -73,6 +76,39 @@ export function check(cwd) {
 
   if (has('api') && has('client') && isFile('vercel.json')) {
     notes.push('Root Directory looks correct: api/, client/ and vercel.json are all in scope.');
+  }
+
+  // Vercel fails the build above twelve Functions on Hobby with one sentence
+  // that names neither the files nor the fix, so the count is checked here
+  // instead, where the message can list both. The exclusions are Vercel's: a
+  // path with a `/_` or `/.` segment, or a .d.ts, is not a Function.
+  if (has('api')) {
+    const functions = [];
+    const walk = (dir) => {
+      for (const entry of fs.readdirSync(path.resolve(cwd, dir), { withFileTypes: true })) {
+        if (entry.name === 'node_modules') continue;
+        const rel = `${dir}/${entry.name}`;
+        if (entry.isDirectory()) walk(rel);
+        else if (rel.includes('/_') || rel.includes('/.') || rel.endsWith('.d.ts')) continue;
+        else if (/\.(?:m|c)?js|tsx?|\.go|\.py|\.rb|\.rs$/.test(entry.name)) functions.push(rel);
+      }
+    };
+    walk('api');
+
+    if (functions.length > HOBBY_FUNCTION_LIMIT) {
+      problems.push(
+        `api/ would deploy ${functions.length} Vercel Functions, over the Hobby limit of ${HOBBY_FUNCTION_LIMIT}.\n` +
+          `  Vercel turns every file under api/ into its own Function, and it would\n` +
+          `  stop the build with "No more than 12 Serverless Functions" without saying which.\n` +
+          `  These are the ${functions.length}:\n` +
+          functions.map((f) => `    ${f}\n`).join('') +
+          '  Anything that is not a route belongs in an underscore-prefixed file or\n' +
+          '  directory — api/_lib/ is already the convention — or folded into a route\n' +
+          '  that already exists.'
+      );
+    } else {
+      notes.push(`api/ deploys ${functions.length} Function(s), within the Hobby limit of ${HOBBY_FUNCTION_LIMIT}.`);
+    }
   }
 
   return { problems, notes };
