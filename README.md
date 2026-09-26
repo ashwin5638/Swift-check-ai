@@ -63,9 +63,6 @@ a message. It reports three states:
 | `warn` | Cannot be verified without side effects (e.g. a `w_member_social` token with no read scope) |
 | `fail` | Not working |
 
-> ⚠️ **Rotate any key that has been pasted into a chat, a commit, or a shared
-> screen.** Moving it into `.env` does not un-expose it.
-
 ---
 
 ## 3. Run It
