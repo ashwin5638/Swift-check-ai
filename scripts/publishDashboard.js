@@ -1,54 +1,25 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import 'dotenv/config';
-import { get, put, del } from '@vercel/blob';
-import { config } from '../server/config.js';
-import {
+
+// Load .env locally if dotenv is installed, ignore in CI/production
+try {
+  await import('dotenv/config');
+} catch {
+  // Ignored in CI/production where env vars are already injected
+}
+
+const { get, put, del } = await import('@vercel/blob');
+const { config } = await import('../server/config.js');
+const {
   PATHS,
   applyPendingTombstones,
   applyTombstones,
   emptyTombstones
-} from '../api/lib/blobState.js';
+} = await import('../api/lib/blobState.js');
 
-/**
- * Publishes run state for the Vercel deployment, in two shapes.
- *
- * The Vercel project is a static site plus a control plane: the Vite build
- * serves client/dist, and api/ serves /api/* from Vercel Blob. The same CI step
- * feeds both, because a dashboard that can trigger a run but cannot show one is
- * worse than either half.
- *
- *   1. client/public/data/runs.json, copied into dist/ and served at
- *      /data/runs.json. This is what the console falls back to when
- *      VITE_READ_ONLY=1, and it needs no credentials.
- *   2. state/*.json in Blob, which is what api/ reads for every request. This is
- *      the live path.
- *
- * Both get the same records with the same resolved reel URLs, so the fallback and
- * the live console cannot disagree about whether a reel is playable. The URLs
- * must be Blob URLs and not /media/<id>.mp4: the Vercel function has no
- * filesystem, and a local path handed to the publish workflow as `video_url`
- * would fail to download on the runner.
- *
- * Step 1 needs no credentials and is written first, on purpose: steps 2 and 3 are
- * improvements to a dashboard that is already correct without them. A store that
- * is unreachable, or a token that was never set, costs the control plane and
- * reel playback and the exit code — never the run log. The reverse ordering once
- * made a single missing secret look like a permanently broken deployment, because
- * the client reads a 404 on runs.json as "no runs yet" and says so rather than
- * complaining.
- *
- * state/runs.json on disk is left untouched. It keeps /media/<id>.mp4 because
- * that is the path Express serves, and mixing the two would break `npm run dev`.
- *
- * ## Tombstones
- *
- * A run deleted from the console comes straight back if this script uploads CI's
- * copy unfiltered, because CI rebuilds state from its cache every run. So the ids
- * a human deleted or rejected are read back out of Blob and applied here, which
- * is what makes the delete button permanent rather than good-until-tomorrow.
- */
+
+
 
 // 8.34 MB per 15s 1080x1920 reel, so five is ~42 MB against a 1 GB allowance.
 export const MAX_VIDEOS = 5;
