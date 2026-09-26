@@ -88,6 +88,24 @@ for (const file of apiFiles) {
   });
 }
 
+test('every relative import in api/ resolves to a file that exists', () => {
+  // The walk above structurally cannot catch a mistyped path: `existsSync` is
+  // false for the wrong target, so the specifier is skipped over and the module
+  // graph is never followed. That is how approve, reject and publish shipped
+  // with `../../../_app.js` — one level too far, pointing at the repo root —
+  // and passed CI while 500-ing on every click. The build stays green because
+  // Vercel only discovers it when the function is invoked.
+  const missing = [];
+  for (const file of apiFiles) {
+    for (const spec of importedFrom(file)) {
+      if (!fs.existsSync(path.resolve(path.dirname(file), spec))) {
+        missing.push(`${rel(file)} -> ${spec}`);
+      }
+    }
+  }
+  assert.deepEqual(missing, [], 'imports a relative path that does not exist');
+});
+
 test('the functions share their read models instead of reimplementing them', () => {
   const app = fs.readFileSync(path.join(API, '_app.js'), 'utf8');
   assert.match(app, /server\/lib\/dashboard\.js/);

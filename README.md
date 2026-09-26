@@ -113,7 +113,7 @@ real file.
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
 | `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
 | `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
-| `npm test` | offline suite, 86 tests, no network |
+| `npm test` | offline suite, 87 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
 | `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
@@ -406,6 +406,14 @@ status derivation, the list shape, the caption text - are imported from
 `server/lib/dashboard.js` and `server/lib/captions.js` as pure functions.
 `test/vercelBoundary.test.js` fails the build if that ever changes.
 
+**`api/_lib/` is shared code, not a route, and the underscore is what says so.**
+Vercel turns every file under `api/` into a Function unless the name starts with
+`_`, so `api/_app.js` and `api/_lib/` are both skipped. That is not a style
+preference: the ten routes plus `api/lib/{auth,blobState,github}.js` came to
+**thirteen**, and Hobby caps a deployment at twelve, so the build fails with
+"No more than 12 Serverless Functions". Renaming the directory to `lib` would
+break the deploy and quietly expose `/api/lib/auth` as a public endpoint.
+
 ### Environment variables
 
 | Variable | Where | For |
@@ -419,7 +427,7 @@ shows up on the status strip rather than as a failed click.
 
 **The passphrase is compared server-side and never shipped to the browser.**
 Any `VITE_*` value is inlined into the JavaScript bundle, so a token placed there
-is public to everyone who opens devtools. `api/lib/auth.js` compares the
+is public to everyone who opens devtools. `api/_lib/auth.js` compares the
 passphrase, hands out a signed `dash_session` cookie, and invalidates every
 outstanding session the moment the passphrase changes.
 
@@ -519,7 +527,7 @@ do. If you change one, change both, or extract a shared module.
 
 ## 14. Tests
 
-`npm test` runs 86 tests with Node's built-in runner. No test dependencies, and
+`npm test` runs 87 tests with Node's built-in runner. No test dependencies, and
 it never touches the network, so a failing credential cannot mask a real bug or
 the other way round.
 
@@ -531,7 +539,7 @@ the other way round.
 | `structure.test.js` | the server/client boundary, stale path literals, asset and logo resolution |
 | `feedContract.test.js` | the published feed against the fields the components read, and caption bytes |
 | `apiAuth.test.js` | the passphrase gate: unset secret, tampered expiry, rotated passphrase, cookie shapes |
-| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module |
+| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module, and every relative import in `api/` resolves |
 
 `runHistory.test.js` snapshots and restores the real `state/runs.json`, so
 running the suite does not wipe your history.
@@ -541,7 +549,8 @@ running the suite does not wipe your history.
 | Symptom | Cause and fix |
 |---|---|
 | `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
-| Console deploys but every `/api/*` call 404s | the Vercel project's **Root Directory** is `client/`, so `api/` is outside the project and no functions were built. Set it to the repository root. |
+| Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the buildCommand's `--prefix client` nests to `client/client/package-lock.json`, which does not exist. The lock *is* committed. Clear the Root Directory field so it is the repository root - `api/` has to be inside the project or no functions are built at all. |
+| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and `api/lib/{auth,blobState,github}.js` pushed the count to thirteen. It is `api/_lib/` - renaming it back also exposes `/api/lib/auth` publicly. |
 | Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `test/vercelBoundary.test.js` is meant to catch this before deploy. |
 | `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |
 | UI shows `link lost` in the status strip | the API on :4000 is not answering. `npm run server` and read the error. |

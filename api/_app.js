@@ -9,7 +9,7 @@ import {
   issueSession,
   isAuthed,
   requireAuth
-} from './lib/auth.js';
+} from './_lib/auth.js';
 import {
   StateError,
   assertSafeId,
@@ -20,8 +20,8 @@ import {
   loadCoveredEvents,
   loadRuns,
   resolvePendingPost
-} from './lib/blobState.js';
-import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './lib/github.js';
+} from './_lib/blobState.js';
+import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './_lib/github.js';
 
 /**
  * The Vercel half of the console: an authenticated control plane, nothing more.
@@ -49,9 +49,9 @@ import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './lib/
  * from server/lib/ as pure functions instead of being reimplemented here. Those
  * two modules have no filesystem or config dependency precisely so this import is
  * legal. If you find yourself adding an fs call to server/lib/dashboard.js,
- * server/lib/captions.js or api/lib/auth.js, this stops working.
+ * server/lib/captions.js or api/_lib/auth.js, this stops working.
  *
- * Reads are public. Writes require a signed session cookie: see api/lib/auth.js
+ * Reads are public. Writes require a signed session cookie: see api/_lib/auth.js
  * for why the local API's loopback-and-CORS posture is not enough once every
  * route is a public URL.
  */

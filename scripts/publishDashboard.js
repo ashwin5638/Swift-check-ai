@@ -16,7 +16,7 @@ const {
   applyPendingTombstones,
   applyTombstones,
   emptyTombstones
-} = await import('../api/lib/blobState.js');
+} = await import('../api/_lib/blobState.js');
 
 
 

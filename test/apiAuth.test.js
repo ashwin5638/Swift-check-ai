@@ -21,7 +21,7 @@ import {
   requireAuth,
   sessionCookie,
   verifyToken
-} from '../api/lib/auth.js';
+} from '../api/_lib/auth.js';
 
 const PASS = 'correct horse battery staple';
 const NOW = 1_700_000_000_000;
@@ -57,7 +57,7 @@ test('the right passphrase passes and every other one does not', () => {
 test('parseCookies reads a single header and copes with the other shapes', () => {
   assert.deepEqual(parseCookies(`${COOKIE_NAME}=abc`), { [COOKIE_NAME]: 'abc' });
   // Every cookie in the header comes back, not just ours. This is a general
-  // parser and isAuthed picks its own key out of the jar (api/lib/auth.js), so
+  // parser and isAuthed picks its own key out of the jar (api/_lib/auth.js), so
   // returning only dash_session would be wrong for any caller wanting a second
   // cookie — and would make this assertion, rather than the code, the contract.
   assert.deepEqual(parseCookies(`other=1; ${COOKIE_NAME}=abc; more=2`), {
