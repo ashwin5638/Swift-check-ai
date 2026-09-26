@@ -24,16 +24,15 @@ Runs on a $0 stack. **Two LLM calls per run**; everything else is deterministic 
 | 5 | [The dashboard](#5-the-dashboard) | The control room UI |
 | 6 | [The approval queue](#6-the-approval-queue) | How human sign-off works |
 | 7 | [Telegram alerts](#7-telegram-alerts) | Phone notifications |
-| 8 | [Is the API safe?](#8-is-the-api-safe) | Threat model, honestly |
-| 9 | [API reference](#9-api-reference) | Every route |
-| 10 | [Posting setup](#10-posting-setup) | Facebook, LinkedIn, Telegram |
-| 11 | [Daily automation](#11-daily-automation) | GitHub Actions |
-| 12 | [Static dashboard](#12-static-dashboard) | The Vercel path and its gap |
-| 13 | [Editing the reel](#13-editing-the-reel) | Where the look and voice live |
-| 14 | [Architecture notes](#14-architecture-notes) | Why it is built this way |
-| 15 | [Tests](#15-tests) | What the suite covers |
-| 16 | [Troubleshooting](#16-troubleshooting) | Symptoms and causes |
-| 17 | [Known limitations](#17-known-limitations) | What is not solved yet |
+| 8 | [API reference](#9-api-reference) | Every route |
+| 9 | [Posting setup](#10-posting-setup) | Facebook, LinkedIn, Telegram |
+| 10 | [Daily automation](#11-daily-automation) | GitHub Actions |
+| 11 | [Static dashboard](#12-static-dashboard) | The Vercel path and its gap |
+| 12 | [Editing the reel](#13-editing-the-reel) | Where the look and voice live |
+| 13 | [Architecture notes](#14-architecture-notes) | Why it is built this way |
+| 14 | [Tests](#15-tests) | What the suite covers |
+| 15 | [Troubleshooting](#16-troubleshooting) | Symptoms and causes |
+| 16 | [Known limitations](#17-known-limitations) | What is not solved yet |
 
 ---
 
@@ -283,32 +282,8 @@ Three things worth knowing:
 Set `DASHBOARD_URL` if you reach the dashboard somewhere other than
 `http://localhost:4000`, so the link in the message points somewhere useful.
 
-## 8. Is the API safe?
 
-There is **no authentication**, so it is only safe while it stays on your own
-machine. Three things enforce that:
-
-- **It binds to `127.0.0.1`, not every interface.** `app.listen(port)` with no
-  host argument binds `::` and would put the publish endpoint on your whole LAN.
-  `HOST` in `.env` overrides it; the server prints a warning if you do.
-- **CORS is restricted to local origins.** Without this, any website you happen
-  to have open could POST to `127.0.0.1:4000` and publish to your accounts. Only
-  `http://localhost:<port>` and `http://127.0.0.1:<port>` are allowed - note
-  that `http://localhost.evil.com` is correctly rejected.
-- **Caller-supplied ids are validated** before being joined into a path
-  (`/api/captions/:id/:platform`), and output paths are resolved and confirmed
-  to stay inside `output/`.
-
-The dashboard never handles a secret: `GET /api/health` reports which
-credentials are *configured* as booleans, never their values, so nothing
-sensitive appears in the browser's network tab. Run history, scripts, and
-captions are readable by anything that can reach the port.
-
-What this does **not** stop: another process or script running as you on the
-same machine. CORS is a browser control, not an access control. If you need to
-expose this beyond localhost, put a real auth layer in front of it first.
-
-## 9. API reference
+## 8. API reference
 
 | Method | Route | Purpose |
 |---|---|---|
@@ -330,7 +305,7 @@ token counts), `media`, `beats[]`, and `publish.results[]`. A run's own `status`
 freezes at `awaiting-approval` once a reel is queued, so read `publish.status`
 for the outcome - the API and the UI both do this.
 
-## 10. Posting setup
+## 9. Posting setup
 
 ### Facebook
 
@@ -378,7 +353,7 @@ Create a bot with @BotFather, then `npm run telegram:chatid` for your chat id.
 
 Add every value as an encrypted repository secret for the GitHub Actions run.
 
-## 11. Daily automation
+## 10. Daily automation
 
 `.github/workflows/dailyReel.yml` fires at 06:17 UTC. GitHub gives scheduled
 workflows 2,000 free minutes/month; this job takes one to three. The workflow
@@ -394,7 +369,7 @@ pipeline uploads the binary directly. That will stop working the moment you add
 Instagram Reels, which does require a public `file_url` - you would add a step
 that uploads the mp4 to a public bucket first.
 
-## 12. Static dashboard
+## 11. Static dashboard
 
 **Status: both halves wired.** The console renders before any run exists and
 reports that it is empty, rather than failing.
@@ -432,7 +407,7 @@ quieter case is the feed itself: `feed.js` reads a 404 on `data/runs.json` as
 `GET /media/*` has no static equivalent, which is why step 2 rewrites the reel
 URLs to Blob.
 
-## 13. Editing the reel
+## 12. Editing the reel
 
 Everything tunable that is not a secret is in `config.json` - brand colours, reel
 length, voice, TTS pitch and rate, the news queries, the models, and which LLM is
@@ -448,7 +423,7 @@ used as-is. Otherwise an ambient pad is synthesised with FFmpeg `sine` sources,
 so the repo stays free of licensed audio binaries and the reel never ships
 silent.
 
-## 14. Architecture notes
+## 13. Architecture notes
 
 `server/lib/llm.js` is the only file that imports a vendor SDK. Every agent calls
 `chat()`, so moving to OpenRouter, Ollama, or any OpenAI-compatible endpoint is a
@@ -485,7 +460,7 @@ in `client/src/lib/status.js`. They must agree, because the header and the run l
 sit side by side and disagreeing about the same run is the worst thing this UI can
 do. If you change one, change both, or extract a shared module.
 
-## 15. Tests
+## 14. Tests
 
 `npm test` runs 50 tests with Node's built-in runner. No test dependencies, and
 it never touches the network, so a failing credential cannot mask a real bug or
@@ -501,7 +476,7 @@ the other way round.
 `runHistory.test.js` snapshots and restores the real `state/runs.json`, so
 running the suite does not wipe your history.
 
-## 16. Troubleshooting
+## 15. Troubleshooting
 
 | Symptom | Cause and fix |
 |---|---|
@@ -517,7 +492,7 @@ running the suite does not wipe your history.
 | `EADDRINUSE` on :4000 | another copy of the server is running. Change `PORT` or stop it. |
 | Dashboard is empty but shows no error | you are probably hitting a static host. The client has no `data/runs.json` fallback - see [section 12](#12-static-dashboard). |
 
-## 17. Known limitations
+## 16. Known limitations
 
 - LinkedIn tokens expire (about 60 days). Automation will need a refresh-token flow.
 - LinkedIn video posting usually needs app review, which is why the publisher
