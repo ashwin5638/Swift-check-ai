@@ -11,13 +11,16 @@
     "setup": "playwright install chromium",
     "check:models": "node scripts/checkModels.js",
     "check:keys": "node scripts/checkKeys.js",
-    "run": "node src/orchestrator.js",
-    "run:dry": "node src/orchestrator.js --dry",
-    "server": "node src/server.js",
-    "dev": "concurrently -n api,ui -c cyan,magenta \"npm:server\" \"npm --prefix dashboard run dev\"",
-    "dashboard": "npm --prefix dashboard run dev",
-    "build:dashboard": "npm --prefix dashboard run build",
-    "test": "node --test test/"
+    "linkedin:whoami": "node scripts/linkedinWhoami.js",
+    "telegram:chatid": "node scripts/telegramChatId.js",
+    "run": "node server/orchestrator.js",
+    "run:dry": "node server/orchestrator.js --dry",
+    "publish:dashboard": "node scripts/publishDashboard.js",
+    "server": "node server/index.js",
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm:server\" \"npm --prefix client run dev\"",
+    "client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build",
+    "test": "node --test \"test/**/*.test.js\""
   },
   "dependencies": {
     "@andresaya/edge-tts": "^1.0.0",
@@ -30,6 +33,7 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
+    "@vercel/blob": "^2.8.0",
     "concurrently": "^9.1.0"
   }
 }

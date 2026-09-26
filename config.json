@@ -6,7 +6,7 @@
     "primaryColor": "#041E2E",
     "accentColor": "#00E5C0",
     "textColor": "#FFFFFF",
-    "logo": "src/assets/logo.svg"
+    "logo": "server/assets/logo.svg"
   },
 
   "news": {
@@ -18,7 +18,7 @@
       "container shipping rates",
       "offshore vessel industry"
     ],
-    "gdeltEnabled": true,
+    "gdeltEnabled": false,
     "gdeltQuery": "(shipping OR maritime OR \"port authority\" OR tanker) sourcelang:english",
     "lookbackDays": 2,
     "maxCandidates": 15,
@@ -49,8 +49,8 @@
 
   "publish": {
     "requireApproval": true,
-    "autoPostFacebook": false,
-    "autoPostLinkedIn": false,
+    "autoPostFacebook": true,
+    "autoPostLinkedIn": true,
     "linkedinFallbackToText": true,
     "notifyTelegram": true
   }

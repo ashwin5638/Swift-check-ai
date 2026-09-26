@@ -1,0 +1,228 @@
+/* =========================================================================
+   Swift Check AI — Control Room
+   Design tokens, reset, and base typography.
+
+   Direction: instrument panel, not marketing page.
+   Dials: DESIGN_VARIANCE 3 · MOTION_INTENSITY 2 · VISUAL_DENSITY 9
+   One accent (desaturated marine teal, carried over from the logo).
+   Colour is a signal, never decoration. Every status hue is paired with a
+   text label so hue is never the only carrier of meaning.
+   ========================================================================= */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Surfaces. Cool graphite with a marine cast, never pure black. ---- */
+  --bg: #0a0d11;
+  --rail: #0b0f13;
+  --surface: #10151a;
+  --surface-2: #151b22;
+  --surface-3: #1c242d;
+
+  /* ---- Hairlines. Data is separated by rules, not by card borders. ---- */
+  --line: #1d242c;
+  --line-2: #28323c;
+  --line-3: #3a4652;
+
+  /* ---- Text ---- */
+  --fg: #dde4ea;
+  --fg-2: #97a4b0;
+  --fg-3: #67737f;
+
+  /* ---- The one accent ---- */
+  --accent: #3ec9a9;
+  --accent-dim: #2b7f6d;
+  --accent-ink: #05100e;
+  --accent-wash: rgba(62, 201, 169, 0.1);
+  --accent-edge: rgba(62, 201, 169, 0.32);
+
+  /* ---- Semantic signal ---- */
+  --ok: #4bb96b;
+  --warn: #d9a227;
+  --err: #e05a4f;
+  --info: #4f9ed1;
+  --idle: #67737f;
+
+  --ok-wash: rgba(75, 185, 107, 0.12);
+  --warn-wash: rgba(217, 162, 39, 0.12);
+  --err-wash: rgba(224, 90, 79, 0.12);
+  --info-wash: rgba(79, 158, 209, 0.12);
+  --idle-wash: rgba(103, 115, 127, 0.14);
+
+  /* ---- Shape. One scale, deliberately sharp. ---- */
+  --r-sm: 2px;
+  --r: 3px;
+  --r-lg: 5px;
+
+  /* ---- Frame metrics ---- */
+  --top-h: 52px;
+  --rail-w: 268px;
+  --aside-w: 344px;
+
+  /* ---- Type. Plex is an engineered family, not an LLM default. ---- */
+  --font: 'IBM Plex Sans', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --fs-micro: 10px;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-base: 13px;
+  --fs-md: 15px;
+  --fs-lg: 19px;
+
+  /* ---- Motion. Instrument feedback only. ---- */
+  --t-fast: 110ms cubic-bezier(0.2, 0.6, 0.3, 1);
+  --t: 180ms cubic-bezier(0.2, 0.6, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numerics are always tabular so columns of figures stay aligned while polling. */
+b,
+strong,
+.mono,
+kbd {
+  font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background: var(--accent-edge);
+  color: #fff;
+}
+
+/* ---- Scrollbars read as part of the chassis, not the browser ---- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border: 2px solid var(--bg);
+  border-radius: 99px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--line-3);
+}
+
+/* ---- Shared type roles -------------------------------------------------
+   A "label" is a data label (column header, spec key, KPI caption). It is
+   never used as a decorative eyebrow above a heading.                     */
+
+.label {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.dim {
+  color: var(--fg-2);
+}
+
+.muted {
+  color: var(--fg-3);
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

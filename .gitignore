@@ -1,9 +1,13 @@
 node_modules/
-dashboard/node_modules/
-dashboard/dist/
+client/node_modules/
+client/dist/
 .env
 .env.local
-.env.example
+# The example files are documentation and must stay tracked. Negating them here
+# keeps a newly added client/.env.example from being silently ignored, which is
+# what happens with a bare `.env*` rule.
+!.env.example
+!client/.env.example
 output/*
 !output/.gitkeep
 logs/

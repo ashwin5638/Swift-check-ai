@@ -1,0 +1,1308 @@
+/* =========================================================================
+   Instrument components.
+
+   Rules held throughout:
+   - Buttons carry hierarchy. Exactly one primary per region, never a stack
+     of identically-weighted full-width pills.
+   - Data is separated by hairlines. Generic rounded cards are reserved for
+     things that genuinely float above the page (queue cards, toast).
+   - Every number is mono and tabular.
+   - Pressed feedback moves 1px on the Y axis only, so no reflow.
+   ========================================================================= */
+
+/* ---- Status primitives -------------------------------------------------
+   A dot is never the only signal: it always sits beside a text label.      */
+
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--idle);
+}
+
+.dot.ok {
+  background: var(--ok);
+}
+.dot.warn {
+  background: var(--warn);
+}
+.dot.err {
+  background: var(--err);
+}
+.dot.info {
+  background: var(--info);
+}
+.dot.accent {
+  background: var(--accent);
+}
+.dot.idle {
+  background: var(--idle);
+}
+
+.dot.live {
+  box-shadow: 0 0 0 3px var(--accent-wash);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px var(--accent-wash);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: var(--idle-wash);
+  color: var(--fg-2);
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag.ok {
+  border-color: rgba(75, 185, 107, 0.3);
+  background: var(--ok-wash);
+  color: var(--ok);
+}
+.tag.warn {
+  border-color: rgba(217, 162, 39, 0.3);
+  background: var(--warn-wash);
+  color: var(--warn);
+}
+.tag.err {
+  border-color: rgba(224, 90, 79, 0.34);
+  background: var(--err-wash);
+  color: var(--err);
+}
+.tag.info {
+  border-color: rgba(79, 158, 209, 0.3);
+  background: var(--info-wash);
+  color: var(--info);
+}
+.tag.accent {
+  border-color: var(--accent-edge);
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    color var(--t-fast);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--surface-3);
+  border-color: var(--line-3);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+}
+
+.btn .ti {
+  flex: none;
+}
+
+.btn-primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #4dd8b7;
+  border-color: transparent;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line-2);
+  color: var(--fg-2);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--line-3);
+  color: var(--fg);
+}
+
+.btn-danger:hover:not(:disabled) {
+  border-color: rgba(224, 90, 79, 0.5);
+  background: var(--err-wash);
+  color: var(--err);
+}
+
+.btn-sm {
+  min-height: 26px;
+  padding: 0 9px;
+  font-size: var(--fs-xs);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-icon {
+  width: 26px;
+  min-height: 26px;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--fg-3);
+}
+
+.btn-icon:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--fg);
+}
+
+.btn-icon.armed {
+  color: var(--err);
+  background: var(--err-wash);
+}
+
+/* ---- Top strip --------------------------------------------------------- */
+
+.zone-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 16px;
+  background: var(--rail);
+  border-bottom: 1px solid var(--line);
+}
+
+.cr-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+}
+
+.cr-brand img {
+  width: 22px;
+  height: 22px;
+}
+
+.cr-brand .wordmark {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.cr-brand .hairline {
+  width: 1px;
+  height: 16px;
+  background: var(--line-2);
+}
+
+.sysstate {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sysitem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 24px;
+  border-radius: var(--r);
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+
+.sysitem + .sysitem {
+  border-left: 1px solid var(--line);
+}
+
+.sysitem b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.sysitem.is-ok b {
+  color: var(--ok);
+}
+.sysitem.is-warn b {
+  color: var(--warn);
+}
+.sysitem.is-err b {
+  color: var(--err);
+}
+.sysitem.is-accent b {
+  color: var(--accent);
+}
+
+.topright {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.clock {
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 1080px) {
+  .cr-brand .hairline,
+  .cr-brand .wordmark {
+    display: none;
+  }
+  .clock {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .zone-top {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .sysstate {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sysstate::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---- KPI cluster -------------------------------------------------------
+   Six figures computed from the real run history. No invented values: an
+   empty history renders an em dash, not a zero.                            */
+
+.kpi {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kpi-cell {
+  padding: 9px 16px 10px;
+  min-width: 0;
+}
+
+.kpi-cell:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.kpi-cell:nth-child(n + 3) {
+  border-top: 1px solid var(--line);
+}
+
+.kpi-cell .label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.kpi-cell .kpi-v {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.kpi-cell .kpi-v.is-ok {
+  color: var(--ok);
+}
+.kpi-cell .kpi-v.is-warn {
+  color: var(--warn);
+}
+.kpi-cell .kpi-v.is-err {
+  color: var(--err);
+}
+.kpi-cell .kpi-v.is-none {
+  color: var(--fg-3);
+}
+
+.kpi-cell .kpi-sub {
+  font-size: var(--fs-micro);
+  color: var(--fg-3);
+  margin-top: 2px;
+}
+
+/* ---- Trigger group ----------------------------------------------------- */
+
+.triggers {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trigger-note {
+  margin-top: 10px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--fg-3);
+}
+
+.trigger-note code {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--fg-2);
+}
+
+/* ---- Run log -----------------------------------------------------------
+   A table, not a stack of cards. The duration bar is scaled against the
+   slowest run in the current history so the column stays comparable.       */
+
+.log {
+  border-top: 1px solid var(--line);
+}
+
+.log-head,
+.log-row {
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr) 58px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+}
+
+.log-head {
+  height: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.log-head > :nth-child(2) {
+  justify-self: start;
+}
+
+.log-head > :nth-child(3) {
+  justify-self: end;
+}
+
+.log-row {
+  position: relative;
+  height: 40px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--t-fast);
+}
+
+/* The select target spans the whole row. The delete control is a sibling,
+   not a descendant — nested buttons are invalid and swallow the click. */
+.log-pick {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr) 58px;
+  align-items: center;
+  gap: 9px;
+  height: 100%;
+  text-align: left;
+}
+
+.log-row:hover {
+  background: var(--surface);
+}
+
+.log-row.is-active {
+  background: var(--accent-wash);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.log-row .log-title {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-row .log-sub {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  font-size: var(--fs-micro);
+  color: var(--fg-3);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.log-row .log-sub .sep {
+  color: var(--line-3);
+}
+
+.log-row.is-active .log-title {
+  color: var(--fg);
+}
+
+/* The duration figure doubles as the bar: a hairline meter sits under the
+   number, scaled against the slowest run in the current history. */
+.log-cell-wrap {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  bottom: 0;
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.log-dur {
+  position: relative;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+  text-align: right;
+  transition: opacity var(--t-fast);
+}
+
+.log-dur::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  width: var(--w, 0%);
+  height: 2px;
+  background: var(--line-3);
+  border-radius: 1px;
+}
+
+.log-row.is-active .log-dur {
+  color: var(--fg);
+}
+
+.log-row.is-active .log-dur::after {
+  background: var(--accent);
+}
+
+/* The delete control takes over the duration cell on hover, so nothing
+   overlaps and the destructive target keeps a full-size hit area. */
+.log-del {
+  position: absolute;
+  right: -5px;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+
+.log-del.is-armed {
+  width: auto;
+  padding: 0 6px;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.06em;
+  color: var(--err);
+  opacity: 1;
+  background: var(--err-wash);
+}
+
+.log-row:hover .log-dur,
+.log-row:focus-within .log-dur {
+  opacity: 0;
+}
+
+.log-row:hover .log-del,
+.log-del:focus-visible,
+.log-del.is-armed {
+  opacity: 1;
+}
+
+/* ---- Run header -------------------------------------------------------- */
+
+.runhead {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.runhead-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.runhead h1 {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  max-width: 62ch;
+}
+
+.runhead .lede {
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--fg-2);
+  max-width: 68ch;
+}
+
+.runhead-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+}
+
+.runhead-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ---- Preview + spec ---------------------------------------------------- */
+
+/* The reel is 9:16, so the player column is sized for the frame rather than
+   for the page: full presence on a wide console, pulled back before it starts
+   squeezing the figures next to it. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1440px) {
+  .split {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 780px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A 9:16 player at full phone width is taller than the viewport. */
+@media (max-width: 560px) {
+  .player {
+    max-width: 260px;
+  }
+}
+
+.player {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.player video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
+}
+
+.player-still {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 9 / 16;
+  color: var(--fg-3);
+  font-size: var(--fs-xs);
+  text-align: center;
+  padding: 16px;
+}
+
+/* ---- Spec table --------------------------------------------------------
+   auto-fit rather than a fixed two columns: the table sits in a column whose
+   width depends on the frame, so it has to pick its own column count. */
+
+.spec {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0 24px;
+}
+
+/* The publish results sit inside the spec column rather than in a card of
+   their own, so they need their own breathing room above the heading. */
+.spec + .section-head {
+  margin-top: 26px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-row .k {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.spec-row .v {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm);
+  color: var(--fg);
+  text-align: right;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spec-row .v.is-ok {
+  color: var(--ok);
+}
+.spec-row .v.is-warn {
+  color: var(--warn);
+}
+.spec-row .v.is-err {
+  color: var(--err);
+}
+
+/* ---- Publish results --------------------------------------------------- */
+
+.results {
+  border-top: 1px solid var(--line);
+}
+
+.result-row {
+  display: grid;
+  grid-template-columns: 34px 84px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.result-row .p {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+}
+
+.result-row .detail {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Stage waterfall ---------------------------------------------------
+   The run's own telemetry, rendered as a gantt against total wall time.
+   This is the panel that makes the console legible at a glance: the long
+   bar is the thing that actually costs the operator time.                  */
+
+.wf {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.wf-head,
+.wf-row {
+  display: grid;
+  grid-template-columns: 8ch 13ch minmax(80px, 1.5fr) 7ch minmax(0, 1.2fr);
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+}
+
+.wf-head {
+  height: 26px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.wf-head > :nth-child(2) {
+  justify-self: start;
+}
+
+.wf-head > :nth-child(4) {
+  justify-self: end;
+}
+
+.wf-row {
+  height: 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.wf-row:last-child {
+  border-bottom: 0;
+}
+
+.wf-row .t0 {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-micro);
+  color: var(--fg-3);
+}
+
+.wf-row .agent {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wf-track {
+  position: relative;
+  height: 7px;
+  background: var(--surface-2);
+  border-radius: 1px;
+}
+
+.wf-bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  min-width: 3px;
+  background: var(--line-3);
+  border-radius: 1px;
+}
+
+/* The stage that actually costs the operator time is the one worth seeing
+   first, so the longest bar is lifted out of the rest. */
+.wf-row.is-dominant .wf-bar {
+  background: var(--fg-2);
+}
+
+.wf-row .ms {
+  justify-self: end;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+}
+
+.wf-row .note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+}
+
+.wf-llm {
+  flex: none;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.wf-note-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wf-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 9px 12px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+}
+
+.wf-foot .label {
+  margin-right: 5px;
+}
+
+@media (max-width: 700px) {
+  .wf-head {
+    display: none;
+  }
+  .wf-row {
+    height: auto;
+    padding: 8px 12px;
+    row-gap: 7px;
+    grid-template-columns: 7ch minmax(0, 1fr) 6ch;
+  }
+  .wf-row .note {
+    display: none;
+  }
+  .wf-row .t0 {
+    grid-area: 1 / 1;
+  }
+  .wf-row .agent {
+    grid-area: 1 / 2;
+  }
+  .wf-row .ms {
+    grid-area: 1 / 3;
+  }
+  .wf-row .wf-track {
+    grid-area: 2 / 1 / 2 / -1;
+  }
+}
+
+/* ---- Beats ------------------------------------------------------------- */
+
+.beats {
+  display: flex;
+  flex-direction: column;
+}
+
+.beat {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.beat:last-child {
+  border-bottom: 0;
+}
+
+.beat .t {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-xs);
+  color: var(--accent);
+}
+
+.beat .x {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ---- Prose (voiceover) ------------------------------------------------- */
+
+.prose {
+  font-size: var(--fs-md);
+  line-height: 1.62;
+  color: var(--fg);
+  max-width: 66ch;
+  border-left: 2px solid var(--line-2);
+  padding-left: 16px;
+}
+
+/* ---- Captions ---------------------------------------------------------- */
+
+.captions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 780px) {
+  .captions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.caption {
+  min-width: 0;
+}
+
+.caption-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.caption-head h3 {
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.caption pre {
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: var(--fg-2);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px 13px;
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.caption pre .tags {
+  color: var(--accent);
+}
+
+/* ---- Approval queue ---------------------------------------------------- */
+
+.qcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--warn);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.qcard + .qcard {
+  margin-top: 8px;
+}
+
+.qcard.is-active {
+  border-color: var(--accent-edge);
+  border-left-color: var(--accent);
+  background: var(--accent-wash);
+}
+
+.qcard-main {
+  display: block;
+  width: 100%;
+  padding: 11px 13px 10px;
+  text-align: left;
+}
+
+.qcard-main:hover {
+  background: var(--surface-2);
+}
+
+.qcard-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.qcard-platforms {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+
+.qcard h3 {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.qcard .qcard-blurb {
+  margin-top: 4px;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--fg-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.qcard-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--fg-3);
+}
+
+.qcard-actions {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--line);
+  background: var(--rail);
+}
+
+/* ---- Credentials ------------------------------------------------------- */
+
+.creds {
+  display: flex;
+  flex-direction: column;
+}
+
+.cred {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-xs);
+}
+
+.cred:last-child {
+  border-bottom: 0;
+}
+
+.cred .name {
+  font-family: var(--mono);
+  color: var(--fg-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note {
+  margin-top: 10px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--fg-3);
+}
+
+.note code {
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  color: var(--fg-2);
+}
+
+/* ---- Failure panel ----------------------------------------------------- */
+
+.fault {
+  border: 1px solid rgba(224, 90, 79, 0.4);
+  border-left-width: 2px;
+  border-radius: var(--r);
+  background: var(--err-wash);
+  padding: 12px 14px;
+}
+
+.fault .label {
+  color: var(--err);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.fault pre {
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--fg);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---- Empty / loading / error ------------------------------------------ */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.empty .ti {
+  color: var(--line-3);
+}
+
+.empty h3 {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.empty p {
+  font-size: var(--fs-sm);
+  color: var(--fg-3);
+  max-width: 44ch;
+  line-height: 1.55;
+}
+
+.inline-err {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(224, 90, 79, 0.35);
+  border-radius: var(--r);
+  background: var(--err-wash);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+.inline-err .ti {
+  flex: none;
+  color: var(--err);
+  margin-top: 1px;
+}
+
+.skel {
+  background: linear-gradient(90deg, transparent, var(--surface-2) 50%, transparent);
+  background-size: 200% 100%;
+  border-radius: var(--r-sm);
+  animation: shimmer 1.4s linear infinite;
+}
+
+.skel-row {
+  height: 38px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(90deg, transparent, var(--surface-2) 50%, transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.skel-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dot.live {
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+}
+
+/* ---- Toast ------------------------------------------------------------- */
+
+.toast-layer {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(400px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 10px 10px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface-2);
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
+  overflow: hidden;
+  animation: toast-in var(--t) both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.toast .ti {
+  flex: none;
+  margin-top: 1px;
+}
+
+.toast p {
+  flex: 1;
+  min-width: 0;
+  padding-top: 1px;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.toast .btn-icon {
+  flex: none;
+  width: 20px;
+  min-height: 20px;
+  margin: -2px -2px 0 0;
+}
+
+.toast.is-ok .ti {
+  color: var(--ok);
+}
+.toast.is-err {
+  border-color: rgba(224, 90, 79, 0.4);
+}
+.toast.is-err .ti {
+  color: var(--err);
+}
+
+/* A two-pixel drain line tells the operator how long the message has left
+   before it clears itself, instead of leaving it to guesswork. */
+.toast-life {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--line-3);
+  transform-origin: left center;
+  animation: toast-drain linear forwards;
+}
+
+@keyframes toast-drain {
+  to {
+    transform: scaleX(0);
+  }
+}

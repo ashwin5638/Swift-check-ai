@@ -23,7 +23,7 @@ cp .env.example .env   # then paste your keys
 
 FFmpeg is **not** required — `ffmpeg-static` ships a binary with the install.
 Voiceover uses Microsoft's free Edge TTS endpoint (no key). Music is synthesised
-procedurally unless you drop a track at `src/assets/music/track.mp3`.
+procedurally unless you drop a track at `server/assets/music/track.mp3`.
 
 Minimum keys to produce a reel: `GROQ_API_KEY` and `PEXELS_API_KEY`.
 Both are free. Without Pexels the reel falls back to a branded gradient.
@@ -48,7 +48,7 @@ and `fail`.
 ```bash
 npm run run:dry        # full chain, renders video, publishes nothing
 npm run run            # respects the auto-post flags in config.json
-node src/orchestrator.js --no-render    # news + script only (fastest smoke test)
+node server/orchestrator.js --no-render    # news + script only (fastest smoke test)
 ```
 
 Outputs land in `output/<runId>/`:
@@ -68,6 +68,96 @@ npm run dev            # API on :4000, React UI on :5173
 
 Open http://localhost:5173. Trigger runs, preview the reel, read both captions,
 copy them, and one-click approve-and-publish. The list on the left is run history.
+
+### The approval queue
+
+`publish.requireApproval` is `true` by default, so a finished reel is **not**
+posted. It is written to `state/pendingPosts.json` and appears in the dashboard
+under **Awaiting approval**, where you can preview it, approve it, or reject it.
+Rejections keep the video on disk; nothing is deleted.
+
+A run can only be queued if at least one platform is enabled, because the queue
+has to record *which* platforms the reel is waiting for. With the shipped
+defaults (`autoPostFacebook: false`, `autoPostLinkedIn: false`) a run reports
+`no-platforms-enabled` and skips the queue entirely. To use the queue, enable at
+least one:
+
+```jsonc
+"publish": {
+  "requireApproval": true,      // queue instead of posting
+  "autoPostFacebook": true,     // at least one of these two …
+  "autoPostLinkedIn": false     // … decides what gets queued
+}
+```
+
+`requireApproval` is independent of the two `autoPost*` flags: it gates *when*,
+they gate *where*. Approving posts to exactly the platforms the reel was queued
+for, and the queue entry is closed as `approved` or `failed` with the reason.
+
+Queue rules: one entry per run id (re-running replaces rather than duplicates),
+30 entries max, and an already-resolved entry cannot be approved or rejected
+again — the API answers `409` rather than double-posting.
+
+### Telegram alerts
+
+Set `publish.notifyTelegram` to `true` (it already is) and fill in two values in
+`.env`:
+
+```bash
+TELEGRAM_BOT_TOKEN=...   # from @BotFather
+TELEGRAM_CHAT_ID=...
+```
+
+Getting the chat id is the fiddly part, because a bot cannot message you before
+you have talked to it. Open your bot in Telegram, press **Start** (or send any
+message), then run:
+
+```bash
+npm run telegram:chatid
+```
+
+It reads your bot's pending updates and prints the line to paste into `.env`.
+`npm run check:keys` then proves delivery with `getChat`, which is the check that
+actually matters — `getMe` only proves the token parses, and it reports a perfectly
+healthy bot whose chat id you got wrong.
+
+Three things worth knowing:
+
+- **Alerts never break a run.** Every send is wrapped; a dead token, a wrong chat
+  id, or Telegram being down is logged as a warning and the pipeline still
+  finishes. Verified: a run completed normally while the chat id was still unset.
+- **A failed video upload falls back to text**, so you still find out a reel is
+  waiting.
+- The approval message sends the **mp4 itself** with the headline as the caption,
+  so you can judge the reel from your phone. It links back to the dashboard —
+  approving happens there, not over Telegram.
+
+Set `DASHBOARD_URL` if you reach the dashboard on something other than
+`http://localhost:4000`, so the link in the message points somewhere useful.
+
+### Is the API safe?
+
+There is **no authentication**, so it is only safe while it stays on your own
+machine. Three things enforce that:
+
+- **It binds to `127.0.0.1`, not every interface.** `app.listen(port)` with no
+  host argument binds `::` and would put the publish endpoint on your whole LAN.
+  `HOST` in `.env` overrides it; the server prints a warning if you do.
+- **CORS is restricted to local origins.** Without this, any website you happen
+  to have open could POST to `127.0.0.1:4000` and publish to your accounts. Only
+  `http://localhost:<port>` and `http://127.0.0.1:<port>` are allowed — note
+  that `http://localhost.evil.com` is correctly rejected.
+- **Caller-supplied ids are validated** before being joined into a path
+  (`/api/captions/:id/:platform`).
+
+The dashboard never handles a secret: `GET /api/health` reports which
+credentials are *configured* as booleans, never their values, so nothing
+sensitive appears in the browser's network tab. Run history, scripts, and
+captions are readable by anything that can reach the port.
+
+What this does **not** stop: another process or script running as you on the
+same machine. CORS is a browser control, not an access control. If you need to
+expose this beyond localhost, put a real auth layer in front of it first.
 
 ## 4. Posting setup
 
@@ -140,14 +230,14 @@ that uploads the mp4 to a public bucket first. Not a problem for this MVP.
 Everything tunable is in `config.json` — brand colours, reel length, voice,
 TTS pitch/rate, the news queries, the models, and which LLM is used for what.
 
-The look lives in `src/templates/frame.html`. It's plain CSS and the file renders
+The look lives in `server/templates/frame.html`. It's plain CSS and the file renders
 identically in a browser, so you can iterate on the design without restarting
-anything. Beat timings are computed in `src/lib/frames.js` — the model only
+anything. Beat timings are computed in `server/lib/frames.js` — the model only
 writes the words, never the timestamps.
 
 ## 7. Architecture notes
 
-`src/lib/llm.js` is the only file that imports a vendor SDK. Every agent calls
+`server/lib/llm.js` is the only file that imports a vendor SDK. Every agent calls
 `chat()`, so moving to OpenRouter, Ollama, or any OpenAI-compatible endpoint is a
 one-file change.
 
@@ -175,6 +265,13 @@ No database. State is three JSON files under `state/` — a 200-entry dedupe log
 60 run records, and the approval queue. At one reel a day that is years of
 headroom before a real database is worth the operational cost.
 
+`npm test` runs the offline suite with Node's built-in runner (no test
+dependencies). It covers the queue's persistence rules — dedupe, the 30-entry
+cap, platform state, and the guards that stop a double-click reposting — plus
+Telegram message formatting, including that a headline containing `<script>`
+is escaped rather than injected. It never touches the network, so a failing
+credential can't mask a real bug or the other way round.
+
 ## 8. Known limitations
 
 - LinkedIn tokens expire (~60 days). Automation will need a refresh-token flow.
@@ -184,5 +281,11 @@ headroom before a real database is worth the operational cost.
   access token — it has to come from the app dashboard.
 - Stock photos occasionally miss for niche stories; the gradient fallback covers it.
 - No performance analytics yet, so the ranker is optimising for impact, not engagement.
-- Telegram notification is a config flag but the send helper is not wired into
-  `publisher.js` — the dashboard is the approval surface for the MVP.
+- Approving happens in the dashboard, not from Telegram. The message links to the
+  dashboard rather than carrying inline Approve/Reject buttons — the approve step
+  is a real publish to two accounts, and a single mis-tap on a phone is a
+  hard-to-undo post.
+- Nothing is scheduled locally. `npm run dev` does not re-post on a timer, and
+  the GitHub workflow cannot run until this repo has a remote.
+- Telegram delivery is proven by `getChat` but has never completed a real send,
+  because the chat id was still unset when this was written.

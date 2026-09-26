@@ -1,0 +1,195 @@
+/* =========================================================================
+   Control room chassis.
+
+   Four zones on a fixed frame. Each column scrolls on its own so a running
+   pipeline never reflows the page under the operator's cursor.
+
+     top   52px   system state strip
+     rail  268px  instrumentation + triggers + run log
+     main  flex   the selected run
+     aside 344px  approval queue + credentials
+   ========================================================================= */
+
+.cr {
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) var(--aside-w);
+  grid-template-rows: var(--top-h) minmax(0, 1fr);
+  grid-template-areas:
+    'top   top   top'
+    'rail  main  aside';
+  height: 100dvh;
+  background: var(--bg);
+}
+
+.cr > .zone-top {
+  grid-area: top;
+}
+.cr > .zone-rail {
+  grid-area: rail;
+}
+.cr > .zone-main {
+  grid-area: main;
+}
+.cr > .zone-aside {
+  grid-area: aside;
+}
+
+/* Columns scroll independently. Overscroll containment stops one column's
+   momentum from chaining into the next. */
+.zone-rail,
+.zone-main,
+.zone-aside {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.zone-rail {
+  background: var(--rail);
+  border-right: 1px solid var(--line);
+}
+
+.zone-aside {
+  background: var(--rail);
+  border-left: 1px solid var(--line);
+}
+
+.zone-main {
+  background: var(--bg);
+}
+
+.zone-pad {
+  padding: 18px 20px 56px;
+}
+
+/* ---- Rail internals ---------------------------------------------------- */
+
+.rail-group + .rail-group {
+  border-top: 1px solid var(--line);
+}
+
+.rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 16px 10px;
+}
+
+.rail-body {
+  padding: 0 16px 16px;
+}
+
+/* ---- Main internals --------------------------------------------------- */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack > * + * {
+  margin-top: 26px;
+}
+
+/* Sections are separated by a rule, not boxed in a card. The heading is a
+   real heading. No decorative eyebrow sits above it. */
+.section + .section {
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.section-head .aside-note {
+  font-size: var(--fs-sm);
+  color: var(--fg-3);
+}
+
+/* ---- Collapse ---------------------------------------------------------
+   Below 1240px the approval column is too narrow to hold a card plus three
+   actions, so it drops under the main column. The frame releases at the same
+   point and the page scrolls as one document, with the rail pinned alongside
+   it. Below 900px the rail unpins and everything stacks. */
+
+@media (max-width: 1240px) {
+  .cr {
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    grid-template-rows: var(--top-h) auto auto;
+    grid-template-areas:
+      'top   top'
+      'rail  main'
+      'rail  aside';
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .zone-main,
+  .zone-aside {
+    overflow: visible;
+  }
+
+  .zone-rail {
+    position: sticky;
+    top: var(--top-h);
+    align-self: start;
+    max-height: calc(100dvh - var(--top-h));
+  }
+
+  .zone-aside {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 900px) {
+  .cr {
+    display: block;
+    height: auto;
+  }
+
+  .zone-top {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: var(--top-h);
+  }
+
+  .zone-rail,
+  .zone-main,
+  .zone-aside {
+    overflow: visible;
+  }
+
+  .zone-rail {
+    position: static;
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .zone-aside {
+    border-top: 1px solid var(--line);
+  }
+
+  .sysstate {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sysstate::-webkit-scrollbar {
+    display: none;
+  }
+}

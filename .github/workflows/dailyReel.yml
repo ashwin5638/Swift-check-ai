@@ -88,7 +88,7 @@ jobs:
             ARGS=""
           fi
           echo "orchestrator args: '$ARGS'"
-          node src/orchestrator.js $ARGS
+          node server/orchestrator.js $ARGS
 
       - name: Upload reel
         uses: actions/upload-artifact@v4
@@ -97,13 +97,28 @@ jobs:
           path: output/*.mp4
           if-no-files-found: warn
 
+      # Feeds the read-only dashboard on Vercel. The reel is already rendered and
+      # published by this point, so a Blob outage must not fail the job — the
+      # dashboard just goes stale until the next run, which is recoverable, while
+      # a red X on the reel job is not.
+      - name: Publish dashboard data
+        continue-on-error: true
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: npm run publish:dashboard
+
       - name: Commit dedupe log
         if: always()
         run: |
-          # Only state/. The mp4 is already delivered as an artifact and is
-          # gitignored on purpose.
+          # state/ is the dedupe log the next run restores. client/public/data is
+          # the published dashboard feed — committing it is what triggers the
+          # Vercel rebuild that makes the new reel visible.
           git config user.name  "swift-check-ai"
           git config user.email "actions@github.com"
-          git add state
+          # git add on a pathspec that matches nothing exits 128, which would fail
+          # this step — and with it the job — on exactly the Blob outage the
+          # publish step above is allowed to survive. The directory must exist.
+          mkdir -p client/public/data
+          git add state client/public/data
           git diff --staged --quiet || git commit -m "chore: reel state $(date -u +%Y-%m-%d)"
           git push

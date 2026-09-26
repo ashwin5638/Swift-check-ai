@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk';
-import { env, config } from '../src/config.js';
+import { env, config } from '../server/config.js';
 
 /**
  * Verifies every model referenced in config.json is still served by Groq.

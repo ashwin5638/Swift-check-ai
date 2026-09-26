@@ -1,4 +1,5 @@
-import { env } from '../src/config.js';
+import { env } from '../server/config.js';
+import { verifyChat } from '../server/lib/telegram.js';
 
 /**
  * Read-only credential validation. Every probe is a GET that changes nothing:
@@ -91,12 +92,23 @@ async function linkedin() {
 }
 
 async function telegram() {
-  const { botToken, chatId } = env.telegram;
+  const { botToken } = env.telegram;
   if (!botToken) return record('TELEGRAM', 'fail', 'bot token not set');
-  const res = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
-  const data = await res.json().catch(() => ({}));
-  if (!data.ok) return record('TELEGRAM', 'fail', data.description || 'invalid token');
-  record('TELEGRAM', 'ok', `valid · @${data.result.username}${chatId ? ` · chat id set` : ' · CHAT_ID missing'}`);
+
+  // getMe proves the token parses; getChat proves this bot can actually reach
+  // this chat. A token with no matching chat is the single most common way a
+  // working-looking Telegram setup silently fails at send time.
+  const meRes = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
+  const me = await meRes.json().catch(() => ({}));
+  if (!me.ok) return record('TELEGRAM', 'fail', me.description || `HTTP ${meRes.status}`);
+
+  const chat = await verifyChat();
+  if (chat.ok) return record('TELEGRAM', 'ok', `@${me.result.username} → ${chat.type} "${chat.label}"`);
+
+  const neverMessaged = /chat not found/i.test(chat.reason || '');
+  return record('TELEGRAM', neverMessaged ? 'fail' : 'fail',
+    `@${me.result.username} token valid, but chat unusable: ${chat.reason}` +
+    (neverMessaged ? ' — message the bot once, then run: npm run telegram:chatid' : ''));
 }
 
 console.log('\nCredential check (read-only)\n');
