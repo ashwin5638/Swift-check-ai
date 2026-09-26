@@ -62,6 +62,21 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: npm run check:keys
 
+      # Here rather than beside the publish step, so a missing token is caught
+      # before the pipeline spends a Groq/TTS/render cycle and posts to two
+      # accounts. Deliberately NOT continue-on-error: unlike a Blob outage, which
+      # is transient and leaves the dashboard merely stale, a token that was never
+      # set means no reel can ever publish, and that must fail loudly rather than
+      # leave a green tick over an empty dashboard.
+      - name: Check dashboard credential
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: |
+          if [ -z "$BLOB_READ_WRITE_TOKEN" ]; then
+            echo "::error::BLOB_READ_WRITE_TOKEN is not set — the dashboard feed will publish with no reels until it is."
+            exit 1
+          fi
+
       - name: Verify models
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
@@ -100,25 +115,35 @@ jobs:
       # Feeds the read-only dashboard on Vercel. The reel is already rendered and
       # published by this point, so a Blob outage must not fail the job — the
       # dashboard just goes stale until the next run, which is recoverable, while
-      # a red X on the reel job is not.
+      # a red X on the reel job is not. The feed itself is still written when the
+      # store is unreachable; only reel playback is lost.
+      #
+      # `if: always()` so that a red credential check above does not also cost the
+      # run log. The job is still red, so the misconfiguration is not hidden — but
+      # a reel-less feed is more use than no feed at all.
       - name: Publish dashboard data
+        if: always()
         continue-on-error: true
         env:
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
         run: npm run publish:dashboard
 
-      - name: Commit dedupe log
+      - name: Commit dashboard feed
         if: always()
         run: |
-          # state/ is the dedupe log the next run restores. client/public/data is
-          # the published dashboard feed — committing it is what triggers the
-          # Vercel rebuild that makes the new reel visible.
+          # client/public/data is the published dashboard feed, and committing it
+          # is the only thing that triggers the Vercel rebuild.
+          #
+          # state/ is NOT added, and must not be: it is gitignored as runtime
+          # state, and `git add` on an ignored path exits 1, which under `set -e`
+          # killed this step before commit or push ever ran. The dedupe log is
+          # carried between runs by the actions/cache step above, not by git.
           git config user.name  "swift-check-ai"
           git config user.email "actions@github.com"
           # git add on a pathspec that matches nothing exits 128, which would fail
           # this step — and with it the job — on exactly the Blob outage the
           # publish step above is allowed to survive. The directory must exist.
           mkdir -p client/public/data
-          git add state client/public/data
-          git diff --staged --quiet || git commit -m "chore: reel state $(date -u +%Y-%m-%d)"
+          git add client/public/data
+          git diff --staged --quiet || git commit -m "chore: dashboard feed $(date -u +%Y-%m-%d)"
           git push

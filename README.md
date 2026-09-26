@@ -409,10 +409,28 @@ deployment. From CI, where the pipeline has just written both, it:
 3. prunes old blobs, because Hobby Blob allows 1 GB of storage and then
    hard-stops - exceeding it does not bill, it locks Blob until the month rolls
 
-It needs `BLOB_READ_WRITE_TOKEN`: a long-lived Vercel token from
-`vercel blob token create`, not the project's OIDC vars, because it runs in CI
-outside Vercel. `state/runs.json` is left untouched; the local `npm run dev`
-path keeps serving `/media/<id>.mp4` from Express.
+Reels need `BLOB_READ_WRITE_TOKEN`. **Vercel mints it when you create a Blob
+store, and no CLI command creates one** - the project dashboard is the only
+route: Storage -> Create Database -> Blob, access **Public**, then copy the
+value from the store page. It has to be that long-lived token rather than the
+project's OIDC vars, because the publish step runs in CI outside Vercel, where
+OIDC is unavailable.
+
+Public access is not optional: `RunDetail.jsx` plays the file in a plain
+`<video>` with no auth header, and a private store's
+`*.private.blob.vercel-storage.com` URLs would 403.
+
+Put the token in two places. As the GitHub Actions secret of the same name, for
+CI. And in `.env` for local runs - note that `vercel env pull` writes
+`.env.local`, which **this project never reads** (`server/config.js` and
+`publishDashboard.js` both load `.env` by name), and pointing it at `.env`
+would overwrite the eleven pipeline credentials that live only on your machine.
+
+**The feed and the reels are separable on purpose.** Without a token the run log
+is still written, with `videoUrl: null` for reels that were never uploaded, and
+only the exit code is non-zero. A store outage costs playback, not the
+dashboard. `state/runs.json` is left untouched; the local `npm run dev` path
+keeps serving `/media/<id>.mp4` from Express.
 
 **The client half is a mode, not a fallback.** `client/src/lib/feed.js` reads
 `VITE_READ_ONLY` at build time. Set to `1`, the console fetches
@@ -515,7 +533,8 @@ running the suite does not wipe your history.
 | `check:models` fails in CI | Groq retired the model. Change the name in `config.json`. |
 | Frame render fails after `npm run setup` | Chromium is missing or the download was interrupted. Re-run `npm run setup`. |
 | `EADDRINUSE` on :4000 | another copy of the server is running. Change `PORT` or stop it. |
-| Dashboard is empty but shows no error | you are probably hitting a static host. The client has no `data/runs.json` fallback - see [section 12](#12-static-dashboard). |
+| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 12](#12-static-dashboard). |
+| Dashboard has runs but no reel plays | the feed was written without a Blob URL. `BLOB_READ_WRITE_TOKEN` was unset, or the store is private, or the reel fell outside the 5-reel window. The publish log names which. |
 
 ## 17. Known limitations
 

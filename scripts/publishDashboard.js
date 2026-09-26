@@ -19,6 +19,13 @@ import { config } from '../server/config.js';
  *   3. prune, because Hobby Blob allows 1 GB of storage and then hard-stops:
  *      exceeding it does not bill, it locks Blob until the month rolls over
  *
+ * Step 1 needs no credentials and is written first, on purpose: steps 2 and 3 are
+ * improvements to a dashboard that is already correct without them. A store that
+ * is unreachable, or a token that was never set, costs reel playback and the
+ * exit code — never the run log. The reverse ordering once made a single missing
+ * secret look like a permanently broken deployment, because the client reads a
+ * 404 on runs.json as "no runs yet" and says so rather than complaining.
+ *
  * state/runs.json is left untouched. It keeps /media/<id>.mp4 because that is
  * the path Express serves, and mixing the two would break `npm run dev`.
  */
@@ -79,10 +86,22 @@ export function selectPublishable(runs, { maxRecords = MAX_RECORDS, maxVideos = 
   return { records, videoIds };
 }
 
-/** The existing URL if we have one, otherwise upload the file from output/. */
-async function resolveVideoUrl(run, knownUrls) {
+/**
+ * The existing URL if we have one, otherwise upload the file from output/.
+ *
+ * A missing token and a rejected upload both land where a reel that was never
+ * rendered lands: the run still ships, with `videoUrl: null`. That is the whole
+ * point. The feed is a 4 KB JSON file that needs no credentials, and the reels
+ * are optional garnish on top of it, so an unavailable store must cost playback
+ * and nothing else. An earlier version threw out of here before the feed was
+ * ever written, which turned one missing credential into a permanently empty
+ * dashboard — and because the workflow tolerates a failed publish, nothing said
+ * so.
+ */
+async function resolveVideoUrl(run, knownUrls, { canUpload }) {
   const known = knownUrls.get(run.id);
   if (known) return known;
+  if (!canUpload) return null;
 
   const file = path.join(config.paths.output, `${run.id}.mp4`);
   if (!fs.existsSync(file)) {
@@ -90,25 +109,120 @@ async function resolveVideoUrl(run, knownUrls) {
     return null;
   }
 
-  // Deterministic path plus overwrite: if client/public/data were ever lost while
-  // state/ survived, this re-uploads to the same pathname and heals the gap
-  // rather than orphaning the original blob.
-  const blob = await put(`${BLOB_PREFIX}/${run.id}.mp4`, fs.readFileSync(file), {
-    access: 'public',
-    contentType: 'video/mp4',
-    addRandomSuffix: false,
-    allowOverwrite: true
-  });
-  console.log(`  up ${run.id}  ${(fs.statSync(file).size / 1024 / 1024).toFixed(1)} MB -> Blob`);
-  return blob.url;
+  try {
+    // Deterministic path plus overwrite: if client/public/data were ever lost
+    // while state/ survived, this re-uploads to the same pathname and heals the
+    // gap rather than orphaning the original blob.
+    const blob = await put(`${BLOB_PREFIX}/${run.id}.mp4`, fs.readFileSync(file), {
+      access: 'public',
+      contentType: 'video/mp4',
+      addRandomSuffix: false,
+      allowOverwrite: true
+    });
+    console.log(`  up ${run.id}  ${(fs.statSync(file).size / 1024 / 1024).toFixed(1)} MB -> Blob`);
+    return blob.url;
+  } catch (err) {
+    // One rejected reel must not cost the other four, and must not cost the feed.
+    console.warn(`  ! ${run.id}  upload failed (${err.message}) — record ships without a reel`);
+    return null;
+  }
+}
+
+/**
+ * Assembles what should ship, then writes it. Exported for one reason: the
+ * invariant that the feed reaches disk even when every reel upload has failed is
+ * the whole point of this script's ordering, and an invariant nobody can test is
+ * an invariant that quietly regresses.
+ *
+ * Reads its run history and its destination from the options, so a test can hand
+ * it fixtures. Defaults are the real paths; that is every production caller.
+ */
+export async function publishFeed({
+  stored,
+  knownUrls = new Map(),
+  outFile = OUT_FILE,
+  canUpload = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
+} = {}) {
+  const { records, videoIds } = selectPublishable(
+    Array.isArray(stored?.runs) ? stored.runs : []
+  );
+
+  const published = [];
+  for (const run of records) {
+    if (!run.media) {
+      published.push(run);
+      continue;
+    }
+    const media = { ...run.media };
+    // media.image.file is where the background was downloaded on whichever
+    // machine rendered the reel. This feed is served publicly, so an absolute
+    // build path in it names the build environment for no benefit — the client
+    // never reads media.image. The attribution beside it is kept: that is the
+    // whole reason the photographer is recorded.
+    if (media.image?.file) {
+      media.image = { ...media.image };
+      delete media.image.file;
+    }
+    media.videoUrl = videoIds.has(run.id)
+      ? await resolveVideoUrl(run, knownUrls, { canUpload })
+      : null;
+    published.push({ ...run, media });
+  }
+
+  // Written before the prune, and before anything else that can fail, because
+  // this is the file Vercel serves at /data/runs.json. Everything below is an
+  // improvement to a dashboard that already works; none of it is the dashboard.
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  fs.writeFileSync(
+    outFile,
+    `${JSON.stringify({ generatedAt: new Date().toISOString(), runs: published }, null, 2)}\n`,
+    'utf8'
+  );
+
+  return published;
+}
+
+/**
+ * Drops blobs the retention window has moved past. Pure gain — del() is free —
+ * and deliberately after publishFeed, because a store that is over quota refuses
+ * deletes, which must not cost a dashboard that is already written.
+ */
+async function pruneBlobs(knownUrls, published) {
+  const live = new Set(published.map((r) => r.media?.videoUrl).filter(Boolean));
+  const stale = [...new Set(knownUrls.values())].filter((url) => !live.has(url));
+  for (const url of stale) {
+    try {
+      await del(url);
+    } catch (err) {
+      // Skipping only means the prune finishes on a later run.
+      console.warn(`  ! could not prune ${url} (${err.message})`);
+    }
+  }
+  if (stale.length) {
+    console.log(`  down pruned ${stale.length} reel(s) past the ${MAX_VIDEOS}-reel window`);
+  }
 }
 
 export async function main() {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error(
-      'BLOB_READ_WRITE_TOKEN is not set. Use a long-lived Vercel token, not the ' +
-        "project's OIDC vars — this runs in CI, outside Vercel. Create one with " +
-        '`vercel blob token create` and add it as a repository secret.'
+  // A missing token is a misconfiguration rather than an outage: no reel can be
+  // published until it is set, so it is reported loudly and sets a non-zero exit
+  // code below. It is not fatal, because the run log does not need a store.
+  const canUpload = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  if (!canUpload) {
+    console.warn(
+      [
+        '',
+        '! BLOB_READ_WRITE_TOKEN is not set — publishing the run log with no reels.',
+        '',
+        '  Vercel mints this token when you create a Blob store, and there is no CLI',
+        '  command that creates one. Dashboard: the project, then Storage, then',
+        '  Create Database > Blob, access Public. Copy the value from the store page',
+        '  into .env and into the repository secret of the same name.',
+        '',
+        "  Use that long-lived token, not the project's OIDC vars: this runs in CI,",
+        '  outside Vercel, where OIDC is unavailable.',
+        ''
+      ].join('\n')
     );
   }
 
@@ -120,41 +234,20 @@ export async function main() {
   }
 
   const knownUrls = readPublishedUrls();
-  const { records, videoIds } = selectPublishable(
-    Array.isArray(stored.runs) ? stored.runs : []
-  );
+  const published = await publishFeed({ stored, knownUrls, canUpload });
 
-  const published = [];
-  for (const run of records) {
-    if (!run.media) {
-      published.push(run);
-      continue;
-    }
-    const media = { ...run.media };
-    media.videoUrl = videoIds.has(run.id) ? await resolveVideoUrl(run, knownUrls) : null;
-    published.push({ ...run, media });
-  }
-
-  // Whatever the previous publish left in Blob that this one no longer references
-  // has fallen out of the retention window. del() is free, so this is pure gain.
-  const live = new Set(published.map((r) => r.media?.videoUrl).filter(Boolean));
-  const stale = [...new Set(knownUrls.values())].filter((url) => !live.has(url));
-  for (const url of stale) await del(url);
-  if (stale.length) {
-    console.log(`  down pruned ${stale.length} reel(s) past the ${MAX_VIDEOS}-reel window`);
-  }
-
-  fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
-  fs.writeFileSync(
-    OUT_FILE,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), runs: published }, null, 2)}\n`,
-    'utf8'
-  );
+  await pruneBlobs(knownUrls, published);
 
   const playable = published.filter((r) => r.media?.videoUrl).length;
   console.log(
     `\n+ ${published.length} run record(s), ${playable} playable reel(s) -> client/public/data/runs.json`
   );
+
+  // Non-zero so a missing token is visible in CI and to anyone running this by
+  // hand, while the feed above is already written. A genuine Blob outage still
+  // exits 0, because the workflow's continue-on-error exists to absorb exactly
+  // that and the dashboard merely goes stale until the next run.
+  if (!canUpload) process.exitCode = 1;
 }
 
 // Same guard as server/orchestrator.js: a bare pathToFileURL comparison, so

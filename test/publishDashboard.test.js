@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-import { readPublishedUrls, selectPublishable } from '../scripts/publishDashboard.js';
+import { publishFeed, readPublishedUrls, selectPublishable } from '../scripts/publishDashboard.js';
 
 /**
  * The published dashboard data is the only copy of the run history that reaches
@@ -109,4 +109,113 @@ test('a missing or corrupt published file reads as an empty store, not a crash',
   const bad = path.join(dir, 'bad.json');
   fs.writeFileSync(bad, '{ not json');
   assert.equal(readPublishedUrls(bad).size, 0);
+});
+
+/**
+ * The feed is 4 KB of JSON that needs no credentials; the reels are optional. So
+ * an unavailable store must cost playback and nothing else. The client reads a
+ * 404 on runs.json as "no runs published yet" rather than complaining, which is
+ * correct behaviour and also why a publish that never wrote the file looks
+ * exactly like a fresh deployment. Nothing else would have caught it.
+ */
+const outFile = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'feed-')), 'data', 'runs.json');
+const readBack = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+
+test('a missing token still publishes the run log, with no reel URLs', async () => {
+  const file = outFile();
+  const published = await publishFeed({
+    stored: { runs: [run('a'), run('b')] },
+    outFile: file,
+    canUpload: false
+  });
+
+  assert.equal(published.length, 2, 'both records ship');
+  const data = readBack(file);
+  assert.deepEqual(
+    data.runs.map((r) => r.id),
+    ['a', 'b'],
+    'and the file Vercel serves exists'
+  );
+  for (const r of data.runs) {
+    assert.equal(r.media.videoUrl, null, 'an unplayable reel is null, never a local path');
+    assert.equal(r.script.headline, `Headline ${r.id}`, 'the rest of the record is intact');
+  }
+});
+
+test('a record with no media at all survives a store that is switched off', async () => {
+  const file = outFile();
+  await publishFeed({
+    stored: { runs: [run('skipped', { video: false })] },
+    outFile: file,
+    canUpload: false
+  });
+
+  assert.equal(readBack(file).runs[0].media, null);
+});
+
+test('a reel already in the store keeps its URL when uploads are unavailable', async () => {
+  // The whole point of readPublishedUrls: the previous publish is the only record
+  // of what was uploaded. Losing that on a token outage would break reels that
+  // are working perfectly well.
+  const file = outFile();
+  const known = new Map([['a', 'https://store.example/reels/a.mp4']]);
+  await publishFeed({ stored: { runs: [run('a')] }, knownUrls: known, outFile: file, canUpload: false });
+
+  assert.equal(readBack(file).runs[0].media.videoUrl, 'https://store.example/reels/a.mp4');
+});
+
+test('no Blob URL ever reaches the feed as a local /media path', async () => {
+  // Vercel does not serve /media, so a relative path here is a 404 in the
+  // <video> tag while the run log still looks perfectly healthy.
+  const file = outFile();
+  await publishFeed({ stored: { runs: [run('a')] }, outFile: file, canUpload: false });
+
+  for (const r of readBack(file).runs) {
+    assert.ok(!String(r.media.videoUrl).startsWith('/'), 'a local path must never be published');
+  }
+});
+
+test('the build machine\'s own paths are not published', async () => {
+  // The feed is a public file. media.image.file is the absolute path to the
+  // downloaded background on whichever machine rendered the reel — from CI that
+  // is /home/runner/work/<repo>/..., which names the build environment to anyone
+  // who opens the dashboard. The attribution beside it is worth keeping; the
+  // path is not.
+  const file = outFile();
+  await publishFeed({
+    stored: {
+      runs: [
+        {
+          ...run('a'),
+          media: {
+            videoUrl: '/media/a.mp4',
+            durationSeconds: 15,
+            image: {
+              file: '/home/runner/work/Swift-check-ai/output/a/work/background.jpg',
+              query: 'large cargo ship water',
+              source: 'pexels',
+              photographer: 'Faruk Tokluoglu',
+              sourcePage: 'https://www.pexels.com/photo/10452701/'
+            }
+          }
+        }
+      ]
+    },
+    outFile: file,
+    canUpload: false
+  });
+
+  const image = readBack(file).runs[0].media.image;
+  assert.equal(image.file, undefined, 'the absolute build path is stripped');
+  assert.equal(image.photographer, 'Faruk Tokluoglu', 'the attribution survives');
+  assert.equal(image.sourcePage, 'https://www.pexels.com/photo/10452701/');
+});
+
+test('a record with no image block is passed through untouched', async () => {
+  const file = outFile();
+  await publishFeed({ stored: { runs: [run('a')] }, outFile: file, canUpload: false });
+
+  const media = readBack(file).runs[0].media;
+  assert.equal(media.image, undefined, 'no image key is invented');
+  assert.equal(media.durationSeconds, 15, 'the rest of media is intact');
 });

@@ -1,0 +1,131 @@
+{
+  "generatedAt": "2026-09-26T11:06:43.052Z",
+  "runs": [
+    {
+      "id": "2026-09-26T09-57-45",
+      "startedAt": "2026-09-26T09:57:45.135Z",
+      "status": "awaiting-approval",
+      "dry": false,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 1152,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 353,
+          "detail": "Giant Bulker Cape Falcon Refloated After Six Days Aground Off Australia"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 645,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 19156,
+          "detail": "15s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "awaiting-approval"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1433,
+        "completionTokens": 311
+      },
+      "finishedAt": "2026-09-26T09:58:06.447Z",
+      "durationMs": 21312,
+      "event": {
+        "title": "Giant Bulker Cape Falcon Refloated After Six Days Aground Off Australia",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTHFYU1JCcW1qX1BOR183Zm0yVU8tUmJkaHZuZEZtTHpaODhEcFo4d1BncFlZMVdNbUZ4MmpRWWtxZGxJemN1Zl9xSmx5dzJiNm9qVjI5UTRGMjZuZUxCbnRBckd6dFU4Vy1uWmo3aTdicHE0R3B2anVfcWZsYWpLXzB5cHczZy1MX0o4c0Vicl9FMk8xM1phM0tkQVh2cUh5c1FnVg?oc=5",
+        "reason": "The refloating of a giant bulker after six days aground highlights significant operational disruption and safety risks in Australian waters."
+      },
+      "script": {
+        "headline": "Cape Falcon Refloated",
+        "voiceover": "The giant bulker Cape Falcon is now refloated after running aground off Australia. Six days of heavy seas and high tides finally freed the vessel, ending a major disruption in the shipping lane.",
+        "beats": [
+          "STUCK FOR SIX DAYS",
+          "HEAVY SEAS WERE KEY",
+          "VESSEL NOW FREE",
+          "AUSTRALIAN WATERS CLEAR"
+        ],
+        "facebookCaption": "The Cape Falcon is finally moving again after six days stuck on the seabed. It all came down to the tides. How long do you think a ship can stay grounded safely?",
+        "linkedinCaption": "The Cape Falcon has been successfully refloated following a six-day grounding incident off the Australian coast. This event highlights the critical importance of tidal windows and salvage planning in shallow water operations. Operational continuity remains a priority for the region.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#bulker",
+          "#salvage",
+          "#australia",
+          "#logistics"
+        ],
+        "imageQuery": "large cargo ship water",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTHFYU1JCcW1qX1BOR183Zm0yVU8tUmJkaHZuZEZtTHpaODhEcFo4d1BncFlZMVdNbUZ4MmpRWWtxZGxJemN1Zl9xSmx5dzJiNm9qVjI5UTRGMjZuZUxCbnRBckd6dFU4Vy1uWmo3aTdicHE0R3B2anVfcWZsYWpLXzB5cHczZy1MX0o4c0Vicl9FMk8xM1phM0tkQVh2cUh5c1FnVg?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-26T09-57-45.mp4",
+        "durationSeconds": 15,
+        "sizeBytes": 4807131,
+        "hasVoiceover": true,
+        "image": {
+          "query": "large cargo ship water",
+          "source": "pexels",
+          "photographer": "Faruk Tokluoğlu",
+          "sourcePage": "https://www.pexels.com/photo/a-barge-sailing-in-the-sea-near-green-mountain-10452701/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.3,
+          "text": "STUCK FOR SIX DAYS"
+        },
+        {
+          "start": 3.3,
+          "end": 7.5,
+          "text": "HEAVY SEAS WERE KEY"
+        },
+        {
+          "start": 7.5,
+          "end": 11.25,
+          "text": "VESSEL NOW FREE"
+        },
+        {
+          "start": 11.25,
+          "end": 15,
+          "text": "AUSTRALIAN WATERS CLEAR"
+        }
+      ],
+      "publish": {
+        "status": "awaiting-approval",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "queued"
+          },
+          {
+            "platform": "linkedin",
+            "status": "queued"
+          }
+        ],
+        "queueId": "2026-09-26T09-57-45",
+        "queuedPlatforms": [
+          "facebook",
+          "linkedin"
+        ]
+      }
+    }
+  ]
+}
