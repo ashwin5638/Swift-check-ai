@@ -117,8 +117,8 @@ jobs:
           git config user.email "actions@github.com"
           # git add on a pathspec that matches nothing exits 128, which would fail
           # this step — and with it the job — on exactly the Blob outage the
-          # publish step above is allowed to survive. The directory must exist.
-          mkdir -p client/public/data
+          # publish step above is allowed to survive. The directories must exist.
+          mkdir -p state client/public/data
           git add state client/public/data
           git diff --staged --quiet || git commit -m "chore: reel state $(date -u +%Y-%m-%d)"
           git push
