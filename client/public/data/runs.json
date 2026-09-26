@@ -1,129 +1,120 @@
 {
-  "generatedAt": "2026-09-26T11:06:43.052Z",
+  "generatedAt": "2026-09-26T14:08:49.996Z",
   "runs": [
     {
-      "id": "2026-09-26T09-57-45",
-      "startedAt": "2026-09-26T09:57:45.135Z",
-      "status": "awaiting-approval",
-      "dry": false,
+      "id": "2026-09-26T14-08-20",
+      "startedAt": "2026-09-26T14:08:20.989Z",
+      "status": "dry-run",
+      "dry": true,
       "steps": [
         {
           "agent": "newsScout",
           "llmCalls": 0,
-          "ms": 1152,
+          "ms": 796,
           "detail": "15 candidates"
         },
         {
           "agent": "eventRanker",
           "llmCalls": 1,
-          "ms": 353,
-          "detail": "Giant Bulker Cape Falcon Refloated After Six Days Aground Off Australia"
+          "ms": 575,
+          "detail": "Hormuz Tanker Transits Fall to Single Digits as Shipping Costs Surge"
         },
         {
           "agent": "scriptWriter",
           "llmCalls": 1,
-          "ms": 645,
-          "detail": "4 beats"
+          "ms": 709,
+          "detail": "3 beats"
         },
         {
           "agent": "visualBuilder",
           "llmCalls": 0,
-          "ms": 19156,
+          "ms": 25163,
           "detail": "15s"
         },
         {
           "agent": "publisher",
           "llmCalls": 0,
-          "ms": 1,
-          "detail": "awaiting-approval"
+          "ms": 0,
+          "detail": "dry-run"
         }
       ],
       "llm": {
         "calls": 2,
-        "promptTokens": 1433,
-        "completionTokens": 311
+        "promptTokens": 1499,
+        "completionTokens": 279
       },
-      "finishedAt": "2026-09-26T09:58:06.447Z",
-      "durationMs": 21312,
+      "finishedAt": "2026-09-26T14:08:48.236Z",
+      "durationMs": 27247,
       "event": {
-        "title": "Giant Bulker Cape Falcon Refloated After Six Days Aground Off Australia",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTHFYU1JCcW1qX1BOR183Zm0yVU8tUmJkaHZuZEZtTHpaODhEcFo4d1BncFlZMVdNbUZ4MmpRWWtxZGxJemN1Zl9xSmx5dzJiNm9qVjI5UTRGMjZuZUxCbnRBckd6dFU4Vy1uWmo3aTdicHE0R3B2anVfcWZsYWpLXzB5cHczZy1MX0o4c0Vicl9FMk8xM1phM0tkQVh2cUh5c1FnVg?oc=5",
-        "reason": "The refloating of a giant bulker after six days aground highlights significant operational disruption and safety risks in Australian waters."
+        "title": "Hormuz Tanker Transits Fall to Single Digits as Shipping Costs Surge",
+        "source": "globaltrademag.com",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNeV95TUlaaHJ2NklraXhwNDVrenJWVU5hSGttRkJrUjJmcmdFeE5KU3dLRnp3d0ppdlBkVjNSb0xPOTBvNURIaEUwQXBzMmxKSGtQUGdBSW1yTGVPQ1BkUHV2MGIwb1pSWHYteTRuY290ZFNFczhpbFlxQTFVMjY3SFRqeC1OUG5PcC0xT0x1bGo3bkw5bnJ4Yk4yYzlhRGtWRHc?oc=5",
+        "reason": "Single-digit Hormuz transits and surging costs signal severe supply-chain disruption and immediate financial impact on global shipping operations."
       },
       "script": {
-        "headline": "Cape Falcon Refloated",
-        "voiceover": "The giant bulker Cape Falcon is now refloated after running aground off Australia. Six days of heavy seas and high tides finally freed the vessel, ending a major disruption in the shipping lane.",
+        "headline": "Hormuz Transits Plunge",
+        "voiceover": "Hormuz tanker transits have dropped to single digits. This sharp decline is driving immediate spikes in global shipping costs. Supply chain disruption is now a financial reality.",
         "beats": [
-          "STUCK FOR SIX DAYS",
-          "HEAVY SEAS WERE KEY",
-          "VESSEL NOW FREE",
-          "AUSTRALIAN WATERS CLEAR"
+          "TRANSITS FALL TO SINGLE DIGITS",
+          "SHIPPING COSTS SURGE",
+          "SUPPLY CHAIN DISRUPTION"
         ],
-        "facebookCaption": "The Cape Falcon is finally moving again after six days stuck on the seabed. It all came down to the tides. How long do you think a ship can stay grounded safely?",
-        "linkedinCaption": "The Cape Falcon has been successfully refloated following a six-day grounding incident off the Australian coast. This event highlights the critical importance of tidal windows and salvage planning in shallow water operations. Operational continuity remains a priority for the region.",
+        "facebookCaption": "Single-digit transits through Hormuz are hitting shipping budgets hard. How is your supply chain adapting to these sudden cost increases?",
+        "linkedinCaption": "Recent data indicates Hormuz tanker transits have fallen to single digits, directly correlating with surging freight rates. This volatility underscores the financial fragility of current maritime logistics. Businesses must prepare for sustained cost pressure.",
         "hashtags": [
           "#shipping",
           "#maritime",
-          "#bulker",
-          "#salvage",
-          "#australia",
-          "#logistics"
+          "#hormuz",
+          "#logistics",
+          "#tankers",
+          "#supplychain"
         ],
-        "imageQuery": "large cargo ship water",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTHFYU1JCcW1qX1BOR183Zm0yVU8tUmJkaHZuZEZtTHpaODhEcFo4d1BncFlZMVdNbUZ4MmpRWWtxZGxJemN1Zl9xSmx5dzJiNm9qVjI5UTRGMjZuZUxCbnRBckd6dFU4Vy1uWmo3aTdicHE0R3B2anVfcWZsYWpLXzB5cHczZy1MX0o4c0Vicl9FMk8xM1phM0tkQVh2cUh5c1FnVg?oc=5",
-        "sourceName": "Marine Insight"
+        "imageQuery": "tanker ship strait narrow water",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNeV95TUlaaHJ2NklraXhwNDVrenJWVU5hSGttRkJrUjJmcmdFeE5KU3dLRnp3d0ppdlBkVjNSb0xPOTBvNURIaEUwQXBzMmxKSGtQUGdBSW1yTGVPQ1BkUHV2MGIwb1pSWHYteTRuY290ZFNFczhpbFlxQTFVMjY3SFRqeC1OUG5PcC0xT0x1bGo3bkw5bnJ4Yk4yYzlhRGtWRHc?oc=5",
+        "sourceName": "globaltrademag.com"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-26T09-57-45.mp4",
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-26T14-08-20.mp4",
         "durationSeconds": 15,
-        "sizeBytes": 4807131,
+        "sizeBytes": 8571522,
         "hasVoiceover": true,
         "image": {
-          "query": "large cargo ship water",
+          "query": "tanker ship strait narrow water",
           "source": "pexels",
-          "photographer": "Faruk Tokluoğlu",
-          "sourcePage": "https://www.pexels.com/photo/a-barge-sailing-in-the-sea-near-green-mountain-10452701/"
+          "photographer": "Nadzli Azlan",
+          "sourcePage": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-in-butterworth-malaysia-37193784/"
         }
       },
       "beats": [
         {
           "start": 0,
-          "end": 3.3,
-          "text": "STUCK FOR SIX DAYS"
+          "end": 3.9,
+          "text": "TRANSITS FALL TO SINGLE DIGITS"
         },
         {
-          "start": 3.3,
-          "end": 7.5,
-          "text": "HEAVY SEAS WERE KEY"
+          "start": 3.9,
+          "end": 9.3,
+          "text": "SHIPPING COSTS SURGE"
         },
         {
-          "start": 7.5,
-          "end": 11.25,
-          "text": "VESSEL NOW FREE"
-        },
-        {
-          "start": 11.25,
+          "start": 9.3,
           "end": 15,
-          "text": "AUSTRALIAN WATERS CLEAR"
+          "text": "SUPPLY CHAIN DISRUPTION"
         }
       ],
       "publish": {
-        "status": "awaiting-approval",
+        "status": "dry-run",
         "results": [
           {
             "platform": "facebook",
-            "status": "queued"
+            "status": "skipped",
+            "reason": "dry-run"
           },
           {
             "platform": "linkedin",
-            "status": "queued"
+            "status": "skipped",
+            "reason": "dry-run"
           }
-        ],
-        "queueId": "2026-09-26T09-57-45",
-        "queuedPlatforms": [
-          "facebook",
-          "linkedin"
         ]
       }
     }
