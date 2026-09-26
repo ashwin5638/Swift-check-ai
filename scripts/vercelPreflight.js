@@ -1,13 +1,14 @@
 /**
  * Vercel runs `installCommand` and `buildCommand` with the working directory
  * set to the project's **Root Directory** setting, not to the repository root.
- * When those differ, nothing in the repo can tell: `--prefix client` quietly
- * becomes `client/client/`, npm reports that no lockfile exists, and the lockfile
- * is sitting in git the whole time. That loop is expensive, so this runs first,
- * from installCommand, and says which field to clear.
+ * When those differ, nothing in the repo can tell: the install lands in the wrong
+ * directory, npm reports that no lockfile exists, and the lockfile is sitting in
+ * git the whole time. That loop is expensive, so this runs from buildCommand —
+ * which Vercel documents as overridable, unlike the install command when an
+ * `api/` directory is present — and says which field to clear.
  *
- * It also checks the lockfiles are actually present, which is the one thing the
- * original report got right, just at the wrong path.
+ * It also checks the files the build genuinely needs are in scope, which is the
+ * one part of the original report that was right, just aimed at the wrong path.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,9 +42,9 @@ export function check(cwd) {
       looksLikeClient
         ? `Root Directory is "${path.basename(cwd)}", not the repository root.\n` +
           `  api/ is outside the project, so no Vercel Functions can be built, and the\n` +
-          `  buildCommand's \`--prefix client\` resolves to ${path.basename(cwd)}/${path.basename(cwd)}/,\n` +
+          `  install there runs against ${path.basename(cwd)}/ rather than the repository,\n` +
           `  which is why npm reports that package-lock.json is missing.\n` +
-          `  The file is committed at client/package-lock.json and is present in git.\n` +
+          `  There is one lockfile, at the repository root, and it is committed.\n` +
           `  Fix: ${ROOT_HINT}`
         : `api/ is not present under the working directory "${cwd}".\n` +
           `  It must be inside the project for the Functions to be built. Fix: ${ROOT_HINT}`
@@ -52,6 +53,8 @@ export function check(cwd) {
     problems.push('api/ exists but api/_app.js is missing, so no route table would be deployed.');
   }
 
+  // client/ is an npm workspace, so there is deliberately no client/package-lock.json.
+  // Its dependencies resolve from the single root lockfile.
   if (!isFile('package-lock.json')) {
     problems.push(
       'package-lock.json is missing from the working directory, so `npm ci` cannot run.\n' +
@@ -60,11 +63,11 @@ export function check(cwd) {
     );
   }
 
-  if (!isFile('client/package-lock.json')) {
+  if (!isFile('client/package.json')) {
     problems.push(
-      'client/package-lock.json is missing, so `npm ci` cannot install the client.\n' +
-        '  It is committed in git; if it is genuinely absent here, the deploy is not\n' +
-        '  building the current commit, or something is excluding it (.vercelignore).'
+      'client/package.json is missing, so the client workspace cannot be built.\n' +
+        '  It is committed in git; if it is genuinely absent, the deploy is not building\n' +
+        '  the current commit, or something is excluding it (.vercelignore).'
     );
   }
 
@@ -88,5 +91,5 @@ if (invokedDirectly) {
     console.error('');
     process.exit(1);
   }
-  console.log('  ok  lockfiles present for the root and client projects');
+  console.log('  ok  the single root lockfile covers the root and the client workspace');
 }

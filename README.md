@@ -113,7 +113,7 @@ real file.
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
 | `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
 | `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
-| `npm test` | offline suite, 91 tests, no network |
+| `npm test` | offline suite, 92 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
 | `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
@@ -385,17 +385,25 @@ is the whole integration: with `api/` outside the project there are no functions
 at all, and every `/api/*` call 404s - which looks exactly like a client-only
 deployment.
 
-Both `npm ci` calls happen in `installCommand`, on the two lock files separately,
-because `client/` is a self-contained sub-project. `buildCommand` only builds.
+**There is one `npm ci` and one lockfile, because `client/` is an npm workspace.**
+`package.json` declares `"workspaces": ["client"]`, so the root lockfile covers the
+root project and the client together, and there is deliberately no
+`client/package-lock.json`. That matters more than tidiness: the error this setup
+was written to prevent only exists because a build command had to name a *second*
+path, and a second path is a thing a dashboard setting can point at the wrong
+place. `installCommand` is now just `npm ci` and `buildCommand` is just the
+build, so no command addresses a directory other than the root.
 
-**`scripts/vercelPreflight.js` runs first, and it is there because of a specific
-trap.** Vercel runs these commands with the working directory set to the
-project's Root Directory, not the repository root. If that setting says
-`client/`, then `--prefix client` nests to `client/client/`, npm reports that no
+**`scripts/vercelPreflight.js` runs first in `buildCommand`, and it is there
+because of a specific trap.** Vercel runs these commands with the working
+directory set to the project's Root Directory, not the repository root. If that
+setting says `client/`, the install lands in the wrong place, npm reports that no
 lockfile exists, and the obvious conclusion - commit the lockfile - is wrong,
 because it is already committed and will still be on the next attempt. Nothing
 in the repository can detect the difference, so the preflight does: it fails the
-build with the field to clear, before npm gets a chance to be cryptic.
+build with the field to clear, before npm gets a chance to be cryptic. It lives
+in `buildCommand` rather than `installCommand` because Vercel does not let you
+customise the install command when a native `api/` directory is present.
 
 ### What runs where
 
@@ -536,7 +544,7 @@ do. If you change one, change both, or extract a shared module.
 
 ## 14. Tests
 
-`npm test` runs 91 tests with Node's built-in runner. No test dependencies, and
+`npm test` runs 92 tests with Node's built-in runner. No test dependencies, and
 it never touches the network, so a failing credential cannot mask a real bug or
 the other way round.
 
@@ -559,7 +567,7 @@ running the suite does not wipe your history.
 | Symptom | Cause and fix |
 |---|---|
 | `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
-| Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the buildCommand's `--prefix client` nests to `client/client/package-lock.json`, which does not exist. The lock *is* committed. Clear the Root Directory field so it is the repository root - `api/` has to be inside the project or no functions are built at all. |
+| Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the install runs against `client/` instead of the repository and finds no lockfile. It *is* committed, at the root. Clear the Root Directory field - `api/` has to be inside the project or no functions are built at all. If `scripts/vercelPreflight.js` is in the build log, it has already named this for you. |
 | Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and `api/lib/{auth,blobState,github}.js` pushed the count to thirteen. It is `api/_lib/` - renaming it back also exposes `/api/lib/auth` publicly. |
 | Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `test/vercelBoundary.test.js` is meant to catch this before deploy. |
 | `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "client"
+  ],
   "description": "Marine industry news -> branded 15s reel -> Facebook & LinkedIn. Fully automated on a $0 budget.",
   "engines": {
     "node": ">=20"
@@ -18,9 +21,9 @@
     "publish:dashboard": "node scripts/publishDashboard.js",
     "publish:reel": "node scripts/publishQueuedReel.js",
     "server": "node server/index.js",
-    "dev": "concurrently -n server,client -c cyan,magenta \"npm:server\" \"npm --prefix client run dev\"",
-    "client": "npm --prefix client run dev",
-    "build:client": "npm --prefix client run build",
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm:server\" \"npm run dev -w client\"",
+    "client": "npm run dev -w client",
+    "build:client": "npm run build -w client",
     "test": "node --test \"test/**/*.test.js\""
   },
   "dependencies": {
