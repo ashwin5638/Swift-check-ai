@@ -113,7 +113,7 @@ real file.
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
 | `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
 | `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
-| `npm test` | offline suite, 87 tests, no network |
+| `npm test` | offline suite, 91 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
 | `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
@@ -385,8 +385,17 @@ is the whole integration: with `api/` outside the project there are no functions
 at all, and every `/api/*` call 404s - which looks exactly like a client-only
 deployment.
 
-`installCommand` and `buildCommand` both run `npm ci`, on the two lock files
-separately, because `client/` is a self-contained sub-project.
+Both `npm ci` calls happen in `installCommand`, on the two lock files separately,
+because `client/` is a self-contained sub-project. `buildCommand` only builds.
+
+**`scripts/vercelPreflight.js` runs first, and it is there because of a specific
+trap.** Vercel runs these commands with the working directory set to the
+project's Root Directory, not the repository root. If that setting says
+`client/`, then `--prefix client` nests to `client/client/`, npm reports that no
+lockfile exists, and the obvious conclusion - commit the lockfile - is wrong,
+because it is already committed and will still be on the next attempt. Nothing
+in the repository can detect the difference, so the preflight does: it fails the
+build with the field to clear, before npm gets a chance to be cryptic.
 
 ### What runs where
 
@@ -527,7 +536,7 @@ do. If you change one, change both, or extract a shared module.
 
 ## 14. Tests
 
-`npm test` runs 87 tests with Node's built-in runner. No test dependencies, and
+`npm test` runs 91 tests with Node's built-in runner. No test dependencies, and
 it never touches the network, so a failing credential cannot mask a real bug or
 the other way round.
 
@@ -540,6 +549,7 @@ the other way round.
 | `feedContract.test.js` | the published feed against the fields the components read, and caption bytes |
 | `apiAuth.test.js` | the passphrase gate: unset secret, tampered expiry, rotated passphrase, cookie shapes |
 | `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module, and every relative import in `api/` resolves |
+| `vercelPreflight.test.js` | the deploy preflight detects a wrong Root Directory, a missing lockfile, and an `api/` with no route table |
 
 `runHistory.test.js` snapshots and restores the real `state/runs.json`, so
 running the suite does not wipe your history.
