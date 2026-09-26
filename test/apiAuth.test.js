@@ -56,8 +56,19 @@ test('the right passphrase passes and every other one does not', () => {
 
 test('parseCookies reads a single header and copes with the other shapes', () => {
   assert.deepEqual(parseCookies(`${COOKIE_NAME}=abc`), { [COOKIE_NAME]: 'abc' });
-  assert.deepEqual(parseCookies(`other=1; ${COOKIE_NAME}=abc; more=2`), { [COOKIE_NAME]: 'abc' });
-  assert.deepEqual(parseCookies(`a=1; ${COOKIE_NAME}`), {}, 'a key with no value is not a session');
+  // Every cookie in the header comes back, not just ours. This is a general
+  // parser and isAuthed picks its own key out of the jar (api/lib/auth.js), so
+  // returning only dash_session would be wrong for any caller wanting a second
+  // cookie — and would make this assertion, rather than the code, the contract.
+  assert.deepEqual(parseCookies(`other=1; ${COOKIE_NAME}=abc; more=2`), {
+    other: '1',
+    [COOKIE_NAME]: 'abc',
+    more: '2'
+  });
+  // A bare `dash_session` with no `=` is dropped, so it can never be read as a
+  // session. Asserted as an absent key rather than an empty jar: `a=1` is a
+  // well-formed cookie and is correctly kept.
+  assert.equal(COOKIE_NAME in parseCookies(`a=1; ${COOKIE_NAME}`), false, 'a key with no value is not a session');
   assert.deepEqual(parseCookies(undefined), {});
   assert.deepEqual(parseCookies('malformed-without-equals'), {});
 });

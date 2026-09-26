@@ -27,7 +27,7 @@ Runs on a $0 stack. **Two LLM calls per run**; everything else is deterministic 
 | 8 | [API reference](#8-api-reference) | Every route |
 | 9 | [Posting setup](#9-posting-setup) | Facebook, LinkedIn, Telegram |
 | 10 | [Daily automation](#10-daily-automation) | GitHub Actions |
-| 11 | [Static dashboard](#11-static-dashboard) | The Vercel path and its gap |
+| 11 | [Deployment](#11-deployment) | Vercel Functions, Blob state, and the static fallback |
 | 12 | [Editing the reel](#12-editing-the-reel) | Where the look and voice live |
 | 13 | [Architecture notes](#13-architecture-notes) | Why it is built this way |
 | 14 | [Tests](#14-tests) | What the suite covers |
@@ -111,8 +111,9 @@ real file.
 | `npm run build:client` | production bundle into `client/dist` |
 | `npm run run` | full pipeline, honours the auto-post flags |
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
-| `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-static-dashboard)) |
-| `npm test` | offline suite, 50 tests, no network |
+| `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
+| `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
+| `npm test` | offline suite, 86 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
 | `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
@@ -369,61 +370,99 @@ pipeline uploads the binary directly. That will stop working the moment you add
 Instagram Reels, which does require a public `file_url` - you would add a step
 that uploads the mp4 to a public bucket first.
 
-## 11. Static dashboard
+## 11. Deployment
 
-**Status: both halves wired.** The console renders before any run exists and
-reports that it is empty, rather than failing.
+Two halves, one Vercel project. `client/` is built as a static site, and `api/`
+becomes serverless functions beside it, so the console and the API share an
+origin and the client needs no API base URL.
 
-`npm run publish:dashboard` prepares a read-only static snapshot for a Vercel
-deployment. From CI, where the pipeline has just written both, it:
+```
+D:\tech\vibe-code\Shfit-Check-Ai\vercel.json   installCommand, buildCommand, outputDirectory
+```
 
-1. copies the run history to `client/public/data/runs.json`, which the Vite
-   build copies into `dist/` and Vercel then serves as a static asset
+Set the project's **Root Directory to the repository root**, not `client/`. That
+is the whole integration: with `api/` outside the project there are no functions
+at all, and every `/api/*` call 404s - which looks exactly like a client-only
+deployment.
+
+`installCommand` and `buildCommand` both run `npm ci`, on the two lock files
+separately, because `client/` is a self-contained sub-project.
+
+### What runs where
+
+| | |
+|---|---|
+| `api/` | Vercel Functions. The control plane: reads state from Blob, gates writes, dispatches work to CI |
+| `client/` | Static Vite build, served from the same origin |
+| `server/` | **Never on Vercel.** GitHub Actions only - it needs Chromium, ffmpeg and a writable disk |
+| `state/` | Vercel Blob, not a function's filesystem |
+
+The route table in `api/_app.js` is a deliberate near-copy of `server/index.js`
+and does **not** import it. `server/config.js` mkdirs `output/`, `state/` and
+`logs/` at import time, which throws `EROFS` on Vercel's read-only filesystem,
+and `ffmpeg-static` and Playwright would follow it into a bundle that cannot
+install a browser's system libraries anyway. The parts that must not drift - the
+status derivation, the list shape, the caption text - are imported from
+`server/lib/dashboard.js` and `server/lib/captions.js` as pure functions.
+`test/vercelBoundary.test.js` fails the build if that ever changes.
+
+### Environment variables
+
+| Variable | Where | For |
+|---|---|---|
+| `DASHBOARD_PASS` | Vercel | Gates every write. Unset means the controls answer `503`, by design |
+| `BLOB_READ_WRITE_TOKEN` | Vercel **and** CI | Run history, queue and reels |
+| `GH_TOKEN`, `GH_REPO` | Vercel | Lets the trigger and approve buttons dispatch a workflow |
+
+`/api/health` reports `github.configured` and `queue.pending`, so a missing pair
+shows up on the status strip rather than as a failed click.
+
+**The passphrase is compared server-side and never shipped to the browser.**
+Any `VITE_*` value is inlined into the JavaScript bundle, so a token placed there
+is public to everyone who opens devtools. `api/lib/auth.js` compares the
+passphrase, hands out a signed `dash_session` cookie, and invalidates every
+outstanding session the moment the passphrase changes.
+
+Reads stay open. The run log is a dashboard about public content; what has to be
+gated is the ability to spend Facebook and LinkedIn credentials. The credential
+panel reports `null` rather than a map of eleven `false`, which would read as
+"this project is broken" - and a map of eleven `true` would tell every anonymous
+visitor which integrations are wired up.
+
+### The static fallback
+
+`VITE_READ_ONLY=1` still exists, and is unset by default. Set, the console reads
+`client/public/data/runs.json` instead of `/api/*` and drops the trigger,
+approve/reject, delete and credential controls - none of which can work without a
+server behind them. It is the fallback for a deliberately static deploy, not the
+default.
+
+Whichever mode you pick, `npm run publish:dashboard` runs in CI and:
+
+1. copies the run history to `client/public/data/runs.json`
 2. rewrites each reel's URL from the local `/media/<id>.mp4` to its Vercel Blob
    URL, so the `<video>` element can seek
 3. prunes old blobs, because Hobby Blob allows 1 GB of storage and then
    hard-stops - exceeding it does not bill, it locks Blob until the month rolls
 
-Reels need `BLOB_READ_WRITE_TOKEN`. **Vercel mints it when you create a Blob
-store, and no CLI command creates one** - the project dashboard is the only
-route: Storage -> Create Database -> Blob, access **Public**, then copy the
-value from the store page. It has to be that long-lived token rather than the
-project's OIDC vars, because the publish step runs in CI outside Vercel, where
-OIDC is unavailable.
-
-Public access is not optional: `RunDetail.jsx` plays the file in a plain
-`<video>` with no auth header, and a private store's
-`*.private.blob.vercel-storage.com` URLs would 403.
-
-Put the token in two places. As the GitHub Actions secret of the same name, for
-CI. And in `.env` for local runs - note that `vercel env pull` writes
-`.env.local`, which **this project never reads** (`server/config.js` and
-`publishDashboard.js` both load `.env` by name), and pointing it at `.env`
-would overwrite the eleven pipeline credentials that live only on your machine.
+**Vercel mints `BLOB_READ_WRITE_TOKEN` when you create a Blob store, and no CLI
+command creates one** - the dashboard is the only route: Storage -> Create
+Database -> Blob, access **Public**, then copy the value from the store page. It
+has to be that long-lived token rather than the project's OIDC vars, because the
+publish step runs in CI outside Vercel, where OIDC is unavailable. Public access
+is not optional: `RunDetail.jsx` plays the file in a plain `<video>` with no
+auth header, and a private store's `*.private.blob.vercel-storage.com` URLs
+would 403.
 
 **The feed and the reels are separable on purpose.** Without a token the run log
 is still written, with `videoUrl: null` for reels that were never uploaded, and
-only the exit code is non-zero. A store outage costs playback, not the
-dashboard. `state/runs.json` is left untouched; the local `npm run dev` path
-keeps serving `/media/<id>.mp4` from Express.
+only the exit code is non-zero. A store outage costs playback, not the dashboard.
+`state/runs.json` is left untouched; the local `npm run dev` path keeps serving
+`/media/<id>.mp4` from Express.
 
-**The client half is a mode, not a fallback.** `client/src/lib/feed.js` reads
-`VITE_READ_ONLY` at build time. Set to `1`, the console fetches
-`client/public/data/runs.json` instead of `/api/*` and drops the trigger,
-approve/reject, delete and credential controls - none of which can work against a
-static site, and one of which would tell any visitor which of the eleven API keys
-are configured. Unset, the full console talks to Express on `:4000`. The two
-modes never both try to own the same view.
-
-That flag is the entire integration, and it is build-time only: Vite inlines it,
-so setting it after the build does nothing. `client/vercel.json` pins it to `1`
-for the deployment, because the failure without it is loud rather than subtle -
-every `/api/*` request 404s - but it is still the whole console failing. The
-quieter case is the feed itself: `feed.js` reads a 404 on `data/runs.json` as
-"no runs published yet" and the console says exactly that.
-
-`GET /media/*` has no static equivalent, which is why step 2 rewrites the reel
-URLs to Blob.
+`GET /media/*` has no Function equivalent, which is why step 2 rewrites the reel
+URLs to Blob and why approving an older reel can answer `409` - only the five most
+recent are kept.
 
 ## 12. Editing the reel
 
@@ -480,7 +519,7 @@ do. If you change one, change both, or extract a shared module.
 
 ## 14. Tests
 
-`npm test` runs 50 tests with Node's built-in runner. No test dependencies, and
+`npm test` runs 86 tests with Node's built-in runner. No test dependencies, and
 it never touches the network, so a failing credential cannot mask a real bug or
 the other way round.
 
@@ -490,6 +529,9 @@ the other way round.
 | `runHistory.test.js` | delete scoping, newest-first order, and every branch of `runDisplayStatus` |
 | `telegram.test.js` | HTML escaping of hostile headlines, entity encoding, message shape |
 | `structure.test.js` | the server/client boundary, stale path literals, asset and logo resolution |
+| `feedContract.test.js` | the published feed against the fields the components read, and caption bytes |
+| `apiAuth.test.js` | the passphrase gate: unset secret, tampered expiry, rotated passphrase, cookie shapes |
+| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module |
 
 `runHistory.test.js` snapshots and restores the real `state/runs.json`, so
 running the suite does not wipe your history.
@@ -498,6 +540,9 @@ running the suite does not wipe your history.
 
 | Symptom | Cause and fix |
 |---|---|
+| `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
+| Console deploys but every `/api/*` call 404s | the Vercel project's **Root Directory** is `client/`, so `api/` is outside the project and no functions were built. Set it to the repository root. |
+| Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `test/vercelBoundary.test.js` is meant to catch this before deploy. |
 | `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |
 | UI shows `link lost` in the status strip | the API on :4000 is not answering. `npm run server` and read the error. |
 | Run fails with `no-platforms-enabled` | both `autoPost*` flags are false, so there is nowhere to queue a reel. Enable one. |
@@ -508,7 +553,7 @@ running the suite does not wipe your history.
 | `check:models` fails in CI | Groq retired the model. Change the name in `config.json`. |
 | Frame render fails after `npm run setup` | Chromium is missing or the download was interrupted. Re-run `npm run setup`. |
 | `EADDRINUSE` on :4000 | another copy of the server is running. Change `PORT` or stop it. |
-| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 11](#11-static-dashboard). |
+| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 11](#11-deployment). |
 | Dashboard has runs but no reel plays | the feed was written without a Blob URL. `BLOB_READ_WRITE_TOKEN` was unset, or the store is private, or the reel fell outside the 5-reel window. The publish log names which. |
 
 ## 16. Known limitations
@@ -528,8 +573,8 @@ running the suite does not wipe your history.
   the GitHub workflow cannot run until this repo has a remote.
 - Telegram delivery is proven by `getChat` but has never completed a real send,
   because the chat id was still unset when this was written.
-- The static console needs `VITE_READ_ONLY=1` in the *build*, not at runtime. It is
-  pinned in `client/vercel.json`, so the supported deploy path cannot miss it, but
-  a deployment made any other way still can. See [section 11](#11-static-dashboard).
+- The route table exists twice, in `server/index.js` and in `api/_app.js`, and the
+  duplication is deliberate - see [section 11](#11-deployment). A route added to
+  one and not the other fails silently, so add it to both.
 - The status-derivation rule is implemented on both sides of the boundary and has
   to be kept in sync by hand.
