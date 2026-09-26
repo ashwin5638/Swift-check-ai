@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-        run: npm ci
+        run: npm install
 
       # Same key scheme as dailyReel.yml. Cache keys are immutable, so each run
       # writes a new entry and restore-keys picks up the newest — which is what
