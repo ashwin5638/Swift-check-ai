@@ -8,10 +8,13 @@ client/dist/
 # what happens with a bare `.env*` rule.
 !.env.example
 !client/.env.example
-output/*
-!output/.gitkeep
+output/
 logs/
 *.log
+# Runtime state, not source: the dedupe ledger, pending-post queue and run
+# history. Written by server/lib/state.js, recreated empty on a fresh clone.
+# Committing these ships one machine's run history to everyone.
+state/
 .DS_Store
 Thumbs.db
 test/tmp/

@@ -97,13 +97,18 @@ const PATH_HOLDERS = [
 ];
 
 test('no file still points at a dashboard/ or src/ path', () => {
+  // A directory tree writes its paths relative to the parent it has already
+  // named (`client/` then `src/styles/`), so tree-drawing lines are exempt.
+  // A real path in prose or a shell example is not, which is what this catches:
+  // the stale `node src/orchestrator.js` and `src/templates/frame.html` that
+  // the folder rename would otherwise have left behind.
+  const TREE_LINE = /[\u2500-\u257F]|[|`][-+\\ ]/;
   const stale = [];
   for (const file of PATH_HOLDERS) {
     if (!fs.existsSync(file)) continue;
     const src = fs.readFileSync(file, 'utf8');
     for (const [i, line] of src.split('\n').entries()) {
-      // A leading `src/` is the old server root. A `client/src/...` or a bare
-      // mention of the word is fine; so is prose about the old layout.
+      if (TREE_LINE.test(line)) continue;
       if (/(^|[\s"'`(])(src|dashboard)\//.test(line) && !/client\/src\//.test(line)) {
         stale.push(`${rel(file)}:${i + 1}  ${line.trim()}`);
       }
