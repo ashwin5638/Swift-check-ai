@@ -30,7 +30,7 @@ function Item({ label, value, tone, live }) {
  * last click, and it says how stale the numbers are. A console that shows
  * live data without an update time is lying by omission.
  */
-export default function TopRail({ health, syncAt, dataAt, syncError, onRefresh, action }) {
+export default function TopRail({ health, syncAt, dataAt, syncError, onRefresh }) {
   const now = useNow(1000);
   const publish = health?.config?.publish ?? {};
   const queueDepth = health?.queue?.pending ?? null;
@@ -101,7 +101,6 @@ export default function TopRail({ health, syncAt, dataAt, syncError, onRefresh, 
       </div>
 
       <div className="topright">
-        {action}
         <span className="clock num">{fmtClock(now)}</span>
         <button type="button" className="btn btn-icon" onClick={onRefresh} aria-label="Refresh now" title="Refresh now">
           <IconRefresh size={15} stroke={1.6} />

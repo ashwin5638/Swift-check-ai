@@ -5,7 +5,7 @@
  * orchestrator.js writes them to output/<id>/<platform>.txt, Express serves them
  * from that path, and the Vercel function has no filesystem to read them from and
  * rebuilds them from the run record instead. The browser has a fourth copy in
- * client/src/lib/feed.js, which test/feedContract.test.js pins against this one.
+ * client/src/lib/feed.js, a copy of this for the static read-only build.
  *
  * This is the *approval* caption — what the operator reviewed and what the .txt
  * file holds. It is deliberately not what publisher.js posts: that strips angle

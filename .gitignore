@@ -17,4 +17,3 @@ logs/
 state/
 .DS_Store
 Thumbs.db
-test/tmp/

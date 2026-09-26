@@ -4,13 +4,6 @@ import express from 'express';
 import { summariseRun } from '../server/lib/dashboard.js';
 import { captionFor } from '../server/lib/captions.js';
 import {
-  checkPassphrase,
-  clearSessionCookie,
-  issueSession,
-  isAuthed,
-  requireAuth
-} from './_lib/auth.js';
-import {
   StateError,
   assertSafeId,
   deleteRun,
@@ -24,14 +17,14 @@ import {
 import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './_lib/github.js';
 
 /**
- * The Vercel half of the console: an authenticated control plane, nothing more.
+ * The Vercel half of the console: a control plane, nothing more.
  *
  * ## Why this file is not a function
  *
  * The leading underscore keeps Vercel from turning it into one. It is the shared
- * Express app; the ten files beside it are three lines each and exist only to
- * give Vercel a path to route to. See api/health.js for why there are ten of them
- * instead of one catch-all.
+ * Express app; the nine files beside it are three lines each and exist only to
+ * give Vercel a path to route to. See api/health.js for why there are nine of
+ * them instead of one catch-all.
  *
  * This deliberately does NOT import server/index.js, even though the route table
  * below is a near-copy of it. Two reasons, both hard:
@@ -48,12 +41,14 @@ import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './_lib
  * drift — the status derivation, the list shape, the caption text — are imported
  * from server/lib/ as pure functions instead of being reimplemented here. Those
  * two modules have no filesystem or config dependency precisely so this import is
- * legal. If you find yourself adding an fs call to server/lib/dashboard.js,
- * server/lib/captions.js or api/_lib/auth.js, this stops working.
+ * legal. If you find yourself adding an fs call to server/lib/dashboard.js or
+ * server/lib/captions.js, this stops working.
  *
- * Reads are public. Writes require a signed session cookie: see api/_lib/auth.js
- * for why the local API's loopback-and-CORS posture is not enough once every
- * route is a public URL.
+ * Every route here is open: this MVP has no authentication, on the deployed
+ * control plane or on the local API. That is a deliberate simplification and it
+ * has a real cost — a deployed URL is public, so anyone who finds it can trigger
+ * runs and post to the Facebook page and the LinkedIn account. Put a gate in
+ * front of the writes before this is exposed to the internet for real.
  */
 
 const require = createRequire(import.meta.url);
@@ -66,49 +61,7 @@ const PUBLISH_WORKFLOW = 'publishReel.yml';
 const app = express();
 app.use(express.json());
 
-// Vercel terminates TLS and forwards the request, so this is what the browser
-// sent. Only used to decide on the Secure cookie attribute, which would
-// otherwise be dropped on a plain-http local preview.
-const isSecure = (req) =>
-  req.headers['x-forwarded-proto'] === 'https' || Boolean(process.env.VERCEL);
-
-const passphrase = () => process.env.DASHBOARD_PASS || '';
-const auth = requireAuth(passphrase(), { secure: true });
-
-// ---- auth -----------------------------------------------------------------
-//
-// One path with three methods rather than three paths, because every path in
-// api/ is a separate Vercel Function and Hobby allows twelve. Login/logout/session
-// as distinct files would spend three of the twelve on plumbing.
-
-app.post('/api/auth', (req, res) => {
-  const pass = passphrase();
-  if (!pass) {
-    return res
-      .status(503)
-      .json({ error: 'DASHBOARD_PASS is not set on this deployment.', code: 'no-passphrase' });
-  }
-  if (!checkPassphrase(req.body?.pass, pass)) {
-    return res.status(401).json({ error: 'That passphrase is not right.', code: 'bad-passphrase' });
-  }
-  issueSession(res, pass, { secure: isSecure(req) });
-  res.json({ ok: true });
-});
-
-app.delete('/api/auth', (req, res) => {
-  res.setHeader('Set-Cookie', clearSessionCookie({ secure: isSecure(req) }));
-  res.json({ ok: true });
-});
-
-/** Lets the console show a "Sign in" affordance instead of failing on first click. */
-app.get('/api/auth', (req, res) => {
-  res.json({
-    authenticated: isAuthed(req, passphrase()),
-    configured: Boolean(passphrase())
-  });
-});
-
-// ---- reads (public) --------------------------------------------------------
+// ---- reads -----------------------------------------------------------------
 
 app.get('/api/health', async (_req, res) => {
   const [running, pending] = await Promise.all([activeRun(), listPendingPosts()]);
@@ -156,8 +109,8 @@ app.get('/api/covered', async (_req, res) => {
 /**
  * Rebuilt from the run record rather than read from output/<id>/<platform>.txt,
  * which is what the local route does and cannot do here. Same bytes: both go
- * through server/lib/captions.js, and test/feedContract.test.js pins the browser
- * copy in client/src/lib/feed.js against it.
+ * through server/lib/captions.js, and client/src/lib/feed.js is a copy of it for
+ * the static read-only build.
  */
 app.get('/api/captions/:id/:platform', async (req, res) => {
   const { id, platform } = req.params;
@@ -175,10 +128,10 @@ app.get('/api/captions/:id/:platform', async (req, res) => {
   res.type('text/plain').send(captionFor(run.script, run.event, platform));
 });
 
-// ---- writes (authenticated) ------------------------------------------------
+// ---- writes ---------------------------------------------------------------
 
 /** Triggering a run is a request to CI, not to this function. */
-app.post('/api/runs', auth, async (req, res) => {
+app.post('/api/runs', async (req, res) => {
   const dispatched = await dispatchWorkflow(RUN_WORKFLOW, {
     // The workflow's own default is true, so an absent value is safer than an
     // explicit false: it cannot post to two accounts by accident.
@@ -192,7 +145,7 @@ app.post('/api/runs', auth, async (req, res) => {
   });
 });
 
-app.post('/api/runs/:id/publish', auth, async (req, res) => {
+app.post('/api/runs/:id/publish', async (req, res) => {
   const id = assertSafeId(req.params.id);
   const run = await getRun(id);
   if (!run) return res.status(404).json({ error: 'Run not found' });
@@ -214,7 +167,7 @@ app.post('/api/runs/:id/publish', auth, async (req, res) => {
   res.status(202).json({ accepted: true, workflow: dispatched.workflow });
 });
 
-app.post('/api/pending/:id/approve', auth, async (req, res) => {
+app.post('/api/pending/:id/approve', async (req, res) => {
   const id = assertSafeId(req.params.id);
   const entry = await getPendingPost(id);
   if (!entry) return res.status(404).json({ error: 'Queue entry not found' });
@@ -243,7 +196,7 @@ app.post('/api/pending/:id/approve', auth, async (req, res) => {
  * anything, so they are the two writes that can be instant. Both leave a
  * tombstone, because tomorrow's 06:17 run rebuilds state from CI's copy.
  */
-app.post('/api/pending/:id/reject', auth, async (req, res) => {
+app.post('/api/pending/:id/reject', async (req, res) => {
   const id = assertSafeId(req.params.id);
   const entry = await getPendingPost(id);
   if (!entry) return res.status(404).json({ error: 'Queue entry not found' });
@@ -252,7 +205,7 @@ app.post('/api/pending/:id/reject', auth, async (req, res) => {
   res.json({ ok: true, entry: await resolvePendingPost(id, 'rejected', { note: req.body?.note || null }) });
 });
 
-app.delete('/api/runs/:id', auth, async (req, res) => {
+app.delete('/api/runs/:id', async (req, res) => {
   const id = assertSafeId(req.params.id);
   const pending = await listPendingPosts();
   if (pending.some((p) => p.id === id)) {

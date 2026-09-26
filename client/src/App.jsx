@@ -9,27 +9,17 @@ import ApprovalQueue from './components/ApprovalQueue.jsx';
 import Credentials from './components/Credentials.jsx';
 import Toasts from './components/Toasts.jsx';
 import { DetailSkeleton, Empty, InlineError, SectionHead, Tag } from './components/ui.jsx';
-import Login, { SignInButton } from './components/Login.jsx';
 import { READ_ONLY, POLL_MS, loadFeed } from './lib/feed.js';
 
 const TOAST_LIFE = 5000;
 
-/** Carries the status code so a 401 can be told apart from a 404 or a 500. The
- *  control plane answers 401 for exactly one reason — no valid session — and the
- *  right response to that is a passphrase prompt, not an error toast. */
-class ApiError extends Error {
-  constructor(message, status, code) {
-    super(message);
-    this.status = status;
-    this.code = code;
-  }
-}
-
+/** The API's own `error` string when it sends one, so the toast says what
+ *  actually went wrong rather than a bare status code. */
 async function getJson(url, options) {
   const res = await fetch(url, options);
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new ApiError(body.error || `Request failed: ${res.status}`, res.status, body.code);
+    throw new Error(body.error || `Request failed: ${res.status}`);
   }
   return res.json();
 }
@@ -47,17 +37,7 @@ export default function App() {
   const [generatedAt, setGeneratedAt] = useState(null);
   const [busy, setBusy] = useState(false);
   const [toasts, setToasts] = useState([]);
-  // null until the session check answers, which is what keeps the "Sign in"
-  // button from flashing on a page that is about to say it is already signed in.
-  const [session, setSession] = useState(null);
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [loginError, setLoginError] = useState(null);
   const toastSeq = useRef(0);
-
-  // What to do after a successful sign-in, so the button that prompted for it
-  // still does the thing the user wanted. Without this, signing in to publish a
-  // reel would sign you in and then require a second click on the same button.
-  const afterLogin = useRef(null);
 
   // Read-only mode ships whole records in the feed, so the selected run is
   // already in hand. The API's reduced per-run shape is why the live console
@@ -111,16 +91,6 @@ export default function App() {
     const timer = setInterval(poll, POLL_MS);
     return () => clearInterval(timer);
   }, [poll]);
-
-  // Only the deployed control plane has sessions. The local API on :4000 has no
-  // auth at all, so asking it would 404 and the console would show a "Sign in"
-  // button that could never work.
-  useEffect(() => {
-    if (READ_ONLY) return;
-    getJson('/api/auth')
-      .then(setSession)
-      .catch(() => setSession({ authenticated: true, configured: false }));
-  }, []);
 
   // Point the selection at something real. A run that was deleted, or a deep
   // link to a run that no longer exists, falls back to the newest entry.
@@ -181,38 +151,10 @@ export default function App() {
 
   const selectRun = useCallback((id) => setSelectedId(id), []);
 
-  const signIn = useCallback(
-    async (pass) => {
-      try {
-        await getJson('/api/auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pass })
-        });
-        setSession((s) => ({ authenticated: true, configured: true }));
-        setLoginOpen(false);
-        setLoginError(null);
-
-        // Replay whatever the 401 interrupted.
-        const resume = afterLogin.current;
-        afterLogin.current = null;
-        if (resume) await resume();
-        return true;
-      } catch (err) {
-        setLoginError(err.message);
-        return false;
-      }
-    },
-    []
-  );
-
   /**
    * Runs one action with the shared busy lock, then resyncs.
    *
-   * A 401 is intercepted rather than reported: the passphrase prompt is the
-   * error message for "you are not signed in", and surfacing it as a red toast
-   * would tell the user their request failed when what actually happened is that
-   * it never ran. The rejected work is stashed and replayed on success.
+   * There is no auth round-trip to recover from: a failure is reported as itself.
    */
   const act = useCallback(
     async (work, onOk) => {
@@ -222,12 +164,7 @@ export default function App() {
         onOk?.(data);
         await Promise.all([poll(), selectedId ? loadDetail(selectedId) : null]);
       } catch (err) {
-        if (err.status === 401) {
-          afterLogin.current = () => act(work, onOk);
-          setLoginOpen(true);
-        } else {
-          notify(err.message, 'err');
-        }
+        notify(err.message, 'err');
       } finally {
         setBusy(false);
       }
@@ -316,11 +253,6 @@ export default function App() {
         dataAt={generatedAt}
         syncError={loadError}
         onRefresh={poll}
-        action={
-          READ_ONLY || session?.authenticated || session?.configured === false ? null : (
-            <SignInButton onClick={() => setLoginOpen(true)} />
-          )
-        }
       />
 
       <aside className="zone-rail" aria-label="Pipeline controls and run history">
@@ -413,18 +345,6 @@ export default function App() {
           )}
         </div>
       </aside>
-
-      <Login
-        open={loginOpen}
-        configured={session?.configured}
-        error={loginError}
-        onSubmit={signIn}
-        onClose={() => {
-          setLoginOpen(false);
-          setLoginError(null);
-          afterLogin.current = null;
-        }}
-      />
 
       <Toasts toasts={toasts} lifeMs={TOAST_LIFE} onDismiss={dismiss} />
     </div>

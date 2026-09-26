@@ -86,7 +86,6 @@ swift-check-ai/
 |
 |-- scripts/                    checkKeys, checkModels, telegramChatId,
 |                               linkedinWhoami, publishDashboard
-|-- test/                       node --test suites
 |-- state/                      coveredEvents, runs, pendingPosts (JSON, no DB)
 |                               gitignored: runtime data, not source
 |-- config.json                 every tunable
@@ -95,11 +94,10 @@ swift-check-ai/
 ```
 
 The `client/src/` and `server/lib/` trees are separate and happen to share a
-folder name; neither side can import the other. `npm test` enforces that.
-
-`test/structure.test.js` fails if either side imports the other, if a path from
-the old folder layout reappears, or if the configured logo stops resolving to a
-real file.
+folder name; neither side can import the other. The route table in `api/_app.js`
+imports only from `server/lib/dashboard.js` and `server/lib/captions.js`, because
+those two modules hold no filesystem or config dependency - that is what makes the
+import legal on Vercel's read-only filesystem.
 
 ## 3. Commands
 
@@ -113,7 +111,6 @@ real file.
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
 | `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
 | `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
-| `npm test` | offline suite, 92 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
 | `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
@@ -409,7 +406,7 @@ customise the install command when a native `api/` directory is present.
 
 | | |
 |---|---|
-| `api/` | Vercel Functions. The control plane: reads state from Blob, gates writes, dispatches work to CI |
+| `api/` | Vercel Functions. The control plane: reads state from Blob and dispatches work to CI |
 | `client/` | Static Vite build, served from the same origin |
 | `server/` | **Never on Vercel.** GitHub Actions only - it needs Chromium, ffmpeg and a writable disk |
 | `state/` | Vercel Blob, not a function's filesystem |
@@ -421,44 +418,42 @@ and `ffmpeg-static` and Playwright would follow it into a bundle that cannot
 install a browser's system libraries anyway. The parts that must not drift - the
 status derivation, the list shape, the caption text - are imported from
 `server/lib/dashboard.js` and `server/lib/captions.js` as pure functions.
-`test/vercelBoundary.test.js` fails the build if that ever changes.
 
 **`api/_lib/` is shared code, not a route, and the underscore is what says so.**
 Vercel turns every file under `api/` into a Function unless the name starts with
 `_`, so `api/_app.js` and `api/_lib/` are both skipped. That is not a style
-preference: the ten routes plus `api/lib/{auth,blobState,github}.js` came to
-**thirteen**, and Hobby caps a deployment at twelve, so the build fails with
+preference: the nine routes plus `api/_lib/{blobState,github}.js` came to
+**twelve**, and Hobby caps a deployment at twelve, so the build fails with
 "No more than 12 Serverless Functions". Renaming the directory to `lib` would
-break the deploy and quietly expose `/api/lib/auth` as a public endpoint.
+break the deploy and quietly expose `/api/lib/blobState` as a public endpoint.
 
 That error names neither the files nor the fix, so the preflight counts what
 Vercel would count - same exclusions, any path with a `/_` or `/.` segment and
 any `.d.ts` skipped - and fails the build listing all of them. The live tree
-deploys **ten**. A thirteenth entry point now fails here and in
-`test/vercelBoundary.test.js` rather than on the next deploy.
+deploys **nine**.
 
 ### Environment variables
 
 | Variable | Where | For |
 |---|---|---|
-| `DASHBOARD_PASS` | Vercel | Gates every write. Unset means the controls answer `503`, by design |
 | `BLOB_READ_WRITE_TOKEN` | Vercel **and** CI | Run history, queue and reels |
 | `GH_TOKEN`, `GH_REPO` | Vercel | Lets the trigger and approve buttons dispatch a workflow |
 
 `/api/health` reports `github.configured` and `queue.pending`, so a missing pair
 shows up on the status strip rather than as a failed click.
 
-**The passphrase is compared server-side and never shipped to the browser.**
-Any `VITE_*` value is inlined into the JavaScript bundle, so a token placed there
-is public to everyone who opens devtools. `api/_lib/auth.js` compares the
-passphrase, hands out a signed `dash_session` cookie, and invalidates every
-outstanding session the moment the passphrase changes.
+**There is no authentication in this MVP.** Not on the local API, not on the
+deployed control plane, not in front of a single write. Every route under `api/`
+is a public URL, so anyone who finds the deployment can trigger runs and post to
+the Facebook page and the LinkedIn account. Before exposing this to the internet
+for real, put a gate in front of the writes - a Vercel deployment protection
+rule, or a session check the way `api/_app.js` used to have one. The local API is
+only safe because it binds to loopback and its CORS allowlist takes localhost
+origins; see `HOST` in `.env.example`.
 
-Reads stay open. The run log is a dashboard about public content; what has to be
-gated is the ability to spend Facebook and LinkedIn credentials. The credential
-panel reports `null` rather than a map of eleven `false`, which would read as
-"this project is broken" - and a map of eleven `true` would tell every anonymous
-visitor which integrations are wired up.
+The credential panel reports `null` on the deployed control plane rather than a
+map of eleven `false`, which would read as "this project is broken" - and a map of
+eleven `true` would tell every visitor which integrations are wired up.
 
 ### The static fallback
 
@@ -550,23 +545,13 @@ do. If you change one, change both, or extract a shared module.
 
 ## 14. Tests
 
-`npm test` runs 92 tests with Node's built-in runner. No test dependencies, and
-it never touches the network, so a failing credential cannot mask a real bug or
-the other way round.
-
-| Suite | Covers |
-|---|---|
-| `pendingQueue.test.js` | dedupe, the 30-entry cap, platform state, 409 on a second resolve, corrupt-file recovery |
-| `runHistory.test.js` | delete scoping, newest-first order, and every branch of `runDisplayStatus` |
-| `telegram.test.js` | HTML escaping of hostile headlines, entity encoding, message shape |
-| `structure.test.js` | the server/client boundary, stale path literals, asset and logo resolution |
-| `feedContract.test.js` | the published feed against the fields the components read, and caption bytes |
-| `apiAuth.test.js` | the passphrase gate: unset secret, tampered expiry, rotated passphrase, cookie shapes |
-| `vercelBoundary.test.js` | no Function transitively imports a filesystem-bound module, every relative import in `api/` resolves, and `api/` stays inside the twelve-Function cap |
-| `vercelPreflight.test.js` | the deploy preflight detects a wrong Root Directory, a missing lockfile, an `api/` with no route table, and an `api/` over the Hobby Function limit |
-
-`runHistory.test.js` snapshots and restores the real `state/runs.json`, so
-running the suite does not wipe your history.
+There is no test suite. The `test/` tree and the `npm test` script were removed
+to keep this an MVP. The checks that were worth keeping survive as things you run
+rather than things you maintain: `npm run check:keys` and `npm run check:models`
+validate credentials and models, `npm run run:dry` exercises the whole pipeline
+end to end without publishing anything, and `scripts/vercelPreflight.js` runs on
+every Vercel build and fails it on a wrong Root Directory, a missing lockfile or
+an `api/` over the twelve-Function cap.
 
 ## 15. Troubleshooting
 
@@ -574,8 +559,8 @@ running the suite does not wipe your history.
 |---|---|
 | `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
 | Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the install runs against `client/` instead of the repository and finds no lockfile. It *is* committed, at the root. Clear the Root Directory field - `api/` has to be inside the project or no functions are built at all. If `scripts/vercelPreflight.js` is in the build log, it has already named this for you. |
-| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and `api/lib/{auth,blobState,github}.js` pushed the count to thirteen. It is `api/_lib/` - renaming it back also exposes `/api/lib/auth` publicly. The count is checked now, so this should never reach Vercel; if it does, the preflight was not in the build log. |
-| Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `test/vercelBoundary.test.js` is meant to catch this before deploy. |
+| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and the nine routes plus `api/_lib/{blobState,github}.js` sit right on the cap. It is `api/_lib/` - renaming it back also exposes `/api/lib/blobState` publicly. The count is checked now, so this should never reach Vercel; if it does, the preflight was not in the build log. |
+| Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `scripts/vercelPreflight.js` is meant to catch this before deploy. |
 | `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |
 | UI shows `link lost` in the status strip | the API on :4000 is not answering. `npm run server` and read the error. |
 | Run fails with `no-platforms-enabled` | both `autoPost*` flags are false, so there is nowhere to queue a reel. Enable one. |
