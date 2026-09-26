@@ -396,7 +396,8 @@ that uploads the mp4 to a public bucket first.
 
 ## 12. Static dashboard
 
-**Status: half-wired. Do not rely on this yet.**
+**Status: both halves wired.** The console renders before any run exists and
+reports that it is empty, rather than failing.
 
 `npm run publish:dashboard` prepares a read-only static snapshot for a Vercel
 deployment. From CI, where the pipeline has just written both, it:
@@ -413,18 +414,23 @@ It needs `BLOB_READ_WRITE_TOKEN`: a long-lived Vercel token from
 outside Vercel. `state/runs.json` is left untouched; the local `npm run dev`
 path keeps serving `/media/<id>.mp4` from Express.
 
-**The gap:** the client fetches only `/api/runs`, `/api/pending`, and
-`/api/health`. It has no fallback to `data/runs.json`, so a static deployment
-renders an **empty console with no error** - every figure reads as a dash and the
-run log is blank. Verified by serving `client/dist` with no API behind it: zero
-console errors, zero runs, nothing to indicate a problem. That silent failure is
-worse than a crash.
+**The client half is a mode, not a fallback.** `client/src/lib/feed.js` reads
+`VITE_READ_ONLY` at build time. Set to `1`, the console fetches
+`client/public/data/runs.json` instead of `/api/*` and drops the trigger,
+approve/reject, delete and credential controls - none of which can work against a
+static site, and one of which would tell any visitor which of the eleven API keys
+are configured. Unset, the full console talks to Express on `:4000`. The two
+modes never both try to own the same view.
 
-To finish it, `client/src/App.jsx` needs a loader that tries `/api/runs` and falls
-back to `./data/runs.json`, plus a read-only flag that hides the trigger panel,
-approve/reject, delete, and the credential panel. `GET /media/*` also has no
-static equivalent, which is why step 2 rewrites the blob URLs. Until then, use the
-API-backed dashboard.
+That flag is the entire integration, and it is build-time only: Vite inlines it,
+so setting it after the build does nothing. `client/vercel.json` pins it to `1`
+for the deployment, because the failure without it is loud rather than subtle -
+every `/api/*` request 404s - but it is still the whole console failing. The
+quieter case is the feed itself: `feed.js` reads a 404 on `data/runs.json` as
+"no runs published yet" and the console says exactly that.
+
+`GET /media/*` has no static equivalent, which is why step 2 rewrites the reel
+URLs to Blob.
 
 ## 13. Editing the reel
 
@@ -528,7 +534,8 @@ running the suite does not wipe your history.
   the GitHub workflow cannot run until this repo has a remote.
 - Telegram delivery is proven by `getChat` but has never completed a real send,
   because the chat id was still unset when this was written.
-- The static/Vercel dashboard path is incomplete: the publish half works, the
-  client half does not, and it fails silently. See [section 12](#12-static-dashboard).
+- The static console needs `VITE_READ_ONLY=1` in the *build*, not at runtime. It is
+  pinned in `client/vercel.json`, so the supported deploy path cannot miss it, but
+  a deployment made any other way still can. See [section 12](#12-static-dashboard).
 - The status-derivation rule is implemented on both sides of the boundary and has
   to be kept in sync by hand.

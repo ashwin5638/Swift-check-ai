@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "build": {
+    "env": {
+      "VITE_READ_ONLY": "1"
+    }
+  }
+}
