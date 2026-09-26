@@ -11,6 +11,20 @@ export default function Credentials({ health }) {
     );
   }
 
+  // The Vercel control plane answers null: the eleven keys live in GitHub Actions
+  // secrets and are not present in the function, so there is nothing true to
+  // report. Listing them as "missing" would send someone off to debug a
+  // deployment that is working exactly as intended.
+  if (health.credentials === null) {
+    return (
+      <p className="note" style={{ marginTop: 0 }}>
+        The eleven pipeline keys are set as GitHub Actions secrets. The control plane never holds
+        them, so it cannot report on them — <code>npm run check:keys</code> in CI is the place
+        that does.
+      </p>
+    );
+  }
+
   const creds = Object.entries(health.credentials ?? {});
   const missing = creds.filter(([, ok]) => !ok).length;
   const telegram = health.telegram ?? {};

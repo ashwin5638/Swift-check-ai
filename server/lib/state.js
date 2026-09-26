@@ -92,23 +92,10 @@ export function getRun(id) {
   return loadRuns().find((r) => r.id === id) || null;
 }
 
-/**
- * The status the dashboard should show for a run.
- *
- * The pipeline writes run.status once, when it finishes, but publishing happens
- * later and from a different place (the queue's approve button, or a retry). The
- * top-level status is therefore stale by the time a reel reaches a platform, and
- * a run that posted to both Facebook and LinkedIn still reads "skipped".
- *
- * publish.status is the newer, more accurate answer whenever it got far enough
- * to mean something. It only overrides on a positive outcome, so a pipeline that
- * genuinely failed is never masked by a later partial publish.
- */
-export function runDisplayStatus(run) {
-  const reached = ['published', 'partial', 'awaiting-approval'];
-  if (reached.includes(run?.publish?.status)) return run.publish.status;
-  return run?.status ?? 'unknown';
-}
+// Re-exported rather than redefined: the Vercel function serves the same status
+// derivation and cannot import this module, since config.js mkdirs directories
+// that do not exist on a read-only filesystem. See server/lib/dashboard.js.
+export { runDisplayStatus } from './dashboard.js';
 
 /** Drops a run from the history log. Returns false if the id was not there. */
 export function deleteRun(id) {

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { config, credentialStatus, env } from './config.js';
 import { createLogger } from './lib/logger.js';
+import { captionFor } from './lib/captions.js';
 import { callLog } from './lib/llm.js';
 import { saveRunRecord, recordCoveredEvent } from './lib/state.js';
 import { notifyApprovalNeeded, notifyPublished, notifyRunFailed } from './lib/telegram.js';
@@ -143,12 +144,8 @@ async function writeArtifacts(runId, record) {
   const dir = path.join(config.paths.output, runId);
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(dir, 'content.json'), JSON.stringify(record, null, 2), 'utf8');
-  await fs.writeFile(path.join(dir, 'facebook.txt'), captionFile(record.script.facebookCaption, record.script.hashtags, record.event.url), 'utf8');
-  await fs.writeFile(path.join(dir, 'linkedin.txt'), captionFile(record.script.linkedinCaption, record.script.hashtags, record.event.url), 'utf8');
-}
-
-function captionFile(caption, hashtags, url) {
-  return [caption, hashtags?.join(' '), url].filter(Boolean).join('\n\n') + '\n';
+  await fs.writeFile(path.join(dir, 'facebook.txt'), captionFor(record.script, record.event, 'facebook'), 'utf8');
+  await fs.writeFile(path.join(dir, 'linkedin.txt'), captionFor(record.script, record.event, 'linkedin'), 'utf8');
 }
 
 function printSummary(record) {

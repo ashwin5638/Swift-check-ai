@@ -1,0 +1,118 @@
+name: Publish queued reel
+
+# Dispatched by the Vercel control plane when a reel is approved in the
+# dashboard, and runnable by hand from the Actions tab.
+#
+# The dashboard cannot post anything itself — a Vercel function has no browser and
+# no ffmpeg — so approving a reel is a request for CI to do it. That makes this
+# workflow the publish path for the deployed console, and it calls the same
+# server/lib/publishRun.js the local API calls, so there is one set of rules about
+# what gets posted and what the run record says afterwards.
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Run id — the ISO timestamp the reel is filed under'
+        required: true
+        type: string
+      video_url:
+        description: 'Blob URL of the rendered mp4'
+        required: true
+        type: string
+      platforms:
+        description: 'Comma-separated. Leave empty for every enabled platform.'
+        required: false
+        type: string
+      dry:
+        description: 'Do everything except actually post'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+# Shared with dailyReel.yml on purpose. Both workflows read and rewrite
+# state/runs.json and state/pendingPosts.json, and GitHub's cache has no locking,
+# so two jobs restoring the same cache and saving to it would silently lose one
+# run's publish result. Serialising costs an approval a few minutes of queueing
+# behind a render; not serialising costs a corrupted history, and only sometimes,
+# which is worse.
+concurrency:
+  group: swift-check-ai
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      # No `playwright install` here, unlike dailyReel.yml. The publish path is
+      # pure HTTP — Graph API and the LinkedIn REST API — so the browser is dead
+      # weight worth about 170 MB of download. The env var stops playwright's own
+      # postinstall from fetching it anyway.
+      - name: Install dependencies
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm ci
+
+      # Same key scheme as dailyReel.yml. Cache keys are immutable, so each run
+      # writes a new entry and restore-keys picks up the newest — which is what
+      # carries a run record forward to the run that publishes it.
+      - name: Restore state
+        uses: actions/cache@v4
+        with:
+          path: |
+            state
+          key: swift-check-state-${{ github.run_number }}
+          restore-keys: |
+            swift-check-state-
+
+      # Least privilege: no GROQ or PEXELS. The publisher makes zero LLM calls
+      # (server/agents/publisher.js) and needs no images, so those secrets are not
+      # worth exposing to a job that only uploads a file.
+      - name: Publish
+        env:
+          RUN_ID: ${{ inputs.run_id }}
+          VIDEO_URL: ${{ inputs.video_url }}
+          PLATFORMS: ${{ inputs.platforms }}
+          DRY: ${{ inputs.dry }}
+          FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_USER_ACCESS_TOKEN: ${{ secrets.FACEBOOK_USER_ACCESS_TOKEN }}
+          LINKEDIN_MEMBER_ID: ${{ secrets.LINKEDIN_MEMBER_ID }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: node scripts/publishQueuedReel.js
+
+      # Re-publishes state/runs.json so the dashboard sees the new publish status
+      # without waiting for tomorrow's scheduled run. continue-on-error for the
+      # same reason as in dailyReel.yml: the reel is already posted, and a Blob
+      # outage must not report a failed publish.
+      - name: Publish dashboard data
+        if: always()
+        continue-on-error: true
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: npm run publish:dashboard
+
+      - name: Commit dashboard feed
+        if: always()
+        run: |
+          git config user.name  "swift-check-ai"
+          git config user.email "actions@github.com"
+          mkdir -p client/public/data
+          git add client/public/data
+          git diff --staged --quiet || git commit -m "chore: dashboard feed $(date -u +%Y-%m-%d)"
+          git push

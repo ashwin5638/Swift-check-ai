@@ -4,10 +4,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { config, env, credentialStatus } from './config.js';
 import { createLogger } from './lib/logger.js';
-import { loadRuns, getRun, deleteRun, loadCoveredEvents, saveRunRecord, listPendingPosts, getPendingPost, resolvePendingPost, runDisplayStatus } from './lib/state.js';
-import { notifyPublished } from './lib/telegram.js';
+import { loadRuns, getRun, deleteRun, loadCoveredEvents, listPendingPosts, getPendingPost, resolvePendingPost } from './lib/state.js';
+import { publishRun } from './lib/publishRun.js';
+import { summariseRun } from './lib/dashboard.js';
 import { runPipeline } from './orchestrator.js';
-import { publisher } from './agents/publisher.js';
 
 const log = createLogger('server');
 const app = express();
@@ -60,7 +60,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.get('/api/runs', (_req, res) => {
-  const runs = loadRuns().map(summarise);
+  const runs = loadRuns().map(summariseRun);
   res.json({ runs });
 });
 
@@ -116,49 +116,9 @@ app.post('/api/runs', async (req, res) => {
 
 /**
  * Shared publish path. Both the run-level button and the queue's approve button
- * land here so they cannot drift apart.
+ * land in server/lib/publishRun.js so they cannot drift apart — and so CI, which
+ * is what actually publishes for the Vercel deployment, runs the same code.
  */
-async function publishRun({ run, platforms, dry }) {
-  const result = await publisher({
-    runId: run.id,
-    script: run.script,
-    media: { videoPath: path.join(config.paths.output, `${run.id}.mp4`) },
-    event: run.event,
-    force: true,
-    dry: Boolean(dry),
-    platforms
-  });
-
-  // Keep the run record in step with whatever we just did.
-  run.publish = result;
-  saveRunRecord(run);
-
-  const failed = result.results?.some((r) => r.status === 'failed');
-  if (platforms) {
-    // Bookkeeping only. The reel has already been posted at this point, so a
-    // failure here must not surface as an error the client would retry.
-    try {
-      resolvePendingPost(run.id, failed ? 'failed' : 'approved', {
-        resolvedPublish: result,
-        error: result.results?.find((r) => r.status === 'failed')?.error || null
-      });
-    } catch (err) {
-      log.warn('Could not close out queue entry', { runId: run.id, reason: err.message });
-    }
-  }
-
-  if (!dry && !failed) {
-    void notifyPublished({
-      headline: run.script?.headline,
-      results: result.results,
-      // Same resolution as orchestrator.js, so a dashboard-triggered run and a
-      // scheduled one put the same link in the Telegram message.
-      dashboardUrl: process.env.DASHBOARD_URL || `http://localhost:${env.port}`
-    }).catch(() => {});
-  }
-
-  return result;
-}
 
 /** Approve-and-post a reel that was gated by requireApproval. */
 app.post('/api/runs/:id/publish', async (req, res) => {
@@ -233,25 +193,6 @@ app.get('/api/captions/:id/:platform', (req, res) => {
   if (!fs.existsSync(file)) return res.status(404).json({ error: 'Caption not found' });
   res.type('text/plain').send(fs.readFileSync(file, 'utf8'));
 });
-
-function summarise(run) {
-  return {
-    id: run.id,
-    startedAt: run.startedAt,
-    finishedAt: run.finishedAt,
-    durationMs: run.durationMs,
-    status: runDisplayStatus(run),
-    error: run.error || null,
-    title: run.event?.title || null,
-    source: run.event?.source || null,
-    videoUrl: run.media?.videoUrl || null,
-    reelDuration: run.media?.durationSeconds || null,
-    publishStatus: run.publish?.status || null,
-    // Lets the dashboard flag a reel that rendered without narration.
-    hasVoiceover: run.media?.hasVoiceover ?? null,
-    llm: run.llm || null
-  };
-}
 
 const server = app.listen(env.port, env.host, () => {
   // Report what was actually bound, not what was requested.

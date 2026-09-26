@@ -16,6 +16,7 @@
     "run": "node server/orchestrator.js",
     "run:dry": "node server/orchestrator.js --dry",
     "publish:dashboard": "node scripts/publishDashboard.js",
+    "publish:reel": "node scripts/publishQueuedReel.js",
     "server": "node server/index.js",
     "dev": "concurrently -n server,client -c cyan,magenta \"npm:server\" \"npm --prefix client run dev\"",
     "client": "npm --prefix client run dev",
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "@andresaya/edge-tts": "^1.0.0",
+    "@vercel/blob": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
@@ -33,7 +35,6 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "@vercel/blob": "^2.8.0",
     "concurrently": "^9.1.0"
   }
 }

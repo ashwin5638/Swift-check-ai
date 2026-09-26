@@ -2,32 +2,52 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import 'dotenv/config';
-import { put, del } from '@vercel/blob';
+import { get, put, del } from '@vercel/blob';
 import { config } from '../server/config.js';
+import {
+  PATHS,
+  applyPendingTombstones,
+  applyTombstones,
+  emptyTombstones
+} from '../api/lib/blobState.js';
 
 /**
- * Publishes the run history as static data for the read-only Vercel dashboard.
+ * Publishes run state for the Vercel deployment, in two shapes.
  *
- * The Vercel deployment serves `client/` as a plain static site, so it cannot
- * answer `/api/runs` or stream `/media/*.mp4`. This script bridges that gap from
- * CI, where the pipeline has just written both:
+ * The Vercel project is a static site plus a control plane: the Vite build
+ * serves client/dist, and api/ serves /api/* from Vercel Blob. The same CI step
+ * feeds both, because a dashboard that can trigger a run but cannot show one is
+ * worse than either half.
  *
- *   1. copy the run history to client/public/data/runs.json, which the Vite
- *      build copies into dist/ and Vercel then serves as a static asset
- *   2. rewrite each reel's URL from the local /media/<id>.mp4 to its Vercel Blob
- *      URL, so the <video> element in the dashboard can seek
- *   3. prune, because Hobby Blob allows 1 GB of storage and then hard-stops:
- *      exceeding it does not bill, it locks Blob until the month rolls over
+ *   1. client/public/data/runs.json, copied into dist/ and served at
+ *      /data/runs.json. This is what the console falls back to when
+ *      VITE_READ_ONLY=1, and it needs no credentials.
+ *   2. state/*.json in Blob, which is what api/ reads for every request. This is
+ *      the live path.
+ *
+ * Both get the same records with the same resolved reel URLs, so the fallback and
+ * the live console cannot disagree about whether a reel is playable. The URLs
+ * must be Blob URLs and not /media/<id>.mp4: the Vercel function has no
+ * filesystem, and a local path handed to the publish workflow as `video_url`
+ * would fail to download on the runner.
  *
  * Step 1 needs no credentials and is written first, on purpose: steps 2 and 3 are
  * improvements to a dashboard that is already correct without them. A store that
- * is unreachable, or a token that was never set, costs reel playback and the
- * exit code — never the run log. The reverse ordering once made a single missing
- * secret look like a permanently broken deployment, because the client reads a
- * 404 on runs.json as "no runs yet" and says so rather than complaining.
+ * is unreachable, or a token that was never set, costs the control plane and
+ * reel playback and the exit code — never the run log. The reverse ordering once
+ * made a single missing secret look like a permanently broken deployment, because
+ * the client reads a 404 on runs.json as "no runs yet" and says so rather than
+ * complaining.
  *
- * state/runs.json is left untouched. It keeps /media/<id>.mp4 because that is
- * the path Express serves, and mixing the two would break `npm run dev`.
+ * state/runs.json on disk is left untouched. It keeps /media/<id>.mp4 because
+ * that is the path Express serves, and mixing the two would break `npm run dev`.
+ *
+ * ## Tombstones
+ *
+ * A run deleted from the console comes straight back if this script uploads CI's
+ * copy unfiltered, because CI rebuilds state from its cache every run. So the ids
+ * a human deleted or rejected are read back out of Blob and applied here, which
+ * is what makes the delete button permanent rather than good-until-tomorrow.
  */
 
 // 8.34 MB per 15s 1080x1920 reel, so five is ~42 MB against a 1 GB allowance.
@@ -203,6 +223,58 @@ async function pruneBlobs(knownUrls, published) {
   }
 }
 
+/**
+ * Reads back the deletions the console recorded.
+ *
+ * A failure here resolves to "no tombstones", which means this run re-uploads
+ * anything that was deleted in the last day. That is the same failure shape as
+ * having no store at all: the dashboard recovers on the next run, and the cost is
+ * a deleted run reappearing once rather than the pipeline stopping. The opposite
+ * default — refusing to publish when tombstones cannot be read — would let an
+ * unreachable store block the run log, which is the thing that must always work.
+ */
+export async function readTombstones() {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return emptyTombstones();
+  try {
+    const blob = await get(PATHS.tombstones, { useCache: false });
+    if (!blob?.stream) return emptyTombstones();
+    return { ...emptyTombstones(), ...JSON.parse(await new Response(blob.stream).text()) };
+  } catch (err) {
+    console.warn(`  ! could not read tombstones (${err.message}) — deletions may reappear once`);
+    return emptyTombstones();
+  }
+}
+
+/**
+ * Writes the live state api/ serves.
+ *
+ * `published` is the same array written to the static feed, not the raw
+ * state/runs.json — the reel URLs in it are already resolved to Blob, and
+ * uploading the local /media/ paths would leave the approve button dispatching a
+ * download the runner cannot perform.
+ *
+ * Ordered records first, then the queue. A failure partway leaves the console
+ * showing runs with a stale queue rather than an empty console, which is the
+ * better of the two partial states.
+ */
+export async function publishState({ published, pending, covered }) {
+  const writes = [
+    [PATHS.runs, { runs: published, generatedAt: new Date().toISOString() }],
+    [PATHS.pending, { pending }],
+    [PATHS.covered, { events: covered }]
+  ];
+
+  for (const [pathname, body] of writes) {
+    await put(pathname, `${JSON.stringify(body, null, 2)}\n`, {
+      access: 'public',
+      contentType: 'application/json',
+      addRandomSuffix: false,
+      allowOverwrite: true
+    });
+    console.log(`  state ${pathname} (${Array.isArray(body.runs) ? body.runs.length : Array.isArray(body.pending) ? body.pending.length : (body.events || []).length} record(s))`);
+  }
+}
+
 export async function main() {
   // A missing token is a misconfiguration rather than an outage: no reel can be
   // published until it is set, so it is reported loudly and sets a non-zero exit
@@ -233,10 +305,35 @@ export async function main() {
     throw new Error(`Could not read ${config.paths.runs} — has the pipeline run yet?`);
   }
 
+  const tombstones = await readTombstones();
+  const dropped = tombstones.runs.length + tombstones.pending.length;
+  if (dropped) console.log(`  honouring ${dropped} deletion(s) recorded in the console`);
+
   const knownUrls = readPublishedUrls();
-  const published = await publishFeed({ stored, knownUrls, canUpload });
+  const published = await publishFeed({
+    stored: { runs: applyTombstones(stored.runs ?? [], tombstones) },
+    knownUrls,
+    canUpload
+  });
 
   await pruneBlobs(knownUrls, published);
+
+  // The live state api/ reads. A failure here leaves the static feed above intact
+  // and already written, which is why it comes after and not before.
+  if (canUpload) {
+    try {
+      await publishState({
+        published,
+        pending: applyPendingTombstones(readLocal(config.paths.pendingPosts, { pending: [] }).pending, tombstones),
+        covered: readLocal(config.paths.coveredEvents, { events: [] }).events
+      });
+    } catch (err) {
+      // The reels are on Blob and the run log is on disk; only the control plane
+      // is stale, and it recovers on the next run. The workflow's
+      // continue-on-error exists to absorb exactly this.
+      console.warn(`  ! could not publish live state (${err.message}) — the console will read the static feed`);
+    }
+  }
 
   const playable = published.filter((r) => r.media?.videoUrl).length;
   console.log(
@@ -248,6 +345,15 @@ export async function main() {
   // exits 0, because the workflow's continue-on-error exists to absorb exactly
   // that and the dashboard merely goes stale until the next run.
   if (!canUpload) process.exitCode = 1;
+}
+
+/** Missing state files are the normal case before the first run of that kind. */
+function readLocal(file, fallback) {
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch {
+    return fallback;
+  }
 }
 
 // Same guard as server/orchestrator.js: a bare pathToFileURL comparison, so
