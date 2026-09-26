@@ -24,15 +24,15 @@ Runs on a $0 stack. **Two LLM calls per run**; everything else is deterministic 
 | 5 | [The dashboard](#5-the-dashboard) | The control room UI |
 | 6 | [The approval queue](#6-the-approval-queue) | How human sign-off works |
 | 7 | [Telegram alerts](#7-telegram-alerts) | Phone notifications |
-| 8 | [API reference](#9-api-reference) | Every route |
-| 9 | [Posting setup](#10-posting-setup) | Facebook, LinkedIn, Telegram |
-| 10 | [Daily automation](#11-daily-automation) | GitHub Actions |
-| 11 | [Static dashboard](#12-static-dashboard) | The Vercel path and its gap |
-| 12 | [Editing the reel](#13-editing-the-reel) | Where the look and voice live |
-| 13 | [Architecture notes](#14-architecture-notes) | Why it is built this way |
-| 14 | [Tests](#15-tests) | What the suite covers |
-| 15 | [Troubleshooting](#16-troubleshooting) | Symptoms and causes |
-| 16 | [Known limitations](#17-known-limitations) | What is not solved yet |
+| 8 | [API reference](#8-api-reference) | Every route |
+| 9 | [Posting setup](#9-posting-setup) | Facebook, LinkedIn, Telegram |
+| 10 | [Daily automation](#10-daily-automation) | GitHub Actions |
+| 11 | [Static dashboard](#11-static-dashboard) | The Vercel path and its gap |
+| 12 | [Editing the reel](#12-editing-the-reel) | Where the look and voice live |
+| 13 | [Architecture notes](#13-architecture-notes) | Why it is built this way |
+| 14 | [Tests](#14-tests) | What the suite covers |
+| 15 | [Troubleshooting](#15-troubleshooting) | Symptoms and causes |
+| 16 | [Known limitations](#16-known-limitations) | What is not solved yet |
 
 ---
 
@@ -111,7 +111,7 @@ real file.
 | `npm run build:client` | production bundle into `client/dist` |
 | `npm run run` | full pipeline, honours the auto-post flags |
 | `npm run run:dry` | full pipeline, renders video, publishes nothing |
-| `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 12](#12-static-dashboard)) |
+| `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-static-dashboard)) |
 | `npm test` | offline suite, 50 tests, no network |
 | `npm run check:keys` | validates every credential with read-only requests |
 | `npm run check:models` | confirms the configured Groq models are still served |
@@ -343,7 +343,7 @@ rather than losing the day's post. Set it to `false` if you would rather it fail
 loudly.
 
 LinkedIn tokens expire in about 60 days; see
-[Known limitations](#17-known-limitations).
+[Known limitations](#16-known-limitations).
 
 ### Telegram
 
@@ -508,7 +508,7 @@ running the suite does not wipe your history.
 | `check:models` fails in CI | Groq retired the model. Change the name in `config.json`. |
 | Frame render fails after `npm run setup` | Chromium is missing or the download was interrupted. Re-run `npm run setup`. |
 | `EADDRINUSE` on :4000 | another copy of the server is running. Change `PORT` or stop it. |
-| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 12](#12-static-dashboard). |
+| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 11](#11-static-dashboard). |
 | Dashboard has runs but no reel plays | the feed was written without a Blob URL. `BLOB_READ_WRITE_TOKEN` was unset, or the store is private, or the reel fell outside the 5-reel window. The publish log names which. |
 
 ## 16. Known limitations
@@ -530,6 +530,6 @@ running the suite does not wipe your history.
   because the chat id was still unset when this was written.
 - The static console needs `VITE_READ_ONLY=1` in the *build*, not at runtime. It is
   pinned in `client/vercel.json`, so the supported deploy path cannot miss it, but
-  a deployment made any other way still can. See [section 12](#12-static-dashboard).
+  a deployment made any other way still can. See [section 11](#11-static-dashboard).
 - The status-derivation rule is implemented on both sides of the boundary and has
   to be kept in sync by hand.
