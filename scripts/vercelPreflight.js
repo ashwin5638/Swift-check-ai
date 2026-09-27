@@ -1,14 +1,13 @@
 /**
- * Vercel runs `installCommand` and `buildCommand` with the working directory
- * set to the project's **Root Directory** setting, not to the repository root.
- * When those differ, nothing in the repo can tell: the install lands in the wrong
- * directory, npm reports that no lockfile exists, and the lockfile is sitting in
- * git the whole time. That loop is expensive, so this runs from buildCommand —
- * which Vercel documents as overridable, unlike the install command when an
- * `api/` directory is present — and says which field to clear.
+ * Vercel runs `installCommand` and `buildCommand` with the working directory set
+ * to the project's **Root Directory** setting, not the repository root. When those
+ * differ nothing in the repo can tell: the install lands in the wrong directory,
+ * npm reports no lockfile, and the lockfile is in git the whole time. So this
+ * runs from buildCommand — which Vercel documents as overridable, unlike the
+ * install command when an `api/` directory is present — and names the field to
+ * clear.
  *
- * It also checks the files the build genuinely needs are in scope, which is the
- * one part of the original report that was right, just aimed at the wrong path.
+ * It also checks the files the build genuinely needs are in scope.
  */
 import fs from 'node:fs';
 import path from 'node:path';

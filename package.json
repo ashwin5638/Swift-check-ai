@@ -6,7 +6,7 @@
   "workspaces": [
     "client"
   ],
-  "description": "Marine industry news -> branded 15s reel -> Facebook & LinkedIn. Fully automated on a $0 budget.",
+  "description": "Marine industry news -> branded 20s reel -> Facebook & LinkedIn. Fully automated on a $0 budget.",
   "engines": {
     "node": ">=20"
   },

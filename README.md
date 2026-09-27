@@ -1,598 +1,245 @@
 # Swift Check AI
 
-Marine-industry news -> one branded 15-second vertical reel per day -> Facebook + LinkedIn.
-Runs on a $0 stack. **Two LLM calls per run**; everything else is deterministic code.
+Marine industry news → one branded 20-second vertical reel per day → Facebook + LinkedIn.
 
-```
-1. News Scout      0 LLM   Google News RSS + GDELT   ->  deduped, 15 candidates
-2. Event Ranker    1 LLM   one call picks THE story of the day
-3. Script Writer   1 LLM   one call returns voiceover + beats + both captions
-4. Visual Builder  0 LLM   Pexels photo -> Playwright overlays -> FFmpeg -> mp4 + TTS
-5. Publisher       0 LLM   Facebook Graph API / LinkedIn Posts API, or queue for approval
-```
+- Runs on a free stack.
+- Only 2 LLM calls per run. Everything else is plain code.
+- One reel a day, fully automatic.
 
 ---
 
-## Contents
+## 1. How It Works
 
-| # | Section | What you get |
-|---|---|---|
-| 1 | [Quick start](#1-quick-start) | First reel in five commands |
-| 2 | [Project layout](#2-project-layout) | Which folder is which side |
-| 3 | [Commands](#3-commands) | Every npm script |
-| 4 | [Configuration](#4-configuration) | `config.json` and `.env` |
-| 5 | [The dashboard](#5-the-dashboard) | The control room UI |
-| 6 | [The approval queue](#6-the-approval-queue) | How human sign-off works |
-| 7 | [Telegram alerts](#7-telegram-alerts) | Phone notifications |
-| 8 | [API reference](#8-api-reference) | Every route |
-| 9 | [Posting setup](#9-posting-setup) | Facebook, LinkedIn, Telegram |
-| 10 | [Daily automation](#10-daily-automation) | GitHub Actions |
-| 11 | [Deployment](#11-deployment) | Vercel Functions, Blob state, and the static fallback |
-| 12 | [Editing the reel](#12-editing-the-reel) | Where the look and voice live |
-| 13 | [Architecture notes](#13-architecture-notes) | Why it is built this way |
-| 14 | [Tests](#14-tests) | What the suite covers |
-| 15 | [Troubleshooting](#15-troubleshooting) | Symptoms and causes |
-| 16 | [Known limitations](#16-known-limitations) | What is not solved yet |
+1. **News Scout** — pulls Google News RSS (+ optional GDELT) → dedupes → 15 candidates.
+2. **Event Ranker** — 1 LLM call picks the story of the day.
+3. **Script Writer** — 1 LLM call writes the voiceover, beats and both captions.
+4. **Visual Builder** — Pexels photo → Playwright overlays → FFmpeg → mp4 + voiceover.
+5. **Publisher** — posts to Facebook/LinkedIn, or waits for your approval.
 
 ---
 
-## 1. Quick start
+## 2. Quick Start
 
-Requires Node >= 20. FFmpeg is **not** required (`ffmpeg-static` ships a binary
-with the install). Voiceover uses Microsoft's free Edge TTS endpoint and needs no key.
+- Requires Node 20+.
+- FFmpeg is not needed — `ffmpeg-static` installs its own binary.
+- Voiceover uses free Edge TTS — no API key.
 
 ```bash
 npm install
-npm run setup          # downloads Chromium for Playwright (~150 MB, one time)
-cp .env.example .env   # then paste GROQ_API_KEY and PEXELS_API_KEY
-npm run check:keys     # read-only credential validation
-npm run run:dry        # full chain, renders video, publishes nothing
+npm run setup          # one-time Chromium download for Playwright
+cp .env.example .env   # add GROQ_API_KEY and PEXELS_API_KEY
+npm run check:keys     # validate credentials (read-only)
+npm run run:dry        # full run, renders video, publishes nothing
 ```
 
-The reel lands in `output/<runId>/<runId>.mp4`. Open the dashboard to watch runs
-and read the captions:
+- Output: `output/<runId>/<runId>.mp4`
+- Dashboard: `npm run dev` → http://localhost:5173
 
-```bash
-npm run dev            # API on :4000, UI on :5173
-```
+> Rotate any key that was ever pasted into a chat, commit or screen.
 
-> **Rotate any key that has been pasted into a chat, a commit, or a shared
-> screen.** Moving it into `.env` does not un-expose it.
+---
 
-## 2. Project layout
-
-Two processes, two folders, separate `package.json` files, and **no imports
-between them** - the UI talks to the API only over HTTP.
+## 3. Project Layout
 
 ```
-swift-check-ai/
-|-- server/                     Express API + pipeline            :4000
-|   |-- index.js                API entry (routes, static media)
-|   |-- orchestrator.js         pipeline entry (CLI)
-|   |-- config.js               .env + config.json loader
-|   |-- agents/                 newsScout, eventRanker, scriptWriter,
-|   |                           visualBuilder, publisher
-|   |-- lib/                    llm, frames, audio, ffmpeg, state,
-|   |                           stockImages, logger, telegram
-|   |-- assets/                 logo.svg, optional music/
-|   `-- templates/frame.html    the reel's visual design
-|
-|-- client/                     React dashboard                   :5173
-|   |-- src/components/         one file per UI region
-|   |-- src/lib/                format, status, useNow
-|   |-- src/styles/             tokens, layout, components
-|   |-- public/                 logo.svg, data/ for the static build
-|   `-- vite.config.js          dev proxy: /api + /media -> :4000
-|
-|-- scripts/                    checkKeys, checkModels, telegramChatId,
-|                               linkedinWhoami, publishDashboard
-|-- state/                      coveredEvents, runs, pendingPosts (JSON, no DB)
-|                               gitignored: runtime data, not source
-|-- config.json                 every tunable
-|-- .env                        secrets (gitignored)
-`-- output/<runId>/             mp4, captions, content.json
+server/       Express API + pipeline        :4000
+  agents/     newsScout, eventRanker, scriptWriter, visualBuilder, publisher
+  lib/        llm, frames, audio, ffmpeg, state, stockImages, telegram
+  assets/     logo.svg, optional music/
+  templates/  frame.html  (the reel's design)
+
+client/       React dashboard                :5173
+  src/        components, lib, styles
+  public/     logo.svg, data/
+
+api/          Vercel serverless routes (deployed control plane)
+scripts/      checkKeys, checkModels, publishDashboard, helpers
+state/        runs, coveredEvents, pendingPosts (JSON)
+config.json   all tunables
+.env          secrets
+output/       generated reels
 ```
 
-The `client/src/` and `server/lib/` trees are separate and happen to share a
-folder name; neither side can import the other. The route table in `api/_app.js`
-imports only from `server/lib/dashboard.js` and `server/lib/captions.js`, because
-those two modules hold no filesystem or config dependency - that is what makes the
-import legal on Vercel's read-only filesystem.
+- Server and client never import each other — they talk over HTTP only.
 
-## 3. Commands
+---
+
+## 4. Commands
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | server + client together via `concurrently` |
+| `npm run dev` | server + dashboard together |
 | `npm run server` | API only, :4000 |
 | `npm run client` | dashboard only, :5173 |
-| `npm run build:client` | production bundle into `client/dist` |
-| `npm run run` | full pipeline, honours the auto-post flags |
-| `npm run run:dry` | full pipeline, renders video, publishes nothing |
-| `npm run publish:dashboard` | publish run history to Vercel Blob and a static snapshot ([section 11](#11-deployment)) |
-| `npm run publish:reel` | post one queued reel to its platforms, used by `publishReel.yml` |
-| `npm run check:keys` | validates every credential with read-only requests |
-| `npm run check:models` | confirms the configured Groq models are still served |
-| `npm run telegram:chatid` | reads your bot's pending updates for the chat id |
-| `npm run linkedin:whoami` | prints the member id behind your LinkedIn token |
-| `npm run setup` | one-time Playwright Chromium download |
+| `npm run build:client` | production build into `client/dist` |
+| `npm run run` | full pipeline, respects the auto-post flags |
+| `npm run run:dry` | full pipeline, publishes nothing |
+| `npm run check:keys` | validate every credential |
+| `npm run check:models` | confirm configured models are still served |
+| `npm run telegram:chatid` | print your Telegram chat id |
+| `npm run linkedin:whoami` | print the member id behind your token |
+| `npm run publish:dashboard` | push run history to Vercel Blob |
+| `npm run publish:reel` | post a queued reel (used by CI) |
+| `npm run setup` | one-time Playwright Chromium install |
 
-Faster smoke test that skips rendering and voiceover:
+- Quick check without video: `node server/orchestrator.js --no-render`
 
-```bash
-node server/orchestrator.js --no-render    # news + script only
-```
+---
 
-## 4. Configuration
+## 5. Configuration
 
-### `config.json`
+### `config.json` — everything that is not a secret
 
-Everything tunable that is not a secret.
-
-| Key | Default | Notes |
+| Key | Default | What it controls |
 |---|---|---|
-| `brand` | Swift Check AI | name, tagline, colours, `logo` path |
-| `news.googleNewsQueries` | 6 marine terms | Google News RSS search terms |
+| `brand.*` | Swift Check AI | name, tagline, colours, logo |
+| `news.googleNewsQueries` | 6 marine terms | search terms |
 | `news.maxCandidates` | 15 | candidates kept for the ranker |
 | `news.lookbackDays` | 2 | how far back to scan |
-| `news.gdeltEnabled` | `false` | GDELT as a second source |
+| `news.gdeltEnabled` | `false` | use GDELT as a second source |
 | `llm.rankerModel` | `qwen/qwen3.8-27b` | picks the story |
-| `llm.writerModel` | `qwen/qwen3.8-27b` | writes the script and captions |
-| `reel.durationSeconds` | 15 | 1080x1920 at 30 fps |
-| `reel.voice` | `en-US-GuyNeural` | Edge TTS voice |
+| `llm.writerModel` | `qwen/qwen3.8-27b` | writes script + captions |
+| `reel.durationSeconds` | 20 | target length (1080×1920, 30 fps) |
+| `reel.maxDurationSeconds` | 30 | ceiling if narration runs long |
+| `reel.voice` | `en-US-GuyNeural` | TTS voice |
 | `reel.voicePitch` / `voiceRate` | `-4Hz` / `+18%` | delivery tuning |
-| `reel.includeMusic` | true | synthesised unless you add a track |
+| `reel.includeMusic` | `true` | background music |
 | `publish.requireApproval` | `true` | queue instead of posting |
-| `publish.autoPostFacebook` | `true` | allow the Facebook target |
-| `publish.autoPostLinkedIn` | `true` | allow the LinkedIn target |
-| `publish.linkedinFallbackToText` | `true` | text post if the video is rejected |
+| `publish.autoPostFacebook` | `true` | allow Facebook |
+| `publish.autoPostLinkedIn` | `true` | allow LinkedIn |
+| `publish.linkedinFallbackToText` | `true` | text post if video is rejected |
 | `publish.notifyTelegram` | `true` | send alerts |
 
-### `.env`
+### `.env` — secrets
 
-| Variable | Required for | Where it comes from |
+| Variable | Needed for | Source |
 |---|---|---|
 | `GROQ_API_KEY` | every run | console.groq.com |
 | `PEXELS_API_KEY` | stock photos | pexels.com/api |
-| `FACEBOOK_APP_ID` | publishing to FB | developers.facebook.com |
-| `FACEBOOK_PAGE_ID` | publishing to FB | your Page |
-| `FACEBOOK_PAGE_ACCESS_TOKEN` | publishing to FB | long-lived Page token |
-| `FACEBOOK_USER_ACCESS_TOKEN` | optional | falls back to the Page token |
-| `FACEBOOK_APP_SECRET` | optional | app settings |
-| `LINKEDIN_MEMBER_ID` | publishing to LI | the numeric part of `urn:li:person:<id>` |
-| `LINKEDIN_ACCESS_TOKEN` | publishing to LI | OAuth with `w_member_social` |
+| `FACEBOOK_APP_ID` | Facebook posting | app dashboard |
+| `FACEBOOK_PAGE_ID` | Facebook posting | your Page |
+| `FACEBOOK_PAGE_ACCESS_TOKEN` | Facebook posting | long-lived Page token |
+| `FACEBOOK_USER_ACCESS_TOKEN` | optional | fallback for the Page token |
+| `LINKEDIN_MEMBER_ID` | LinkedIn posting | number in `urn:li:person:<id>` |
+| `LINKEDIN_ACCESS_TOKEN` | LinkedIn posting | OAuth with `w_member_social` |
 | `TELEGRAM_BOT_TOKEN` | alerts | @BotFather |
 | `TELEGRAM_CHAT_ID` | alerts | `npm run telegram:chatid` |
-| `DASHBOARD_URL` | alert links | where your UI actually is |
-| `PORT` | any | defaults to 4000 |
-| `HOST` | any | defaults to `127.0.0.1`; changing it prints a warning |
+| `DASHBOARD_URL` | alert links | where your UI lives |
+| `PORT` / `HOST` | optional | default 4000 / 127.0.0.1 |
 
-`check:keys` reports three states per credential: `ok`, `warn` (cannot be
-verified without side effects, e.g. a `w_member_social` token with no read
-scope), and `fail`. It only ever issues `GET` requests - it never posts,
-uploads, or sends a message.
+- `check:keys` reports each key as `ok`, `warn` or `fail` using only read requests.
 
-## 5. The dashboard
+---
 
-`npm run dev`, then open http://localhost:5173. The UI is a four-zone control
-room built for a single operator:
+## 6. Dashboard
 
-```
-+--------------------------------------------------------------+
-| status strip    pipeline . queue . auto-post . sync . clock   |
-+---------------+-----------------------------+----------------+
-| KPIs          | run detail                 | approval queue |
-| trigger       | reel, spec, publish result | credentials    |
-| run log       | waterfall, beats, script   |                |
-+---------------+-----------------------------+----------------+
-```
+- Four zones: status strip, KPIs + run log, run detail, approval queue + credentials.
+- Status strip shows live pipeline state, queue depth, auto-post targets and sync health.
+- KPI strip reads real run history — empty history shows a dash, never a fake `0%`.
+- Triggers: **Run pipeline**, **Run dry**, **Script only**.
+- Run detail: reel preview, spec table, stage waterfall, beats, script, captions with copy button.
+- Deep-link any run with `?run=<id>`.
 
-- **Status strip** - live pipeline state, queue depth, which platforms can
-  auto-post, and a sync indicator that says `live`, `stale`, or `link lost`
-  rather than pretending to be fine when the API is unreachable.
-- **KPI strip** - six figures computed from real run history. An empty history
-  renders a dash, never a fake `0%`.
-- **Trigger** - `Run pipeline`, `Run dry`, and `Script only`. Button labels
-  state their consequence: dry publishes nothing, script-only stops before
-  rendering.
-- **Run log** - history newest first, with a duration meter per row and a
-  two-step delete.
-- **Run detail** - reel preview, a spec table, publish results, the stage
-  waterfall, on-screen beats, voiceover script, and per-platform captions with
-  one-click copy.
-- **Stage waterfall** - the real `steps[]` timings drawn as a cumulative gantt.
-  On a typical run this shows `visualBuilder` consuming about 19 s of a 21 s run.
-- **Approval queue** - pending reels with preview, approve, and reject.
-- **Credentials** - which of the 11 keys are present, and what is switched off in
-  `config.json`.
+---
 
-Deep-link any run with `?run=<id>`. Keyboard accessible throughout: a single
-`<h1>`, labelled landmarks, a visible focus ring on every control, and
-`prefers-reduced-motion` honoured.
+## 7. Approval Queue
 
-Approve-and-post appears only while a reel is genuinely still queued, judged the
-same way the server judges it.
+- `publish.requireApproval: true` means a finished reel is **not** posted.
+- It is saved to `state/pendingPosts.json` and shown in the dashboard queue.
+- You can preview, approve or reject. Rejecting keeps the video file.
+- Approving posts to exactly the platforms the reel was queued for.
+- Already-resolved entries return `409` instead of double-posting.
+- Set `requireApproval: false` (plus both `autoPost*` flags `true`) for fully unattended posting.
 
-## 6. The approval queue
+---
 
-`publish.requireApproval` is `true` by default, so a finished reel is **not**
-posted. It is written to `state/pendingPosts.json` and appears in the dashboard's
-approval queue as a card marked `pending review`, where you can preview it,
-approve it, or reject it. Rejections keep the video on disk; nothing is deleted.
+## 8. Telegram Alerts
 
-A run can only be queued if at least one platform is enabled, because the queue
-has to record *which* platforms the reel is waiting for. A run with both
-`autoPost*` flags false reports `no-platforms-enabled` and skips the queue.
+- Already enabled. Add `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` to `.env`.
+- Get the chat id: open your bot in Telegram → press **Start** → run `npm run telegram:chatid`.
+- Alerts never break a run — a bad token is logged as a warning only.
+- If the video upload fails, it sends a text alert instead.
+- The approval message includes the mp4 so you can judge the reel from your phone.
 
-`requireApproval` is independent of the two `autoPost*` flags: it gates *when*,
-they gate *where*. Approving posts to exactly the platforms the reel was queued
-for, and the entry is closed as `approved` or `failed` with the reason.
+---
 
-```jsonc
-"publish": {
-  "requireApproval": true,      // queue instead of posting
-  "autoPostFacebook": true,     // at least one of these two ...
-  "autoPostLinkedIn": false     // ... decides what gets queued
-}
-```
-
-Flip `requireApproval` to `false` and set the per-platform flags to `true` for
-fully unattended posting.
-
-Queue rules: one entry per run id (re-running replaces rather than duplicates),
-30 entries max, and an already-resolved entry cannot be approved or rejected
-again - the API answers `409` rather than double-posting.
-
-## 7. Telegram alerts
-
-Set `publish.notifyTelegram` to `true` (it already is) and fill in two values in
-`.env`:
-
-```bash
-TELEGRAM_BOT_TOKEN=...   # from @BotFather
-TELEGRAM_CHAT_ID=...
-```
-
-Getting the chat id is the fiddly part, because a bot cannot message you before
-you have talked to it. Open your bot in Telegram, press **Start** (or send any
-message), then run:
-
-```bash
-npm run telegram:chatid
-```
-
-It reads your bot's pending updates and prints the line to paste into `.env`.
-`npm run check:keys` then proves delivery with `getChat`, which is the check that
-actually matters - `getMe` only proves the token parses, and it reports a
-perfectly healthy bot whose chat id you got wrong.
-
-Three things worth knowing:
-
-- **Alerts never break a run.** Every send is wrapped; a dead token, a wrong chat
-  id, or Telegram being down is logged as a warning and the pipeline still
-  finishes. Verified: a run completed normally while the chat id was still unset.
-- **A failed video upload falls back to text**, so you still find out a reel is
-  waiting.
-- The approval message sends the **mp4 itself** with the headline as the caption,
-  so you can judge the reel from your phone. It links back to the dashboard;
-  approving happens there, not over Telegram.
-
-Set `DASHBOARD_URL` if you reach the dashboard somewhere other than
-`http://localhost:4000`, so the link in the message points somewhere useful.
-
-
-## 8. API reference
+## 9. API Reference
 
 | Method | Route | Purpose |
 |---|---|---|
-| `GET` | `/api/health` | credential booleans, config, queue depth |
+| `GET` | `/api/health` | credential flags, config, queue depth |
 | `GET` | `/api/runs` | run summaries, newest first |
 | `GET` | `/api/runs/:id` | full record: steps, llm, media, publish, script |
 | `POST` | `/api/runs` | trigger a run `{ dry, skipRender }` |
 | `POST` | `/api/runs/:id/publish` | approve and publish a queued run |
 | `DELETE` | `/api/runs/:id` | remove a run and its files |
-| `GET` | `/api/pending` | queue entries still awaiting a decision |
-| `POST` | `/api/pending/:id/approve` | close as `approved` and publish |
-| `POST` | `/api/pending/:id/reject` | close as `rejected`, keep the file |
-| `GET` | `/api/covered` | the dedupe log of already-covered events |
-| `GET` | `/api/captions/:id/:platform` | raw caption text, `facebook` or `linkedin` |
-| `GET` | `/media/*` | streamed mp4 with range support so the UI can seek |
+| `GET` | `/api/pending` | queue entries awaiting a decision |
+| `POST` | `/api/pending/:id/approve` | approve and publish |
+| `POST` | `/api/pending/:id/reject` | reject, keep the file |
+| `GET` | `/api/covered` | dedupe log of covered events |
+| `GET` | `/api/captions/:id/:platform` | raw caption text |
+| `GET` | `/media/*` | streamed mp4 (supports seeking) |
 
-A run record carries `steps[]` (per-agent `ms` and `llmCalls`), `llm` (calls and
-token counts), `media`, `beats[]`, and `publish.results[]`. A run's own `status`
-freezes at `awaiting-approval` once a reel is queued, so read `publish.status`
-for the outcome - the API and the UI both do this.
+- Read `publish.status` for the outcome, not `run.status`.
 
-## 9. Posting setup
+---
 
-### Facebook
+## 10. Platform Setup
 
-developers.facebook.com -> create app -> add the Pages product -> generate a
-long-lived Page access token. The app needs `pages_show_list`,
-`pages_read_engagement`, and `pages_manage_posts`.
+- **Facebook** — create an app, add the Pages product, generate a long-lived Page token. Needs `pages_show_list`, `pages_read_engagement`, `pages_manage_posts`. Uploads use the Resumable Upload flow; the binary goes up directly, so no public URL is needed.
+- **LinkedIn** — create an app with "Sign In with LinkedIn", request `w_member_social`, then set the member id and token. `npm run linkedin:whoami` prints the id. Video posting needs app review, so a text-only fallback is enabled by default.
+- **Telegram** — @BotFather for the token, `npm run telegram:chatid` for the chat id.
 
-Publishing uses the current three-step Resumable Upload flow on Graph API
-`v26.0`: open a session on `/{APP_ID}/uploads`, `POST` the bytes to
-`/upload:{SESSION_ID}` to get a file handle, then publish that handle to
-`graph-video.facebook.com/{PAGE_ID}/videos`. The older `/{PAGE_ID}/video_upload`
-and `upload_phase` chunking were removed, so older examples found online will
-fail. The binary is uploaded directly, so no public URL is needed.
+---
 
-`FACEBOOK_APP_ID` is required for publishing and cannot be derived from a Page
-access token - it has to come from the app dashboard.
+## 11. Daily Automation
 
-### LinkedIn
+- `.github/workflows/dailyReel.yml` runs at 06:17 UTC.
+- It checks credentials, checks models, runs the pipeline, uploads the mp4 artifact and commits the dedupe log.
+- Every value must be added as an encrypted repository secret.
+- Dry runs never publish — the decision is enforced in the shell.
 
-developers.linkedin.com -> app -> "Sign In with LinkedIn" product -> request
-`w_member_social`, complete the OAuth flow, then set `LINKEDIN_MEMBER_ID` (the
-numeric part of `urn:li:person:<id>`) and `LINKEDIN_ACCESS_TOKEN`. Run
-`npm run linkedin:whoami` to print the member id behind your token.
+---
 
-The Posts API replaced `ugcPosts`. Version is a **header**
-(`Linkedin-Version: YYYYMM`), not a path segment. Video goes through the Videos
-API: `initializeUpload` -> `PUT` each 4 MB part keeping every `ETag` ->
-`finalizeUpload` -> `POST /rest/posts` with the resulting `urn:li:video:` id. The
-post id comes back in the `x-restli-id` response header, not the body.
+## 12. Deployment (Vercel)
 
-Video posting needs extra app review on most new apps, so
-`linkedinFallbackToText` is on by default: if the video upload is rejected the
-publisher still creates a text-only post and marks the result `degraded: true`
-rather than losing the day's post. Set it to `false` if you would rather it fail
-loudly.
+- `client/` builds as a static site; `api/` becomes serverless functions on the same origin.
+- Set the Vercel **Root Directory to the repository root** (not `client/`) or no functions get built.
+- `client` is an npm workspace, so there is a single lockfile and a single `npm ci`.
+- `scripts/vercelPreflight.js` runs first and fails the build on a wrong Root Directory, a missing lockfile, or more than 12 functions.
 
-LinkedIn tokens expire in about 60 days; see
-[Known limitations](#16-known-limitations).
-
-### Telegram
-
-Create a bot with @BotFather, then `npm run telegram:chatid` for your chat id.
-
-### CI
-
-Add every value as an encrypted repository secret for the GitHub Actions run.
-
-## 10. Daily automation
-
-`.github/workflows/dailyReel.yml` fires at 06:17 UTC. GitHub gives scheduled
-workflows 2,000 free minutes/month; this job takes one to three. The workflow
-verifies credentials, verifies models, runs the pipeline, uploads the mp4 as an
-artifact, and commits the dedupe log.
-
-Scheduled runs and dispatches that leave `dry_run` on must never publish, so the
-`--dry` decision is made in the shell rather than in a single GitHub expression.
-
-One caveat worth knowing: a 15-second video can be posted to LinkedIn or
-Facebook from a CI runner without a publicly reachable file, because this
-pipeline uploads the binary directly. That will stop working the moment you add
-Instagram Reels, which does require a public `file_url` - you would add a step
-that uploads the mp4 to a public bucket first.
-
-## 11. Deployment
-
-Two halves, one Vercel project. `client/` is built as a static site, and `api/`
-becomes serverless functions beside it, so the console and the API share an
-origin and the client needs no API base URL.
-
-```
-D:\tech\vibe-code\Shfit-Check-Ai\vercel.json   installCommand, buildCommand, outputDirectory
-```
-
-Set the project's **Root Directory to the repository root**, not `client/`. That
-is the whole integration: with `api/` outside the project there are no functions
-at all, and every `/api/*` call 404s - which looks exactly like a client-only
-deployment.
-
-**There is one `npm ci` and one lockfile, because `client/` is an npm workspace.**
-`package.json` declares `"workspaces": ["client"]`, so the root lockfile covers the
-root project and the client together, and there is deliberately no
-`client/package-lock.json`. That matters more than tidiness: the error this setup
-was written to prevent only exists because a build command had to name a *second*
-path, and a second path is a thing a dashboard setting can point at the wrong
-place. `installCommand` is now just `npm ci` and `buildCommand` is just the
-build, so no command addresses a directory other than the root.
-
-**`scripts/vercelPreflight.js` runs first in `buildCommand`, and it is there
-because of a specific trap.** Vercel runs these commands with the working
-directory set to the project's Root Directory, not the repository root. If that
-setting says `client/`, the install lands in the wrong place, npm reports that no
-lockfile exists, and the obvious conclusion - commit the lockfile - is wrong,
-because it is already committed and will still be on the next attempt. Nothing
-in the repository can detect the difference, so the preflight does: it fails the
-build with the field to clear, before npm gets a chance to be cryptic. It lives
-in `buildCommand` rather than `installCommand` because Vercel does not let you
-customise the install command when a native `api/` directory is present.
-
-### What runs where
-
-| | |
+| Where | What |
 |---|---|
-| `api/` | Vercel Functions. The control plane: reads state from Blob and dispatches work to CI |
-| `client/` | Static Vite build, served from the same origin |
-| `server/` | **Never on Vercel.** GitHub Actions only - it needs Chromium, ffmpeg and a writable disk |
-| `state/` | Vercel Blob, not a function's filesystem |
+| `api/` | Vercel Functions — control plane only |
+| `client/` | static Vite build |
+| `server/` | never on Vercel — GitHub Actions only (needs Chromium, ffmpeg, writable disk) |
+| `state/` | Vercel Blob, not a function filesystem |
 
-The route table in `api/_app.js` is a deliberate near-copy of `server/index.js`
-and does **not** import it. `server/config.js` mkdirs `output/`, `state/` and
-`logs/` at import time, which throws `EROFS` on Vercel's read-only filesystem,
-and `ffmpeg-static` and Playwright would follow it into a bundle that cannot
-install a browser's system libraries anyway. The parts that must not drift - the
-status derivation, the list shape, the caption text - are imported from
-`server/lib/dashboard.js` and `server/lib/captions.js` as pure functions.
+**Environment variables**
 
-**`api/_lib/` is shared code, not a route, and the underscore is what says so.**
-Vercel turns every file under `api/` into a Function unless the name starts with
-`_`, so `api/_app.js` and `api/_lib/` are both skipped. That is not a style
-preference: the nine routes plus `api/_lib/{blobState,github}.js` came to
-**twelve**, and Hobby caps a deployment at twelve, so the build fails with
-"No more than 12 Serverless Functions". Renaming the directory to `lib` would
-break the deploy and quietly expose `/api/lib/blobState` as a public endpoint.
+- `BLOB_READ_WRITE_TOKEN` — Vercel **and** CI. Create it in the dashboard: Storage → Blob (access: **Public**). No CLI command can mint one.
+- `GITHUB_TOKEN`, `GITHUB_REPO` — Vercel only. Lets the trigger and approve buttons dispatch a workflow.
 
-That error names neither the files nor the fix, so the preflight counts what
-Vercel would count - same exclusions, any path with a `/_` or `/.` segment and
-any `.d.ts` skipped - and fails the build listing all of them. The live tree
-deploys **nine**.
+- Static fallback: set `VITE_READ_ONLY=1` to read `client/public/data/runs.json` instead of the API (read-only UI).
+- `npm run publish:dashboard` copies run history into the client, rewrites reel URLs to Blob, and prunes old blobs (Hobby caps storage at 1 GB).
+- **No authentication** on the API or deployed routes. Add protection before exposing it publicly.
 
-### Environment variables
+---
 
-| Variable | Where | For |
-|---|---|---|
-| `BLOB_READ_WRITE_TOKEN` | Vercel **and** CI | Run history, queue and reels |
-| `GH_TOKEN`, `GH_REPO` | Vercel | Lets the trigger and approve buttons dispatch a workflow |
+## 13. Customising the Reel
 
-`/api/health` reports `github.configured` and `queue.pending`, so a missing pair
-shows up on the status strip rather than as a failed click.
+- Colours, length, voice, pitch, queries, models → all in `config.json`.
+- The look lives in `server/templates/frame.html` — plain CSS, renders in a browser for quick iteration.
+- Beat timings are computed in `server/lib/frames.js`; the model only writes the words.
+- Add your own music at `server/assets/music/track.mp3`. Without one, an ambient pad is synthesised with FFmpeg.
 
-**There is no authentication in this MVP.** Not on the local API, not on the
-deployed control plane, not in front of a single write. Every route under `api/`
-is a public URL, so anyone who finds the deployment can trigger runs and post to
-the Facebook page and the LinkedIn account. Before exposing this to the internet
-for real, put a gate in front of the writes - a Vercel deployment protection
-rule, or a session check the way `api/_app.js` used to have one. The local API is
-only safe because it binds to loopback and its CORS allowlist takes localhost
-origins; see `HOST` in `.env.example`.
+---
 
-The credential panel reports `null` on the deployed control plane rather than a
-map of eleven `false`, which would read as "this project is broken" - and a map of
-eleven `true` would tell every visitor which integrations are wired up.
+## 14. Architecture Notes
 
-### The static fallback
-
-`VITE_READ_ONLY=1` still exists, and is unset by default. Set, the console reads
-`client/public/data/runs.json` instead of `/api/*` and drops the trigger,
-approve/reject, delete and credential controls - none of which can work without a
-server behind them. It is the fallback for a deliberately static deploy, not the
-default.
-
-Whichever mode you pick, `npm run publish:dashboard` runs in CI and:
-
-1. copies the run history to `client/public/data/runs.json`
-2. rewrites each reel's URL from the local `/media/<id>.mp4` to its Vercel Blob
-   URL, so the `<video>` element can seek
-3. prunes old blobs, because Hobby Blob allows 1 GB of storage and then
-   hard-stops - exceeding it does not bill, it locks Blob until the month rolls
-
-**Vercel mints `BLOB_READ_WRITE_TOKEN` when you create a Blob store, and no CLI
-command creates one** - the dashboard is the only route: Storage -> Create
-Database -> Blob, access **Public**, then copy the value from the store page. It
-has to be that long-lived token rather than the project's OIDC vars, because the
-publish step runs in CI outside Vercel, where OIDC is unavailable. Public access
-is not optional: `RunDetail.jsx` plays the file in a plain `<video>` with no
-auth header, and a private store's `*.private.blob.vercel-storage.com` URLs
-would 403.
-
-**The feed and the reels are separable on purpose.** Without a token the run log
-is still written, with `videoUrl: null` for reels that were never uploaded, and
-only the exit code is non-zero. A store outage costs playback, not the dashboard.
-`state/runs.json` is left untouched; the local `npm run dev` path keeps serving
-`/media/<id>.mp4` from Express.
-
-`GET /media/*` has no Function equivalent, which is why step 2 rewrites the reel
-URLs to Blob and why approving an older reel can answer `409` - only the five most
-recent are kept.
-
-## 12. Editing the reel
-
-Everything tunable that is not a secret is in `config.json` - brand colours, reel
-length, voice, TTS pitch and rate, the news queries, the models, and which LLM is
-used for what.
-
-The look lives in `server/templates/frame.html`. It is plain CSS and the file
-renders identically in a browser, so you can iterate on the design without
-restarting anything. Beat timings are computed in `server/lib/frames.js` - the
-model only writes the words, never the timestamps.
-
-To add your own music, drop a file at `server/assets/music/track.mp3` and it is
-used as-is. Otherwise an ambient pad is synthesised with FFmpeg `sine` sources,
-so the repo stays free of licensed audio binaries and the reel never ships
-silent.
-
-## 13. Architecture notes
-
-`server/lib/llm.js` is the only file that imports a vendor SDK. Every agent calls
-`chat()`, so moving to OpenRouter, Ollama, or any OpenAI-compatible endpoint is a
-one-file change.
-
-The model split is `llm.rankerModel` and `llm.writerModel`. Both currently point
-at `qwen/qwen3.8-27b`, which is deliberate and **not** an oversight. Groq's
-`gpt-oss-*` family are reasoning models: measured on the real prompts,
-`gpt-oss-120b` needed 1,063 output tokens and 2.7 s for the writer call where
-`qwen3.8-27b` used 233 tokens and 0.6 s for the same valid JSON. At
-`rankerMaxTokens: 200` the reasoning models return *empty* content with
-`finish_reason: length`, which is exactly how the pipeline first broke. If you
-swap in a reasoning model, raise the token caps and expect the cost.
-
-Model names are config, not code, and Groq retires models with no runtime
-signal - `llama-3.1-8b-instant` and `llama-3.3-70b-versatile` were removed in
-August 2026. `npm run check:models` is the guard; the workflow runs it before the
-pipeline so a retirement fails in seconds with a clear message instead of
-mid-render.
-
-`chat()` also degrades instead of dying: if a model rejects
-`response_format: json_object` with `json_validate_failed`, it retries once with
-prompt-only JSON, and a truncated response raises an error naming the exact
-config key to raise.
-
-**No database.** State is three JSON files under `state/` - a 200-entry dedupe
-log, 60 run records, and a 30-entry approval queue. At one reel a day that is
-years of headroom before a real database is worth the operational cost. A corrupt
-or missing file degrades to an empty list rather than crashing.
-
-**One rule, two implementations.** The status a run should be *judged* by is
-defined twice: `runDisplayStatus()` in `server/lib/state.js` and `displayStatus()`
-in `client/src/lib/status.js`. They must agree, because the header and the run log
-sit side by side and disagreeing about the same run is the worst thing this UI can
-do. If you change one, change both, or extract a shared module.
-
-## 14. Tests
-
-There is no test suite. The `test/` tree and the `npm test` script were removed
-to keep this an MVP. The checks that were worth keeping survive as things you run
-rather than things you maintain: `npm run check:keys` and `npm run check:models`
-validate credentials and models, `npm run run:dry` exercises the whole pipeline
-end to end without publishing anything, and `scripts/vercelPreflight.js` runs on
-every Vercel build and fails it on a wrong Root Directory, a missing lockfile or
-an `api/` over the twelve-Function cap.
-
-## 15. Troubleshooting
-
-| Symptom | Cause and fix |
-|---|---|
-| `npm ci` fails with `Missing: <pkg> from lock file` in CI or on Vercel but not on your machine | a **user-global `legacy-peer-deps=true`** in `~/.npmrc` stops your npm auto-installing peer deps, so it tolerates a lock that CI's stricter npm rejects. Check `npm config get legacy-peer-deps`; then regenerate the lock the way CI sees it: `npm install --legacy-peer-deps=false`. `@andresaya/edge-tts` is the usual culprit - it declares a `typescript` peer. |
-| Build fails with `npm ci ... can only install with an existing package-lock.json` | the Vercel project's **Root Directory** is set to `client/`, so the install runs against `client/` instead of the repository and finds no lockfile. It *is* committed, at the root. Clear the Root Directory field - `api/` has to be inside the project or no functions are built at all. If `scripts/vercelPreflight.js` is in the build log, it has already named this for you. |
-| Build fails with `No more than 12 Serverless Functions` | a shared module lost its leading underscore. Vercel turns every non-`_` file under `api/` into a Function, and the nine routes plus `api/_lib/{blobState,github}.js` sit right on the cap. It is `api/_lib/` - renaming it back also exposes `/api/lib/blobState` publicly. The count is checked now, so this should never reach Vercel; if it does, the preflight was not in the build log. |
-| Functions 500 at cold start with no stack trace | something in `api/` transitively imported `server/config.js`, which mkdirs at import time and cannot write to Vercel's read-only filesystem. `scripts/vercelPreflight.js` is meant to catch this before deploy. |
-| `date.toLocaleTimeString is not a function` | a formatter received a number instead of a Date. All formatters coerce now; if you added a new one, coerce at the boundary. |
-| UI shows `link lost` in the status strip | the API on :4000 is not answering. `npm run server` and read the error. |
-| Run fails with `no-platforms-enabled` | both `autoPost*` flags are false, so there is nowhere to queue a reel. Enable one. |
-| A run still says `awaiting approval` after posting | its own `status` froze at queue time. Read `publish.status`; if you are reading `run.status` directly, that is the bug. |
-| LinkedIn post returns `degraded: true` | the video upload was rejected (usually app review) and a text post was published instead. |
-| LinkedIn upload fails on a 4 MB part | every part's `ETag` must be kept and echoed; losing one fails the finalize call. |
-| `check:keys` says a token is `warn` | it cannot be verified without side effects, usually a token with no read scope. Not necessarily broken. |
-| `check:models` fails in CI | Groq retired the model. Change the name in `config.json`. |
-| Frame render fails after `npm run setup` | Chromium is missing or the download was interrupted. Re-run `npm run setup`. |
-| `EADDRINUSE` on :4000 | another copy of the server is running. Change `PORT` or stop it. |
-| Dashboard is empty but shows no error | expected until the first `publish:dashboard` runs: `feed.js` reads a 404 on `data/runs.json` as "no runs published yet". Check `client/public/data/runs.json` exists and was committed - see [section 11](#11-deployment). |
-| Dashboard has runs but no reel plays | the feed was written without a Blob URL. `BLOB_READ_WRITE_TOKEN` was unset, or the store is private, or the reel fell outside the 5-reel window. The publish log names which. |
-
-## 16. Known limitations
-
-- LinkedIn tokens expire (about 60 days). Automation will need a refresh-token flow.
-- LinkedIn video posting usually needs app review, which is why the publisher
-  falls back to a text post and flags the run as `degraded`.
-- `FACEBOOK_APP_ID` is required for publishing and cannot be derived from a Page
-  access token - it has to come from the app dashboard.
-- Stock photos occasionally miss for niche stories; the gradient fallback covers it.
-- No performance analytics yet, so the ranker is optimising for impact, not engagement.
-- Approving happens in the dashboard, not from Telegram. The message links to the
-  dashboard rather than carrying inline Approve/Reject buttons - the approve step
-  is a real publish to two accounts, and a single mis-tap on a phone is a
-  hard-to-undo post.
-- Nothing is scheduled locally. `npm run dev` does not re-post on a timer, and
-  the GitHub workflow cannot run until this repo has a remote.
-- Telegram delivery is proven by `getChat` but has never completed a real send,
-  because the chat id was still unset when this was written.
-- The route table exists twice, in `server/index.js` and in `api/_app.js`, and the
-  duplication is deliberate - see [section 11](#11-deployment). A route added to
-  one and not the other fails silently, so add it to both.
-- The status-derivation rule is implemented on both sides of the boundary and has
-  to be kept in sync by hand.
+- `server/lib/llm.js` is the only file importing a vendor SDK — switching providers is a one-file change.
+- Ranker and writer use the same non-reasoning model on purpose; reasoning models return empty content under the token caps.
+- `npm run check:models` guards against providers retiring models.
+- **No database** — three JSON files under `state/`: dedupe log, run records, approval queue. Corrupt files degrade to an empty list.
+- Run status is derived in both `server/lib/state.js` and `client/src/lib/status.js`. They must stay in sync.
+- Routes exist in both `server/index.js` and `api/_app.js`. Add new routes to both.

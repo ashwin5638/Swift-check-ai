@@ -1,26 +1,21 @@
 /**
  * The read-model the console renders.
  *
- * Pure, and deliberately free of `config` and `node:fs` imports. That constraint
- * is the whole point: the Vercel function serves the same shapes as the local
- * Express API, and it runs on a read-only filesystem where importing config.js
- * fails at module load because config.js mkdirs output/, state/ and logs/. Sharing
- * these derivations means the two deployments cannot drift into disagreeing about
- * what a run's status is, which would show a published reel as skipped on one and
- * published on the other.
+ * Pure, and deliberately free of `config` and `node:fs` imports. The Vercel
+ * function serves the same shapes as the local Express API but runs on a
+ * read-only filesystem where importing config.js fails at module load (it
+ * mkdirs). Sharing these derivations stops the two deployments from disagreeing
+ * about what a run's status is.
  */
 
 /**
- * The status the dashboard should show for a run.
+ * The status the dashboard shows for a run.
  *
- * The pipeline writes run.status once, when it finishes, but publishing happens
- * later and from a different place (the queue's approve button, or a retry). The
- * top-level status is therefore stale by the time a reel reaches a platform, and
- * a run that posted to both Facebook and LinkedIn still reads "skipped".
- *
- * publish.status is the newer, more accurate answer whenever it got far enough
- * to mean something. It only overrides on a positive outcome, so a pipeline that
- * genuinely failed is never masked by a later partial publish.
+ * The pipeline writes run.status once, but publishing happens later and from a
+ * different place (the queue's approve button, or a retry), so the top-level
+ * status goes stale — a run that posted to both platforms still reads "skipped".
+ * publish.status is the newer answer whenever it means something, and only
+ * overrides on a positive outcome so a genuine failure is never masked.
  */
 export function runDisplayStatus(run) {
   const reached = ['published', 'partial', 'awaiting-approval'];

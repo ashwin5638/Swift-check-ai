@@ -1,16 +1,14 @@
 /**
  * The GitHub Actions half of the control plane.
  *
- * Nothing renders on Vercel. A Vercel function has a read-only filesystem, a
- * 300s ceiling on Hobby, and no way to install Playwright's system libraries, so
- * ffmpeg and the browser upload simply cannot run there. What Vercel *can* do is
- * ask CI to run them, and CI already does: dailyReel.yml has fired on a schedule
- * every morning and has declared workflow_dispatch all along. This module is the
- * button wired to that.
+ * Nothing renders on Vercel: a read-only filesystem, a 300s ceiling on Hobby,
+ * and no way to install Playwright's system libraries. What Vercel *can* do is
+ * ask CI to run them, and CI already runs dailyReel.yml on a schedule. This
+ * module is the button wired to that.
  *
- * The consequence is that these calls return 204 immediately and the reel appears
- * minutes later, when CI has committed the new state. The dashboard shows the live
- * Actions run in the meantime, so it never looks like a dropped click.
+ * So these calls return 204 immediately and the reel appears minutes later,
+ * when CI has committed the new state. The dashboard shows the live Actions run
+ * meanwhile, so it never looks like a dropped click.
  */
 
 const API = 'https://api.github.com';
@@ -21,7 +19,6 @@ const API_VERSION = '2022-11-28';
 // need a valid token either way — but it keeps a bad config from building a
 // surprising URL.
 const SAFE_WORKFLOW = /^[\w.-]{1,100}\.ya?ml$/;
-
 const SAFE_REF = /^[A-Za-z0-9._/-]{1,255}$/;
 
 export class DispatchError extends Error {
@@ -41,10 +38,9 @@ export function githubConfig(env = process.env) {
 }
 
 /**
- * Why each one is checked the way it is, because the failures are otherwise
- * indistinguishable from each other: a dispatch against a token without Actions
- * write returns 403, and one against a workflow file that is not on the target
- * ref returns 422. Both read as "GitHub said no" from the browser.
+ * Each check is distinct because the failures otherwise look alike: a dispatch
+ * against a token without Actions write returns 403, and one against a workflow
+ * that isn't on the target ref returns 422. Both read as "GitHub said no".
  */
 function requireConfig(cfg, workflow) {
   if (!cfg.token) throw new DispatchError('GITHUB_TOKEN is not set on this deployment.', 503);
@@ -67,14 +63,12 @@ async function githubFetch(cfg, path, init = {}) {
 }
 
 /**
- * Asks CI to run a workflow. 204 is success and carries no body, so there is
- * nothing to return — the caller answers 202 and the dashboard polls.
+ * Asks CI to run a workflow. 204 is success and carries no body, so the caller
+ * answers 202 and the dashboard polls.
  *
- * A double-click is not specially handled here. dailyReel.yml declares
- * `concurrency: { group: daily-reel, cancel-in-progress: false }`, so a second
- * dispatch queues behind the first instead of running two pipelines at once, and
- * a lock on Vercel would be redundant as well as useless (module scope is
- * per-instance).
+ * Double-clicks are not handled here: dailyReel.yml declares a concurrency group
+ * with cancel-in-progress false, so a second dispatch queues behind the first. A
+ * lock on Vercel would be useless anyway — module scope is per-instance.
  */
 export async function dispatchWorkflow(workflow, inputs = {}, env = process.env) {
   const cfg = githubConfig(env);
@@ -110,9 +104,8 @@ export async function dispatchWorkflow(workflow, inputs = {}, env = process.env)
 }
 
 /**
- * workflow_dispatch inputs are always strings, and a boolean input is declared
- * with a default. Coercing here means callers can pass real booleans without
- * every call site remembering, and an omitted value is left out entirely so the
+ * workflow_dispatch inputs are always strings. Coercing here means callers can
+ * pass real booleans, and an omitted value is left out entirely so the
  * workflow's own default applies.
  */
 function mapInputs(inputs) {
@@ -128,14 +121,12 @@ function mapInputs(inputs) {
  * The in-progress run, for the dashboard's busy indicator.
  *
  * This replaces the `running` boolean the local API keeps in module scope, which
- * is meaningless here: a serverless instance is recycled between requests, so it
- * would report "idle" to everyone except the one caller lucky enough to land on
- * the instance that just handled a dispatch. The real question — is CI busy right
- * now — has an actual answer, and it is this endpoint.
+ * is meaningless here: a serverless instance recycles between requests, so it
+ * would report "idle" to everyone except the caller lucky enough to land on the
+ * instance that just dispatched.
  *
- * A failure is not an error. An expired token or a GitHub outage should cost the
- * busy indicator, not the run log, so this resolves to null and the console
- * renders the control as available.
+ * A failure is not an error. An expired token or GitHub outage should cost the
+ * busy indicator, not the run log, so this resolves to null.
  */
 export async function activeRun(env = process.env) {
   const cfg = githubConfig(env);
@@ -156,8 +147,8 @@ export async function activeRun(env = process.env) {
       id: run.id,
       name: run.name,
       status: run.status,
-      // null while queued, which is the case the dashboard most needs to
-      // distinguish from "actually rendering".
+      // null while queued — the case the dashboard most needs to tell apart
+      // from "actually rendering".
       startedAt: run.run_started_at ?? run.created_at ?? null,
       url: run.html_url
     };

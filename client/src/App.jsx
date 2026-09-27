@@ -13,8 +13,7 @@ import { READ_ONLY, POLL_MS, loadFeed } from './lib/feed.js';
 
 const TOAST_LIFE = 5000;
 
-/** The API's own `error` string when it sends one, so the toast says what
- *  actually went wrong rather than a bare status code. */
+/** Surfaces the API's own `error` string instead of a bare status code. */
 async function getJson(url, options) {
   const res = await fetch(url, options);
   if (!res.ok) {
@@ -40,8 +39,7 @@ export default function App() {
   const toastSeq = useRef(0);
 
   // Read-only mode ships whole records in the feed, so the selected run is
-  // already in hand. The API's reduced per-run shape is why the live console
-  // needs a second request to fill the detail pane.
+  // already in hand. The live API's reduced shape needs a second request.
   const run = useMemo(
     () => (READ_ONLY ? runs.find((r) => r.id === selectedId) ?? null : detailRun),
     [READ_ONLY, runs, selectedId, detailRun]
@@ -92,15 +90,14 @@ export default function App() {
     return () => clearInterval(timer);
   }, [poll]);
 
-  // Point the selection at something real. A run that was deleted, or a deep
-  // link to a run that no longer exists, falls back to the newest entry.
+  // Fall back to the newest run when the selection is stale or missing.
   useEffect(() => {
     if (!runs.length) return setSelectedId(null);
     if (selectedId && runs.some((r) => r.id === selectedId)) return;
     setSelectedId(runs[0].id);
   }, [runs, selectedId]);
 
-  // Mirror the selection into the URL so a run can be linked to or reloaded.
+  // Mirror the selection into the URL so a run can be linked or reloaded.
   useEffect(() => {
     const current = new URLSearchParams(location.search).get('run');
     if ((selectedId ?? null) === (current ?? null)) return;
@@ -110,9 +107,8 @@ export default function App() {
     history.replaceState(null, '', url);
   }, [selectedId]);
 
-  // The detail is fetched on selection only, so a publish would otherwise
-  // leave a stale status on screen. Read-only mode skips it: the feed already
-  // holds the whole record and a re-poll replaces it.
+  // Fetched on selection only, so a publish can't leave a stale status on
+  // screen. Read-only mode skips it: the feed already holds the whole record.
   const loadDetail = useCallback(async (id) => {
     if (READ_ONLY) return;
     if (!id) {
@@ -130,32 +126,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (READ_ONLY) return;
-    let cancelled = false;
-    if (!selectedId) {
-      setDetailRun(null);
-      return;
-    }
-    fetch(`/api/runs/${selectedId}`)
-      .then((r) => (r.ok ? r.json() : { run: null }))
-      .then((d) => {
-        if (!cancelled) setDetailRun(d.run);
-      })
-      .catch(() => {
-        if (!cancelled) setDetailRun(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedId]);
+    loadDetail(selectedId);
+  }, [selectedId, loadDetail]);
 
   const selectRun = useCallback((id) => setSelectedId(id), []);
 
-  /**
-   * Runs one action with the shared busy lock, then resyncs.
-   *
-   * There is no auth round-trip to recover from: a failure is reported as itself.
-   */
+  /** Runs one action under the shared busy lock, then resyncs. */
   const act = useCallback(
     async (work, onOk) => {
       setBusy(true);
@@ -172,10 +148,9 @@ export default function App() {
     [notify, poll, loadDetail, selectedId]
   );
 
-  // The three actions below are dispatched to GitHub Actions rather than run
-  // inline, so their responses are 202s with no result attached. The local API
-  // still answers them synchronously, which is why each branch handles both
-  // shapes rather than assuming the slow one.
+  // The three actions below are dispatched to GitHub Actions on the deployed
+  // control plane, so their responses are 202s with no result attached. The
+  // local API answers synchronously — hence reportOutcome handles both shapes.
 
   const startRun = useCallback(
     (options) =>
@@ -314,15 +289,12 @@ export default function App() {
                 selectedId={selectedId}
               />
 
-              {/* Never rendered in read-only mode. It exposes no secret values,
-                  but on a public URL it still tells every visitor which of the
-                  eleven API keys are configured, which is reconnaissance worth
-                  more than the panel is worth.
-
-                  The deployed control plane reports `credentials: null` rather
-                  than a map of booleans, because the keys are in GitHub Actions
-                  secrets and absent from the function — a map of eleven `false`
-                  would read as "this project is broken". */}
+              {/* Never rendered in read-only mode: it exposes no secret values,
+                  but on a public URL it still reveals which of the eleven API
+                  keys are configured. The deployed control plane reports
+                  `credentials: null` rather than a map of booleans, because the
+                  keys live in GitHub Actions secrets and are absent from the
+                  function — a map of eleven `false` would read as "broken". */}
               <section className="section">
                 <SectionHead
                   title="Credentials"
@@ -352,10 +324,9 @@ export default function App() {
 }
 
 /**
- * A publish either came back with results — the local API, which ran it inline —
- * or with a 202, meaning it was handed to CI and nothing has happened yet. The
- * second case is not a result and must not be phrased as one; "published" would
- * be a lie for the next three minutes.
+ * A publish either returned results (local API, ran inline) or a 202 meaning it
+ * was handed to CI and nothing has happened yet. The second case must not be
+ * phrased as a result — "published" would be a lie for the next three minutes.
  */
 function reportOutcome(notify, data, verb) {
   if (data.publish) return reportPublish(notify, data.publish);

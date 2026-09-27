@@ -16,11 +16,10 @@ import { publishRun } from '../server/lib/publishRun.js';
  * publishDashboard.js put the newest five in Blob — and this fetches it, then
  * hands off to the same publishRun() the local API uses.
  *
- * The record is looked up locally first because that is the common case: the
- * daily workflow's cache step carries state/ between runs, so a reel queued
- * yesterday is on disk. The Blob fallback covers the awkward case where the
- * cache was evicted, and it is a fallback rather than the primary because the
- * cached copy is the one whose record matches the mp4 that was actually rendered.
+ * The record is looked up locally first because that is the common case: the daily
+ * workflow's cache step carries state/ between runs, so a reel queued yesterday is
+ * on disk. The Blob fallback covers an evicted cache, and is only a fallback
+ * because the cached copy is the one whose record matches the mp4 that rendered.
  */
 
 const SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;

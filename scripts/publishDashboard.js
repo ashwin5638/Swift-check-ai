@@ -21,7 +21,8 @@ const {
 
 
 
-// 8.34 MB per 15s 1080x1920 reel, so five is ~42 MB against a 1 GB allowance.
+// ~17 MB per 20s 1080x1920 reel, so five is ~85 MB against a 1 GB allowance.
+// Size tracks how busy the footage is, so treat this as an order of magnitude.
 export const MAX_VIDEOS = 5;
 // ~3.1 KB per record, so thirty is ~95 KB — cheap to keep, and it means the run
 // log stays useful long after the reels themselves have been pruned away.
@@ -327,8 +328,8 @@ function readLocal(file, fallback) {
   }
 }
 
-// Same guard as server/orchestrator.js: a bare pathToFileURL comparison, so
-// importing this module from the test suite does not kick off an upload.
+// Same guard as server/orchestrator.js, so importing this module never kicks off
+// an upload.
 const isMain = Boolean(
   process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href
 );

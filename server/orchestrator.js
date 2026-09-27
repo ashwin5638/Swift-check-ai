@@ -16,11 +16,11 @@ import { publisher } from './agents/publisher.js';
 const log = createLogger('orchestrator');
 
 /**
- * AGENT 0 — Orchestrator. Chains 1→5 exactly once.
+ * Chains agents 1→5 exactly once.
  *
- * Deliberately a plain async function, not an agent framework: CrewAI/AutoGen
- * add inter-agent message passing that costs tokens without changing the
- * output. This chain makes the LLM boundary visible — exactly two calls.
+ * Deliberately a plain async function, not an agent framework: CrewAI/AutoGen add
+ * inter-agent message passing that costs tokens without changing the output. This
+ * keeps the LLM boundary visible — exactly two calls.
  */
 export async function runPipeline({ dry = false, forcePublish = false, skipRender = false } = {}) {
   const startedAt = new Date();
@@ -94,8 +94,8 @@ export async function runPipeline({ dry = false, forcePublish = false, skipRende
 
     await writeArtifacts(runId, finalRecord);
     printSummary(finalRecord);
-    // Fire-and-forget: the reel is already on disk, so a Telegram failure must
-    // not turn a good run into a failed one.
+    // Fire-and-forget: the reel is already on disk, so a Telegram failure must not
+    // turn a good run into a failed one.
     void notifyOutcome({ runId, script, event, publishResult, media: finalRecord.media, dashboardUrl });
     return finalRecord;
   } catch (err) {
@@ -156,9 +156,9 @@ function printSummary(record) {
 }
 
 // ---- CLI entry point -------------------------------------------------------
-// pathToFileURL, not string concatenation: on Windows `file://` + `D:\...`
-// yields two slashes while import.meta.url has three, so a hand-rolled check
-// silently never matches and the command exits 0 having done nothing.
+// pathToFileURL, not string concatenation: on Windows `file://` + `D:\...` yields
+// two slashes while import.meta.url has three, so a hand-rolled check silently
+// never matches and the command exits 0 having done nothing.
 const isMain = Boolean(
   process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href
 );

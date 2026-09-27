@@ -90,24 +90,23 @@ export async function publisher({ runId, script, media, event, force = false, dr
 // Two ways to get a local mp4 onto a Page, tried in this order.
 //
 // 1. One multipart POST to /{PAGE_ID}/videos with the file in the `file` field.
-//    This is the default in Meta's own SDKs and the only path that reliably
-//    yields a complete video from a file on disk.
+//    The default in Meta's own SDKs and the only path that reliably yields a
+//    complete video from a file on disk.
 //
-// 2. The Resumable Upload API, which is what the Video API guide documents:
+// 2. The Resumable Upload API from the Video API guide:
 //      a. POST /{APP_ID}/uploads      -> upload session id   (user token)
 //      b. POST /upload:{SESSION_ID}   -> file handle         (user token)
 //      c. POST graph-video /{PAGE_ID}/videos with that handle (page token)
 //
-// Path 2 is kept as the fallback because it is Meta's documented flow, but it
-// has a real defect for anything over a few MB: step b splits the file server
-// side and returns ONE HANDLE PER PART, newline separated. A 9 MB reel comes
-// back as four handles, and /videos cannot assemble them — passing the joined
-// string fails with (#100) Using file handle created for another user, and
-// passing a single one silently publishes only that part as a few-second clip.
-// So a multi-part handle is reported rather than sent.
+// Path 2 is only a fallback, and it is broken for anything over a few MB: step b
+// splits the file server-side and returns ONE HANDLE PER PART, newline separated.
+// A 9 MB reel comes back as four handles, and /videos cannot assemble them — the
+// joined string fails with (#100) "file handle created for another user", and a
+// single one silently publishes only that part as a few-second clip. So a
+// multi-part handle is reported rather than sent.
 //
-// Both paths publish with the Page token: a user token is only accepted for
-// the upload steps, and the page token is the identity the post is made as.
+// Both paths publish with the Page token: a user token is only accepted for the
+// upload steps, and the page token is the identity the post is made as.
 
 async function postToFacebook({ script, media, event }) {
   const { appId, pageId, pageAccessToken, userAccessToken, graphVersion } = env.facebook;
@@ -166,8 +165,8 @@ async function publishFacebookResumable({
   if (!rawSessionId) throw new Error(`No upload session id returned: ${JSON.stringify(session)}`);
 
   // The id already carries the `upload:` prefix (e.g. `upload:MTphdHRhY2htZW50…`).
-  // Prepending it again yields `/upload:upload:…`, which fails the HMAC check
-  // with a 400 "HMAC check failed". Strip it, then add exactly one prefix.
+  // Prepending it again yields `/upload:upload:…`, which fails the HMAC check with
+  // a 400. Strip it, then add exactly one prefix.
   const sessionId = String(rawSessionId).replace(/^upload:/, '');
 
   // 2. Push the bytes, then keep the returned file handle.
@@ -183,9 +182,9 @@ async function publishFacebookResumable({
   const handle = (await readGraph(uploadRes, 'upload video')).h;
   if (!handle) throw new Error('Upload returned no file handle');
 
-  // More than one line means Meta chunked the file and is handing back a handle
-  // per part. /videos has no way to join them, so say that instead of letting
-  // the publish step fail with an opaque ownership error.
+  // More than one line means Meta chunked the file and returned a handle per part.
+  // /videos cannot join them, so say that instead of failing later with an opaque
+  // ownership error.
   const parts = String(handle).split('\n').filter(Boolean);
   if (parts.length > 1) {
     throw new Error(
@@ -220,7 +219,7 @@ async function readGraph(res, what) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok || data.error) {
     // The trace id is the only thing Meta support can act on, and the subcode
-    // is what distinguishes a permission problem from a malformed request.
+    // separates a permission problem from a malformed request.
     const err = data.error || {};
     const sub = err.error_subcode ? ` (subcode ${err.error_subcode})` : '';
     const trace = err.fbtrace_id ? ` [fbtrace ${err.fbtrace_id}]` : '';
@@ -276,8 +275,8 @@ async function postToLinkedIn({ script, media, event }) {
 
     return { ...shareFromHeader(postRes), videoUrn, degraded: false };
   } catch (err) {
-    // Video posting is gated behind extra app review on most new apps. Rather
-    // than lose the daily post entirely, drop to a text post and say so.
+    // Video posting needs extra app review on most new apps. Rather than lose the
+    // daily post entirely, drop to a text post and say so.
     if (!config.publish.linkedinFallbackToText) throw err;
 
     log.warn(`LinkedIn video post rejected, falling back to a text-only post. reason: ${err.message}`);
@@ -301,9 +300,9 @@ async function postToLinkedIn({ script, media, event }) {
     if (!postRes.ok) {
       const status = postRes.status;
       const body = (await postRes.text()).trim();
-      // A 401/403 here is the token, not the video. LinkedIn answers those with
-      // an empty body, so say what to check instead of reporting a bare status
-      // and leaving the real cause buried under the video failure.
+      // A 401/403 here is the token, not the video. LinkedIn answers those with an
+      // empty body, so name what to check instead of leaving the real cause buried
+      // under the video failure.
       if (status === 401 || status === 403) {
         throw new Error(
           `LinkedIn text post rejected: HTTP ${status}${body ? ` ${body}` : ' (empty body)'} — ` +
@@ -319,10 +318,8 @@ async function postToLinkedIn({ script, media, event }) {
   }
 }
 
-/**
- * x-restli-id comes back either as a bare numeric id or as a full URN depending
- * on the endpoint, so only add the urn:li:share: prefix when it is missing.
- */
+/** x-restli-id comes back as a bare numeric id or a full URN depending on the
+ *  endpoint, so only add the urn:li:share: prefix when it is missing. */
 function shareFromHeader(res) {
   const id = res.headers.get('x-restli-id');
   if (!id) return { id: null, urn: null };
@@ -337,8 +334,8 @@ async function uploadLinkedInVideo({ bytes, headers, memberId }) {
       initializeUploadRequest: {
         owner: `urn:li:person:${memberId}`,
         fileSizeBytes: bytes.length,
-        // Plural. The singular `uploadCaption` is rejected outright by the
-        // Videos API with "unrecognized field found but not allowed".
+        // Plural. The singular `uploadCaption` is rejected outright by the Videos
+        // API with "unrecognized field found but not allowed".
         uploadCaptions: false,
         uploadThumbnail: false
       }
@@ -346,9 +343,9 @@ async function uploadLinkedInVideo({ bytes, headers, memberId }) {
   });
   if (!initRes.ok) {
     const body = (await initRes.text()).trim();
-    // 401/403 here is the token, not the video: the request was well formed but
-    // the app is not allowed to upload. Say which scope is missing, because
-    // LinkedIn returns an empty body for it.
+    // 401/403 here is the token, not the video: the request was well formed but the
+    // app may not upload. Name the missing scope, since LinkedIn returns an empty
+    // body for it.
     if (initRes.status === 401 || initRes.status === 403) {
       throw new Error(
         `initializeUpload rejected: HTTP ${initRes.status}${body ? ` ${body}` : ' (empty body)'} — ` +
@@ -362,9 +359,8 @@ async function uploadLinkedInVideo({ bytes, headers, memberId }) {
 
   const { value: upload } = await initRes.json();
   const { video, uploadToken = '', uploadInstructions } = upload || {};
-  // LinkedIn answers with "uploadToken": "" for member tokens. The field is
-  // required to be present in finalizeUpload but its value may be empty, so
-  // this must not be a truthiness test.
+  // LinkedIn answers with "uploadToken": "" for member tokens. The field must be
+  // present in finalizeUpload but its value may be empty, so not a truthiness test.
   if (!video || !uploadInstructions?.length) {
     const keys = upload ? Object.keys(upload).join(', ') : '(no value object)';
     throw new Error(

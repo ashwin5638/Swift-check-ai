@@ -1,16 +1,15 @@
 /**
  * The caption text, in one place.
  *
- * Three callers need these exact bytes and none of them can import each other:
- * orchestrator.js writes them to output/<id>/<platform>.txt, Express serves them
- * from that path, and the Vercel function has no filesystem to read them from and
- * rebuilds them from the run record instead. The browser has a fourth copy in
- * client/src/lib/feed.js, a copy of this for the static read-only build.
+ * Three callers need these exact bytes and cannot import each other: orchestrator
+ * writes them to output/<id>/<platform>.txt, Express serves them from there, and
+ * the Vercel function has no filesystem so it rebuilds them from the run record.
+ * A fourth copy lives in client/src/lib/feed.js for the static read-only build.
  *
- * This is the *approval* caption — what the operator reviewed and what the .txt
- * file holds. It is deliberately not what publisher.js posts: that strips angle
- * brackets for Facebook and prefixes the source URL for LinkedIn, because the
- * platform APIs want a different string than a human signs off on.
+ * This is the *approval* caption — what the operator reviewed. It is deliberately
+ * not what publisher.js posts: that strips angle brackets for Facebook and
+ * prefixes the source URL for LinkedIn, because the platform APIs want a
+ * different string than a human signs off on.
  */
 
 /**

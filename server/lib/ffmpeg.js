@@ -1,20 +1,14 @@
 import { spawn } from 'node:child_process';
 import ffmpegPath from 'ffmpeg-static';
-import { createLogger } from './logger.js';
-
-const log = createLogger('ffmpeg');
 
 if (!ffmpegPath) {
   throw new Error('ffmpeg-static failed to provide a binary. Reinstall dependencies.');
 }
 
 /**
- * Thin wrapper over the ffmpeg binary. Args are passed straight through — no
- * fluent wrapper — so the filtergraphs below read exactly like ffmpeg docs.
- *
- * Warnings are captured but not echoed by default: swscaler pixel-format
- * deprecation notices alone produced ~250 lines of noise on a 15-second render.
- * They are still attached to the thrown error, so a real failure stays legible.
+ * Thin wrapper over the ffmpeg binary. Args pass straight through so the
+ * filtergraphs read like ffmpeg docs. Warnings are captured, not echoed —
+ * swscaler notices alone added ~250 lines of noise per render.
  */
 export function runFfmpeg(args, { quiet = true, label = '' } = {}) {
   return new Promise((resolve, reject) => {
@@ -51,9 +45,4 @@ export function probeDuration(file) {
     });
     proc.on('error', () => resolve(null));
   });
-}
-
-export function ffmpegBinaryPath() {
-  log.debug(`ffmpeg: ${ffmpegPath}`);
-  return ffmpegPath;
 }

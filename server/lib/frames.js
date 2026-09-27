@@ -8,10 +8,10 @@ const log = createLogger('frames');
 /**
  * Renders the branded HTML template to one transparent PNG per on-screen beat.
  *
- * Playwright does the layout because CSS beats hand-rolled PIL/canvas drawing
- * for text wrapping, and the same file can be opened in a browser to tweak the
- * brand without touching JS. PNG overlays are then composited by FFmpeg using
- * time-based `enable` expressions — no per-frame JS looping.
+ * Playwright does the layout because CSS beats hand-rolled drawing for text
+ * wrapping, and the same file opens in a browser for tweaking the brand without
+ * touching JS. FFmpeg then composites the PNGs with time-based `enable`
+ * expressions — no per-frame JS looping.
  */
 export async function renderBeatFrames({ beats, headline, source, workDir, durationSeconds, width, height }) {
   await fs.mkdir(workDir, { recursive: true });
@@ -40,7 +40,8 @@ export async function renderBeatFrames({ beats, headline, source, workDir, durat
       });
 
       await page.setContent(html, { waitUntil: 'load' });
-      // Webfonts come from a CDN; without this the first frame can render in a fallback face.
+      // Webfonts come from a CDN; without this the first frame renders in a
+      // fallback face.
       await page.evaluate(() => document.fonts?.ready);
       await page.waitForTimeout(120);
 
@@ -57,18 +58,19 @@ export async function renderBeatFrames({ beats, headline, source, workDir, durat
   return frames;
 }
 
-/**
- * Beat timing is deterministic: the intro beat gets a shorter slot so the
- * hook lands fast, the takeaway gets the longest. No LLM arithmetic involved.
- */
+/** Beat timing is deterministic: the intro gets a shorter slot so the hook lands
+ *  fast, the takeaway the longest. No LLM arithmetic involved. */
 export function planBeats(count, durationSeconds) {
-  const weights = count === 3 ? [0.26, 0.36, 0.38] : count === 4 ? [0.22, 0.28, 0.25, 0.25] : null;
-  const w = weights ?? Array.from({ length: count }, () => 1 / count);
+  const weights = {
+    3: [0.26, 0.36, 0.38],
+    4: [0.22, 0.28, 0.25, 0.25],
+    5: [0.18, 0.22, 0.2, 0.2, 0.2]
+  }[count] ?? Array.from({ length: count }, () => 1 / count);
 
   let cursor = 0;
-  return w.map((weight, i) => {
+  return weights.map((weight, i) => {
     const start = Number(cursor.toFixed(3));
-    const end = i === w.length - 1 ? Number(durationSeconds.toFixed(3)) : Number((start + weight * durationSeconds).toFixed(3));
+    const end = i === weights.length - 1 ? Number(durationSeconds.toFixed(3)) : Number((start + weight * durationSeconds).toFixed(3));
     cursor = end;
     return { start, end, duration: Number((end - start).toFixed(3)) };
   });

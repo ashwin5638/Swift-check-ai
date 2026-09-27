@@ -42,21 +42,20 @@ export const PLATFORM_LABEL = { facebook: 'FB', linkedin: 'LI' };
 
 /** The status a run should be *judged* by.
  *
- *  A run's own `status` stops at 'awaiting-approval' and stays there for good,
- *  even after a human approves it and the reel reaches a platform. What the
- *  operator needs to see is the publish outcome, so this mirrors the server's
- *  runDisplayStatus(): if publishing resolved, that wins. Without this the
- *  header and the run log disagree about the same run.
- */
+ *  A run's own `status` stops at 'awaiting-approval' and stays there even after a
+ *  human approves it. What the operator needs to see is the publish outcome, so
+ *  this mirrors the server's runDisplayStatus(): if publishing resolved, that
+ *  wins. Without it the header and the run log disagree about the same run. */
+
 export function displayStatus(run) {
   const reached = ['published', 'partial', 'awaiting-approval'];
   if (reached.includes(run?.publish?.status)) return run.publish.status;
   return run?.status ?? 'unknown';
 }
 
-/** Derives the headline figures from the run history. Returns an em dash
- *  rather than a zero when there is nothing to measure, so an empty console
- *  never looks like a console reporting success. */
+/** Derives the headline figures. Returns an em dash rather than a zero when
+ *  there is nothing to measure, so an empty console never looks like one
+ *  reporting success. */
 export function summariseRuns(runs) {
   const total = runs.length;
   if (!total) {

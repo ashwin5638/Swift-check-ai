@@ -9,10 +9,10 @@ const parser = new Parser();
 /**
  * AGENT 1 — News Scout.  Zero LLM calls.
  *
- * Pulls candidate marine-industry headlines from keyless feeds, collapses
- * duplicates across sources, drops anything already covered, and returns a
- * short list of titles + one-line snippets for the ranker. Snippets only:
- * shipping full article bodies would multiply prompt tokens for no benefit.
+ * Pulls marine-industry headlines from keyless feeds, collapses duplicates across
+ * sources, drops anything already covered, and returns titles + one-line
+ * snippets for the ranker. Snippets only: full article bodies would multiply
+ * prompt tokens for no benefit.
  */
 export async function newsScout() {
   const { googleNewsQueries, gdeltEnabled, gdeltQuery, lookbackDays, maxCandidates, minTitleLength } = config.news;

@@ -72,10 +72,10 @@ export async function visualBuilder({ script, event, runId }) {
 /**
  * Builds one flat ffmpeg command.
  *
- * Order matters to ffmpeg: every `-i` input must precede the filtergraph and
- * all output options. Building video args and audio args separately and
- * concatenating them puts `-t` before the audio inputs, which ffmpeg rejects.
- * So inputs are collected first, then one combined filtergraph, then outputs.
+ * Order matters: every `-i` must precede the filtergraph and all output options.
+ * Building video and audio args separately and concatenating puts `-t` before the
+ * audio inputs, which ffmpeg rejects. So inputs are collected first, then one
+ * combined filtergraph, then outputs.
  */
 async function buildFfmpegArgs({ background, frames, voiceFile, music, width, height, fps, durationSeconds, kenBurnsZoom, outputFile }) {
   const inputArgs = [];
@@ -155,12 +155,18 @@ async function buildFfmpegArgs({ background, frames, voiceFile, music, width, he
   ];
 }
 
-/** Narration longer than the reel means the reel grows, capped at 22s. */
+/**
+ * Narration longer than the target means the reel grows; it never truncates, so
+ * a wordy voiceover can never be cut off mid-sentence. Capped by
+ * config.reel.maxDurationSeconds rather than a number inlined here, because the
+ * target is a floor and the cap is the real ceiling on how long a reel can get.
+ */
 async function fitDuration(voiceFile, target) {
   const actual = await probeDuration(voiceFile);
   if (!actual) return target;
   const needed = Number((actual + 0.9).toFixed(2));
-  const final = Math.min(Math.max(needed, target), 22);
+  const cap = config.reel.maxDurationSeconds ?? Infinity;
+  const final = Math.min(Math.max(needed, target), cap);
   if (final !== target) {
     log.info(`Reel length adjusted ${target}s → ${final}s to fit the voiceover`);
   }

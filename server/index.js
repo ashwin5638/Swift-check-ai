@@ -12,10 +12,9 @@ import { runPipeline } from './orchestrator.js';
 const log = createLogger('server');
 const app = express();
 
-// Only local origins. A page served from anywhere else on the internet has a
-// different Origin, so this blocks drive-by requests to 127.0.0.1:4000 from
-// sites you happen to be visiting while the dashboard is up. Requests with no
-// Origin header (curl, same-origin navigations) still pass.
+// Only local origins. A page served from anywhere else has a different Origin, so
+// this blocks drive-by requests to 127.0.0.1:4000 from sites you happen to be
+// visiting. Requests with no Origin header (curl, same-origin) still pass.
 const LOCAL_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 app.use(cors({
   origin(origin, cb) {
@@ -25,9 +24,9 @@ app.use(cors({
 app.use(express.json());
 
 /**
- * Resolves a path under output/ and refuses anything that escapes it.
- * Guards `/api/captions/:id` where `id` is caller-controlled: Express decodes
- * %2F, so `..%2f..` would otherwise traverse out of the directory.
+ * Resolves a path under output/ and refuses anything that escapes it. Guards
+ * `/api/captions/:id`, where `id` is caller-controlled: Express decodes %2F, so
+ * `..%2f..` would otherwise traverse out of the directory.
  */
 function safeOutputPath(...segments) {
   const root = path.resolve(config.paths.output);
@@ -36,8 +35,8 @@ function safeOutputPath(...segments) {
   return resolved;
 }
 
-// Run ids are generated as ISO timestamps, so this is a strict allowlist that
-// also rejects anything starting with a dot.
+// Run ids are ISO timestamps, so this allowlist also rejects anything starting
+// with a dot.
 const SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 
 // Generated reels. Streamed with range support so the dashboard <video> can seek.
@@ -72,8 +71,8 @@ app.get('/api/runs/:id', (req, res) => {
 
 /**
  * Removes a run from the history and its reel from disk. The queue is checked
- * first: a reel awaiting approval is still a live candidate, so deleting it
- * would silently drop something a human has not decided on yet.
+ * first: a reel awaiting approval is still a live candidate, so deleting it would
+ * silently drop something a human has not decided on yet.
  */
 app.delete('/api/runs/:id', (req, res) => {
   const { id } = req.params;
@@ -114,13 +113,10 @@ app.post('/api/runs', async (req, res) => {
   }
 });
 
-/**
- * Shared publish path. Both the run-level button and the queue's approve button
- * land in server/lib/publishRun.js so they cannot drift apart — and so CI, which
- * is what actually publishes for the Vercel deployment, runs the same code.
- */
-
-/** Approve-and-post a reel that was gated by requireApproval. */
+// Approve-and-post a reel that was gated by requireApproval. Shares
+// server/lib/publishRun.js with the run-level button so the two cannot drift, and
+// so CI — which is what actually publishes for the Vercel deployment — runs the
+// same code.
 app.post('/api/runs/:id/publish', async (req, res) => {
   const run = getRun(req.params.id);
   if (!run) return res.status(404).json({ error: 'Run not found' });

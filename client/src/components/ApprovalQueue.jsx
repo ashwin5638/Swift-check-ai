@@ -6,11 +6,10 @@ import { fmtBytes, fmtRelative } from '../lib/format.js';
 
 /**
  * The approval queue. A reel lands here when config.publish.requireApproval is
- * true: it has already been rendered and saved, and is waiting for a human to
- * decide whether it goes out.
+ * true: already rendered and saved, waiting for a human to decide.
  *
- * The card body is a button so the queue is reachable by keyboard. The actions
- * are siblings of that button, not children, so nothing nests.
+ * The card body is a button so the queue is keyboard-reachable. The actions are
+ * siblings of that button, not children, so nothing nests.
  */
 export default function ApprovalQueue({ pending, busy, onApprove, onReject, onSelectRun, selectedId }) {
   const now = useNow(15_000);

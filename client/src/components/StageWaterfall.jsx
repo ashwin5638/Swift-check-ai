@@ -4,12 +4,8 @@ import { fmtDuration } from '../lib/format.js';
 const MIN_BAR = 1.4;
 
 /**
- * The run's own telemetry, drawn as a gantt against total wall time.
- *
- * This data has always been written to state/runs.json and returned by
- * /api/runs/:id — it was simply never shown. It is the fastest way to see
- * where a run spent its time, and the longest bar is the honest answer to
- * "why did this take twenty seconds".
+ * The run's telemetry, drawn as a gantt against total wall time. Always present
+ * in state/runs.json — the fastest way to see where a run spent its time.
  */
 export default function StageWaterfall({ run }) {
   const steps = run.steps ?? [];

@@ -36,10 +36,10 @@ export async function chat({ model, messages, maxTokens = 400, temperature = 0.7
   const started = Date.now();
   let response = await request(model, messages, maxTokens, temperature, json);
 
-  // Some models (notably the gpt-oss reasoning family) reject a JSON response
-  // format on non-trivial prompts with `json_validate_failed`. Our prompts
-  // already demand JSON and parseJsonLoose handles fences, so degrade to
-  // prompt-only rather than failing the whole run.
+  // Some models (notably the gpt-oss reasoning family) reject a JSON response format
+  // on non-trivial prompts with `json_validate_failed`. Our prompts already demand
+  // JSON and parseJsonLoose handles fences, so degrade to prompt-only rather than
+  // failing the whole run.
   if (!response.ok && response.errorCode === 'json_validate_failed') {
     log.warn(`${label}: model rejected JSON mode, retrying with prompt-only JSON`, { model });
     response = await request(model, messages, maxTokens, temperature, false);

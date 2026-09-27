@@ -17,39 +17,24 @@ import {
 import { DispatchError, activeRun, dispatchWorkflow, githubConfig } from './_lib/github.js';
 
 /**
- * The Vercel half of the console: a control plane, nothing more.
+ * The Vercel half of the console: a control plane that dispatches to CI.
  *
- * ## Why this file is not a function
- *
- * The leading underscore keeps Vercel from turning it into one. It is the shared
- * Express app; the nine files beside it are three lines each and exist only to
- * give Vercel a path to route to. See api/health.js for why there are nine of
- * them instead of one catch-all.
+ * The leading underscore keeps Vercel from treating this as a function. The nine
+ * files beside it are three lines each, existing only to give Vercel a path to
+ * route to.
  *
  * This deliberately does NOT import server/index.js, even though the route table
- * below is a near-copy of it. Two reasons, both hard:
+ * below is a near-copy: server/config.js mkdirs at import time (throws EROFS on
+ * Vercel's read-only FS), and ffmpeg-static + Playwright would bloat the bundle.
+ * So the routes are written twice and the parts that must not drift — status
+ * derivation, list shape, caption text — are imported from server/lib/ as pure
+ * functions. Do not add an fs call to server/lib/dashboard.js or captions.js.
  *
- *   1. server/config.js mkdirs output/, state/ and logs/ at import time, which
- *      throws EROFS on Vercel's read-only filesystem. It is imported by
- *      orchestrator.js, publisher.js and state.js, so anything that reaches the
- *      pipeline reaches that too.
- *   2. ffmpeg-static and Playwright would follow it into the bundle, and a
- *      function carrying a browser has no way to install that browser's system
- *      libraries anyway.
- *
- * So the routes are written twice, deliberately, and the parts that must not
- * drift — the status derivation, the list shape, the caption text — are imported
- * from server/lib/ as pure functions instead of being reimplemented here. Those
- * two modules have no filesystem or config dependency precisely so this import is
- * legal. If you find yourself adding an fs call to server/lib/dashboard.js or
- * server/lib/captions.js, this stops working.
- *
- * Every route here is open: this MVP has no authentication, on the deployed
- * control plane or on the local API. That is a deliberate simplification and it
- * has a real cost — a deployed URL is public, so anyone who finds it can trigger
- * runs and post to the Facebook page and the LinkedIn account. Put a gate in
- * front of the writes before this is exposed to the internet for real.
+ * Every route is open: this MVP has no authentication, so a deployed URL is
+ * public and anyone who finds it can trigger runs and post to Facebook and
+ * LinkedIn. Put a gate in front of the writes before exposing it for real.
  */
+
 
 const require = createRequire(import.meta.url);
 const config = require('../config.json');
@@ -69,18 +54,13 @@ app.get('/api/health', async (_req, res) => {
 
   res.json({
     ok: true,
-    // Null rather than false when GitHub could not be reached. A "Pipeline:
-    // idle" badge that is really "could not check" teaches the operator to
-    // ignore the one field meant to stop them double-triggering.
     running: running ? true : false,
     run: running,
-    // From config.json, which is a build artefact and therefore readable here.
     config: { brand: config.brand, publish: config.publish, reel: config.reel },
-    // The eleven pipeline credentials live in GitHub Actions secrets and are not
-    // present in this function, so there is nothing truthful to report. Null
-    // tells the panel to say so; a map of eleven `false` would read as "this
-    // project is broken", and a map of eleven `true` would tell every anonymous
-    // visitor which integrations are wired up.
+    // The pipeline credentials live in GitHub Actions secrets and are absent from
+    // this function. Null tells the panel to say so; a map of booleans would
+    // either read as "this project is broken" or tell every anonymous visitor
+    // which integrations are wired up.
     credentials: null,
     telegram: null,
     queue: { pending: pending.length },
@@ -108,9 +88,8 @@ app.get('/api/covered', async (_req, res) => {
 
 /**
  * Rebuilt from the run record rather than read from output/<id>/<platform>.txt,
- * which is what the local route does and cannot do here. Same bytes: both go
- * through server/lib/captions.js, and client/src/lib/feed.js is a copy of it for
- * the static read-only build.
+ * which is what the local route does. Same bytes: both go through
+ * server/lib/captions.js.
  */
 app.get('/api/captions/:id/:platform', async (req, res) => {
   const { id, platform } = req.params;
@@ -152,8 +131,8 @@ app.post('/api/runs/:id/publish', async (req, res) => {
   if (!run.media) return res.status(400).json({ error: 'Run has no rendered media' });
   if (!run.media.videoUrl) {
     // The reel has to be somewhere CI can fetch. publishDashboard.js uploads the
-    // newest five to Blob; an older one was pruned, so there is no file to post
-    // and the workflow would fail on a download instead of here.
+    // newest five to Blob; an older one was pruned, so the workflow would fail
+    // on a download instead of here.
     return res.status(409).json({
       error: 'This reel is no longer in the blob store — only the five most recent are kept.'
     });
@@ -183,7 +162,7 @@ app.post('/api/pending/:id/approve', async (req, res) => {
   const dispatched = await dispatchWorkflow(PUBLISH_WORKFLOW, {
     run_id: id,
     video_url: run.media.videoUrl,
-    // The queue records exactly which platforms this reel was gated for, and
+    // The queue records exactly which platforms this reel was gated for, so
     // approving it must not widen that to everything config.json enables.
     platforms: (entry.platforms || []).join(','),
     dry: req.body?.dry ? 'true' : 'false'
@@ -192,9 +171,9 @@ app.post('/api/pending/:id/approve', async (req, res) => {
 });
 
 /**
- * Rejecting and deleting need no CI: neither spends a credential or produces
- * anything, so they are the two writes that can be instant. Both leave a
- * tombstone, because tomorrow's 06:17 run rebuilds state from CI's copy.
+ * Rejecting and deleting need no CI: neither spends a credential, so they are
+ * the two writes that can be instant. Both leave a tombstone, because tomorrow's
+ * 06:17 run rebuilds state from CI's copy.
  */
 app.post('/api/pending/:id/reject', async (req, res) => {
   const id = assertSafeId(req.params.id);
@@ -213,9 +192,8 @@ app.delete('/api/runs/:id', async (req, res) => {
   }
 
   await deleteRun(id);
-  // There is no output/ directory to clean and no local run record to remove;
-  // the blob is pruned by publishDashboard.js, which is the only thing that
-  // knows the retention window.
+  // No output/ dir to clean and no local run record; the blob is pruned by
+  // publishDashboard.js, the only thing that knows the retention window.
   res.json({ ok: true, removed: 1 });
 });
 
@@ -225,9 +203,8 @@ app.use((err, _req, res, _next) => {
   if (err instanceof StateError || err instanceof DispatchError) {
     return res.status(err.status || 500).json({ error: err.message });
   }
-  // Anything reaching here is a bug or an unreachable store. The message is
-  // logged by the platform either way, and a leaked stack in a JSON body tells
-  // an anonymous caller more about the deployment than it helps.
+  // A leaked stack in a JSON body tells an anonymous caller more about the
+  // deployment than it helps. The platform logs the message either way.
   console.error('[api] unhandled', err);
   res.status(500).json({ error: 'The control plane hit an unexpected error.' });
 });

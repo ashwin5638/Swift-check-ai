@@ -7,10 +7,10 @@ const log = createLogger('eventRanker');
 /**
  * AGENT 2 — Event Ranker.  Exactly 1 LLM call per day.
  *
- * Scoring and selecting are fused: instead of one call per candidate (10-15
+ * Scoring and selecting are fused: rather than one call per candidate (10-15
  * calls), the model sees every headline at once and returns a single winner.
- * Titles + one-line snippets only, and max_tokens is capped at ~160 because
- * the whole answer is an index, a title, and a sentence.
+ * Titles + one-line snippets only, and max_tokens is capped low because the whole
+ * answer is an index, a title, and a sentence.
  */
 export async function eventRanker(candidates) {
   if (!candidates?.length) {
