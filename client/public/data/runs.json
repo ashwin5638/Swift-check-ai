@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-09-26T14:08:49.996Z",
+  "generatedAt": "2026-09-27T12:09:15.979Z",
   "runs": [
+    {
+      "id": "2026-09-27T12-08-47",
+      "startedAt": "2026-09-27T12:08:47.683Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 659,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 227,
+          "detail": "India tells UN attacks on shipping in Gulf are simply unacceptable"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 548,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 23530,
+          "detail": "15s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1341,
+        "completionTokens": 272
+      },
+      "finishedAt": "2026-09-27T12:09:12.652Z",
+      "durationMs": 24969,
+      "event": {
+        "title": "India tells UN attacks on shipping in Gulf are simply unacceptable",
+        "source": "India Today",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOdTRHUE5GVUptUEFVSEtCR0FYZFhmMjh1eXRHNnJranlzdlY5TnZNSU9lTnp2c0UzTTNQS0cwbHNOaDBRcWE2N3BvOWI3THVVN0pvSklaQmpUZDFlSWVGOTliS0dwYUxvMXR6Qlo1Q0tzWUluLTNVZzV4QVplS2hYdi1lYmhnVXZ0bmhNUDV2ZGtPa3p3M2tNbmY3ZlhGQTNMWHB5eUJUcmNaVkZNZXVjaFdiONIBuAFBVV95cUxPZS1aejFRMnVRZmFtdjZrM0ppYnIzNFdvN0MyNTdGTHRMVmhHWXFHdWtiV2hOSHUxamU2LV84NWgxRWxyYXdtTUFQZkRMMzBrOEEyUnhUeE8ySVpzVEdveHVyZzdzNEw2Z0RpaGJLY0UwNmVxVFkyWlNlOGhaWFZIcWtTOXJKY25MaTlOUDh4TVNZRWE2a1NtTTlGZEp4RGFRQTEtS1FmWjFJTFpKRFozUm1VcTFsY2tj?oc=5",
+        "reason": "India's UN condemnation of Gulf attacks signals a major geopolitical shift impacting global war-risk insurance premiums and route security."
+      },
+      "script": {
+        "headline": "India Condemns Gulf Attacks",
+        "voiceover": "India told the United Nations that attacks on shipping in the Gulf are unacceptable. This statement highlights rising geopolitical risks that directly impact global war-risk insurance premiums and maritime route security for all operators.",
+        "beats": [
+          "INDIA TELLS UN",
+          "GULF ATTACKS UNACCEPTABLE",
+          "GEOPOLITICAL RISE",
+          "INSURANCE COSTS UP"
+        ],
+        "facebookCaption": "India just called out attacks on Gulf shipping at the UN. How do you think this affects your route planning? Drop your thoughts below.",
+        "linkedinCaption": "India's formal UN condemnation of recent Gulf shipping attacks signals a significant shift in regional security dynamics. This development is likely to influence global war-risk insurance premiums and route risk assessments. Monitor geopolitical impact on your supply chain resilience.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#gulf",
+          "#insurance",
+          "#logistics",
+          "#geopolitics"
+        ],
+        "imageQuery": "container ship open sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOdTRHUE5GVUptUEFVSEtCR0FYZFhmMjh1eXRHNnJranlzdlY5TnZNSU9lTnp2c0UzTTNQS0cwbHNOaDBRcWE2N3BvOWI3THVVN0pvSklaQmpUZDFlSWVGOTliS0dwYUxvMXR6Qlo1Q0tzWUluLTNVZzV4QVplS2hYdi1lYmhnVXZ0bmhNUDV2ZGtPa3p3M2tNbmY3ZlhGQTNMWHB5eUJUcmNaVkZNZXVjaFdiONIBuAFBVV95cUxPZS1aejFRMnVRZmFtdjZrM0ppYnIzNFdvN0MyNTdGTHRMVmhHWXFHdWtiV2hOSHUxamU2LV84NWgxRWxyYXdtTUFQZkRMMzBrOEEyUnhUeE8ySVpzVEdveHVyZzdzNEw2Z0RpaGJLY0UwNmVxVFkyWlNlOGhaWFZIcWtTOXJKY25MaTlOUDh4TVNZRWE2a1NtTTlGZEp4RGFRQTEtS1FmWjFJTFpKRFozUm1VcTFsY2tj?oc=5",
+        "sourceName": "India Today"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-27T12-08-47.mp4",
+        "durationSeconds": 15,
+        "sizeBytes": 5457368,
+        "hasVoiceover": true,
+        "image": {
+          "query": "container ship open sea",
+          "source": "pexels",
+          "photographer": "William Liu",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-9806482/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.3,
+          "text": "INDIA TELLS UN"
+        },
+        {
+          "start": 3.3,
+          "end": 7.5,
+          "text": "GULF ATTACKS UNACCEPTABLE"
+        },
+        {
+          "start": 7.5,
+          "end": 11.25,
+          "text": "GEOPOLITICAL RISE"
+        },
+        {
+          "start": 11.25,
+          "end": 15,
+          "text": "INSURANCE COSTS UP"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-09-26T14-08-20",
       "startedAt": "2026-09-26T14:08:20.989Z",
