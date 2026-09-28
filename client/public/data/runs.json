@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-09-27T12:09:15.979Z",
+  "generatedAt": "2026-09-28T14:04:18.726Z",
   "runs": [
+    {
+      "id": "2026-09-28T14-03-43",
+      "startedAt": "2026-09-28T14:03:43.290Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 1060,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 471,
+          "detail": "Three Seized Iranian Oil Tankers Carrying 6 Million Barrels Of Oil Head Towards U.S."
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 758,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31136,
+          "detail": "19.99s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1412,
+        "completionTokens": 317
+      },
+      "finishedAt": "2026-09-28T14:04:16.719Z",
+      "durationMs": 33429,
+      "event": {
+        "title": "Three Seized Iranian Oil Tankers Carrying 6 Million Barrels Of Oil Head Towards U.S.",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMjdmb2ZmVWxHRE04clQ2MUJ4TTEyNTNuYUNXMHhmNVByX3hYR0QyRk5SYnVERXpMQXcxcWxUSWRla184dkN0RDBUSWFvTnVWTjJaQnpSUTZTTjRhUWd2MGtra2xQb2E4OWNtZ1pDODJnVktWaGhEczF3TTBrdVc5Q1E2dV9VXzFDcnVGMkI5ZHpNa2w3ZDJuVGNGYXFrczBZTm5SbG5sdlJLOUY1YTRsMkUzOEk?oc=5",
+        "reason": "Seizure of three tankers carrying 6 million barrels creates immediate geopolitical risk and potential supply chain disruption for marine insurers and shipowners."
+      },
+      "script": {
+        "headline": "Iranian Tankers Seized",
+        "voiceover": "Three Iranian oil tankers carrying six million barrels have been seized. These vessels are now moving toward the United States. This sudden removal creates immediate geopolitical risk and potential supply chain disruption for marine insurers and shipowners globally.",
+        "beats": [
+          "THREE TANKERS SEIZED",
+          "SIX MILLION BARRELS",
+          "MOVING TO U.S.",
+          "SUPPLY CHAIN RISK",
+          "INSURERS WATCHING"
+        ],
+        "facebookCaption": "Three Iranian tankers with six million barrels are heading to the U.S. after being seized. How does this impact your shipping insurance rates? Let us know in the comments.",
+        "linkedinCaption": "The seizure of three Iranian oil tankers carrying six million barrels introduces significant volatility to global energy logistics. Marine insurers and shipowners must assess geopolitical exposure immediately. Supply chain continuity remains the primary concern.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#oiltransport",
+          "#geopolitics",
+          "#marinelaw",
+          "#logistics"
+        ],
+        "imageQuery": "large oil tanker ship",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMjdmb2ZmVWxHRE04clQ2MUJ4TTEyNTNuYUNXMHhmNVByX3hYR0QyRk5SYnVERXpMQXcxcWxUSWRla184dkN0RDBUSWFvTnVWTjJaQnpSUTZTTjRhUWd2MGtra2xQb2E4OWNtZ1pDODJnVktWaGhEczF3TTBrdVc5Q1E2dV9VXzFDcnVGMkI5ZHpNa2w3ZDJuVGNGYXFrczBZTm5SbG5sdlJLOUY1YTRsMkUzOEk?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-28T14-03-43.mp4",
+        "durationSeconds": 19.99,
+        "sizeBytes": 12699541,
+        "hasVoiceover": true,
+        "image": {
+          "query": "large oil tanker ship",
+          "source": "pexels",
+          "photographer": "DeLuca G",
+          "sourcePage": "https://www.pexels.com/photo/default-27275198/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "THREE TANKERS SEIZED"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "SIX MILLION BARRELS"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "MOVING TO U.S."
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SUPPLY CHAIN RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURERS WATCHING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-09-27T12-08-47",
       "startedAt": "2026-09-27T12:08:47.683Z",
