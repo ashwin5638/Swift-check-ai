@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-09-28T14:04:18.726Z",
+  "generatedAt": "2026-09-29T13:00:31.164Z",
   "runs": [
+    {
+      "id": "2026-09-29T12-59-57",
+      "startedAt": "2026-09-29T12:59:57.515Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 827,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 285,
+          "detail": "Ship hit in Hormuz, sparking fire: maritime agency"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 637,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 29838,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1347,
+        "completionTokens": 299
+      },
+      "finishedAt": "2026-09-29T13:00:29.106Z",
+      "durationMs": 31591,
+      "event": {
+        "title": "Ship hit in Hormuz, sparking fire: maritime agency",
+        "source": "The Peninsula Qatar",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQ3piMWd5M1lYQXZKVlRPYmNqZ0VsamhvcjdXSkhoQ0FYOEhXVTRpUkhJMWtxeWY4Y3ZjbWRfejFhTFFFMVRHa1RnWmN0ZE53Yk56Ny0xendiT2ptdFNtLVBYOVJiMHJvUGRYLVdtSnZPZDFGcy1idnNhendLcjhsRU0tUWN3VE8yZFBNemx5cHFNR0tiU2tOOHlnQVotQQ?oc=5",
+        "reason": "A vessel struck in the Strait of Hormuz poses immediate supply-chain disruption risks and safety concerns for global energy transit."
+      },
+      "script": {
+        "headline": "Hormuz Fire Alert",
+        "voiceover": "A vessel struck in the Strait of Hormuz is currently on fire, according to the maritime agency. This incident poses immediate risks to global energy transit and safety. Monitor official updates closely for further developments on the situation.",
+        "beats": [
+          "VESSEL STRUCK IN HORMUZ",
+          "FIRE REPORTED ON DECK",
+          "MARITIME AGENCY CONFIRMS",
+          "GLOBAL ENERGY ROUTE AT RISK",
+          "MONITOR OFFICIAL UPDATES"
+        ],
+        "facebookCaption": "A ship has been hit and is on fire in the Strait of Hormuz. The maritime agency has confirmed the incident. How do you think this affects current transit schedules?",
+        "linkedinCaption": "The maritime agency confirmed a vessel struck in the Strait of Hormuz is experiencing a fire. This incident highlights persistent safety and supply chain risks in critical energy corridors. Operational continuity depends on rapid, coordinated response protocols.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#Hormuz",
+          "#logistics",
+          "#energy",
+          "#supplychain"
+        ],
+        "imageQuery": "cargo ship strait of hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQ3piMWd5M1lYQXZKVlRPYmNqZ0VsamhvcjdXSkhoQ0FYOEhXVTRpUkhJMWtxeWY4Y3ZjbWRfejFhTFFFMVRHa1RnWmN0ZE53Yk56Ny0xendiT2ptdFNtLVBYOVJiMHJvUGRYLVdtSnZPZDFGcy1idnNhendLcjhsRU0tUWN3VE8yZFBNemx5cHFNR0tiU2tOOHlnQVotQQ?oc=5",
+        "sourceName": "The Peninsula Qatar"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-29T12-59-57.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 10240194,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship strait of hormuz",
+          "source": "pexels",
+          "photographer": "Şahin Doğdu",
+          "sourcePage": "https://www.pexels.com/photo/a-large-cargo-ship-is-floating-in-the-ocean-27597349/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "VESSEL STRUCK IN HORMUZ"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "FIRE REPORTED ON DECK"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "MARITIME AGENCY CONFIRMS"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "GLOBAL ENERGY ROUTE AT RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MONITOR OFFICIAL UPDATES"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-09-28T14-03-43",
       "startedAt": "2026-09-28T14:03:43.290Z",
