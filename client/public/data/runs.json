@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-09-29T13:00:31.164Z",
+  "generatedAt": "2026-09-30T12:42:45.538Z",
   "runs": [
+    {
+      "id": "2026-09-30T12-42-08",
+      "startedAt": "2026-09-30T12:42:08.725Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 982,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 473,
+          "detail": "Three tankers hit Tuesday in Hormuz: maritime agency"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 741,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 32149,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1350,
+        "completionTokens": 311
+      },
+      "finishedAt": "2026-09-30T12:42:43.074Z",
+      "durationMs": 34349,
+      "event": {
+        "title": "Three tankers hit Tuesday in Hormuz: maritime agency",
+        "source": "The Peninsula Qatar",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOeFR0TWM5X2pkMlJRbmwyRzE3NFNDRUVMejlJZFpRWVlMeldIUEJZbEkweTRHRFA5S3hRS1lCWXhnRndkRjR6alJua2JfYk1udE1UcVg4b28xQ1lGNWJmU1FmQ3BORzRtaDVQdV9KYkVXNkFBbGdQbDhvaWowREtyZUsyVjBXWEdzTEpSYXNDLWJRWWRteW9yVFBRSlJyVFRNMkE?oc=5",
+        "reason": "Multiple tanker strikes in the Strait of Hormuz signal severe supply-chain disruption and immediate risk to marine insurers and shipowners."
+      },
+      "script": {
+        "headline": "Hormuz Tanker Strikes",
+        "voiceover": "Three tankers were hit in the Strait of Hormuz on Tuesday. This immediate disruption threatens global oil supply chains and raises urgent questions for marine insurers and shipowners regarding current transit risk and security protocols.",
+        "beats": [
+          "THREE TANKERS HIT",
+          "HORMUZ STRAIT TUESDAY",
+          "SUPPLY CHAIN DISRUPTION",
+          "INSURANCE RISK RISING",
+          "MARITIME SECURITY ALERT"
+        ],
+        "facebookCaption": "Three tankers were struck in Hormuz on Tuesday. How is your supply chain adapting to this new level of risk?",
+        "linkedinCaption": "Multiple tanker strikes in the Strait of Hormuz have occurred, signaling immediate supply chain disruption. This event necessitates a rapid reassessment of maritime risk and insurance coverage. The primary takeaway is that regional instability now directly impacts global freight stability.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#hormuz",
+          "#logistics",
+          "#oiltanker",
+          "#supplychain"
+        ],
+        "imageQuery": "oil tanker open water",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOeFR0TWM5X2pkMlJRbmwyRzE3NFNDRUVMejlJZFpRWVlMeldIUEJZbEkweTRHRFA5S3hRS1lCWXhnRndkRjR6alJua2JfYk1udE1UcVg4b28xQ1lGNWJmU1FmQ3BORzRtaDVQdV9KYkVXNkFBbGdQbDhvaWowREtyZUsyVjBXWEdzTEpSYXNDLWJRWWRteW9yVFBRSlJyVFRNMkE?oc=5",
+        "sourceName": "The Peninsula Qatar"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-30T12-42-08.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8328356,
+        "hasVoiceover": true,
+        "image": {
+          "query": "oil tanker open water",
+          "source": "pexels",
+          "photographer": "Chengxin Zhao",
+          "sourcePage": "https://www.pexels.com/photo/view-of-an-oil-tanker-on-a-sea-at-sunset-20097614/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "THREE TANKERS HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "HORMUZ STRAIT TUESDAY"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "SUPPLY CHAIN DISRUPTION"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE RISK RISING"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MARITIME SECURITY ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-09-29T12-59-57",
       "startedAt": "2026-09-29T12:59:57.515Z",
