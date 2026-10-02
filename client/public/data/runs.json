@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-09-30T12:42:45.538Z",
+  "generatedAt": "2026-10-02T12:44:04.386Z",
   "runs": [
+    {
+      "id": "2026-10-02T12-43-36",
+      "startedAt": "2026-10-02T12:43:36.613Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 588,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 290,
+          "detail": "US-led maritime center raises threat level for Middle East to severe"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 613,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 22319,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1340,
+        "completionTokens": 284
+      },
+      "finishedAt": "2026-10-02T12:44:00.426Z",
+      "durationMs": 23813,
+      "event": {
+        "title": "US-led maritime center raises threat level for Middle East to severe",
+        "source": "Awani International",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPd0FlWnpBaF9UcWNDTGJuc1FOcXFPR2R0TzV0WWlpUFZYWDhEY2djOGQ2M0JkMC0xQVBtRTRpQUszM1RUTG9DSjVzaU55RXVpZ2xaQXNEc1FIbS1vWXlOV25kUmh4dFp2UjY3RXJvNl9NMHNYUzBpNEFvZWsyWXQ0ankxRlJLNzlRVDY0VVBfOEp6SUlEdS1rRzJ3Mm9FVXp1TGxKX2RZSlRFUElIdl9V?oc=5",
+        "reason": "The US-led center raising the Middle East threat level to severe directly impacts insurance premiums and routing for global shipping."
+      },
+      "script": {
+        "headline": "Middle East Threat Severe",
+        "voiceover": "The US-led maritime center has officially raised the Middle East threat level to severe. This decision directly impacts global shipping routes and insurance premiums. Vessels must now navigate with heightened caution in the region.",
+        "beats": [
+          "THREAT LEVEL RAISED",
+          "US LED CENTER",
+          "MIDDLE EAST SEVERE",
+          "INSURANCE IMPACT",
+          "NAVIGATE WITH CAUTION"
+        ],
+        "facebookCaption": "The threat level for the Middle East is now severe. How does this shift affect your supply chain? Let us know in the comments.",
+        "linkedinCaption": "The US-led maritime center has elevated the Middle East threat level to severe. This development signals immediate implications for route planning and risk assessment. Monitor your exposure accordingly.",
+        "hashtags": [
+          "#maritime",
+          "#shipping",
+          "#security",
+          "#logistics",
+          "#riskmanagement",
+          "#middleeast"
+        ],
+        "imageQuery": "cargo ship open sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPd0FlWnpBaF9UcWNDTGJuc1FOcXFPR2R0TzV0WWlpUFZYWDhEY2djOGQ2M0JkMC0xQVBtRTRpQUszM1RUTG9DSjVzaU55RXVpZ2xaQXNEc1FIbS1vWXlOV25kUmh4dFp2UjY3RXJvNl9NMHNYUzBpNEFvZWsyWXQ0ankxRlJLNzlRVDY0VVBfOEp6SUlEdS1rRzJ3Mm9FVXp1TGxKX2RZSlRFUElIdl9V?oc=5",
+        "sourceName": "Awani International"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-02T12-43-36.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 18914967,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship open sea",
+          "source": "pexels",
+          "photographer": "Regan Dsouza",
+          "sourcePage": "https://www.pexels.com/photo/commercial-cargo-ships-on-the-open-sea-36112907/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "THREAT LEVEL RAISED"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "US LED CENTER"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "MIDDLE EAST SEVERE"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE IMPACT"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "NAVIGATE WITH CAUTION"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-09-30T12-42-08",
       "startedAt": "2026-09-30T12:42:08.725Z",
@@ -584,7 +713,7 @@
         "sourceName": "globaltrademag.com"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-26T14-08-20.mp4",
+        "videoUrl": null,
         "durationSeconds": 15,
         "sizeBytes": 8571522,
         "hasVoiceover": true,
