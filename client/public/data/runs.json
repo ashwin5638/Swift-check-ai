@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-02T12:44:04.386Z",
+  "generatedAt": "2026-10-03T11:45:29.573Z",
   "runs": [
+    {
+      "id": "2026-10-03T11-44-52",
+      "startedAt": "2026-10-03T11:44:52.237Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 749,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 341,
+          "detail": "Two Oil Tankers Hit By Unidentified Projectiles Near Strait Of Hormuz"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 659,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 33234,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1477,
+        "completionTokens": 297
+      },
+      "finishedAt": "2026-10-03T11:45:27.225Z",
+      "durationMs": 34988,
+      "event": {
+        "title": "Two Oil Tankers Hit By Unidentified Projectiles Near Strait Of Hormuz",
+        "source": "marineinsight.com",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPWVowV3NGYnh0SkhtMUNvSEpqd2RTN2hrbjF2VndZUjJ1UDZQeEJSS1d2Wlpfc3NTci1ySk9uYTdGSERONVJubWZUTWJMbWk5OElaQll1TDBnLUxjTG9odzJ0NGt2Z1MxRlhSMHMtc19nNUlWSXF1MTNHMzUyOGpwVTJ4Q2gwV21uRmE5N0FRZDlFYVVyeW0xNHFFRWIwbUtseFE?oc=5",
+        "reason": "Projectile strikes on tankers in the Strait of Hormuz threaten critical oil supply routes, directly impacting marine insurance premiums and global energy logistics."
+      },
+      "script": {
+        "headline": "Hormuz Tanker Strikes",
+        "voiceover": "Two oil tankers were hit by unidentified projectiles near the Strait of Hormuz. While no injuries were reported, this incident highlights persistent security risks. It directly impacts shipping insurance costs and global energy logistics routes.",
+        "beats": [
+          "TWO TANKERS STRUCK",
+          "UNIDENTIFIED PROJECTILES",
+          "STRAIT OF HORMUZ",
+          "NO INJURIES REPORTED",
+          "INSURANCE COSTS RISE"
+        ],
+        "facebookCaption": "Two tankers just took hits near the Strait of Hormuz. Security concerns are back in focus for the industry. Is your route planning ready for this?",
+        "linkedinCaption": "Recent projectile strikes on tankers in the Strait of Hormuz underscore the ongoing volatility in key energy corridors. This event will likely influence marine insurance premiums and risk assessments for operators in the region. Security remains a primary operational concern.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#oil",
+          "#Hormuz",
+          "#logistics",
+          "#marinesecurity"
+        ],
+        "imageQuery": "oil tanker sea horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPWVowV3NGYnh0SkhtMUNvSEpqd2RTN2hrbjF2VndZUjJ1UDZQeEJSS1d2Wlpfc3NTci1ySk9uYTdGSERONVJubWZUTWJMbWk5OElaQll1TDBnLUxjTG9odzJ0NGt2Z1MxRlhSMHMtc19nNUlWSXF1MTNHMzUyOGpwVTJ4Q2gwV21uRmE5N0FRZDlFYVVyeW0xNHFFRWIwbUtseFE?oc=5",
+        "sourceName": "marineinsight.com"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-03T11-44-52.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8353012,
+        "hasVoiceover": true,
+        "image": {
+          "query": "oil tanker sea horizon",
+          "source": "pexels",
+          "photographer": "Chengxin Zhao",
+          "sourcePage": "https://www.pexels.com/photo/view-of-an-oil-tanker-on-a-sea-at-sunset-20097614/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "TWO TANKERS STRUCK"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "UNIDENTIFIED PROJECTILES"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "STRAIT OF HORMUZ"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "NO INJURIES REPORTED"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE COSTS RISE"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-02T12-43-36",
       "startedAt": "2026-10-02T12:43:36.613Z",
@@ -591,7 +720,7 @@
         "sourceName": "India Today"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-27T12-08-47.mp4",
+        "videoUrl": null,
         "durationSeconds": 15,
         "sizeBytes": 5457368,
         "hasVoiceover": true,
