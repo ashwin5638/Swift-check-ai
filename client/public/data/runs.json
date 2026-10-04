@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-03T11:45:29.573Z",
+  "generatedAt": "2026-10-04T12:28:18.376Z",
   "runs": [
+    {
+      "id": "2026-10-04T12-27-42",
+      "startedAt": "2026-10-04T12:27:42.821Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 727,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 296,
+          "detail": "Strait of Hormuz crisis: Tanker struck near Oman as shipping traffic plunges"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 702,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31494,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1372,
+        "completionTokens": 304
+      },
+      "finishedAt": "2026-10-04T12:28:16.051Z",
+      "durationMs": 33230,
+      "event": {
+        "title": "Strait of Hormuz crisis: Tanker struck near Oman as shipping traffic plunges",
+        "source": "Gulf News",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNZWIwT2VpUmZsZ3NXVERLczJNRXpJU2F3NlRFVmYteHl3aENfWnloRkV1aFZqUXhWREJ1RzQwM25DRTNTUnpYNEs0Ykd3RkhYSGd0UUtMN2RESU5lTnVOYUJpLS1sVnh0VzZWWFVwXzBfLTVrdDREdlBkNF91VDR2ZUQ5T2xpcTc1aHZEUFZUWkJXZHd0Wnh0WjRfQXYtMVdiYlpiM1NSWnRJRF9SMDZjTVhGTnBzbk1YUEF0X0hWM1lPUQ?oc=5",
+        "reason": "Tanker attack and plunging traffic in the Strait of Hormuz signal severe supply-chain disruption and immediate risk for marine insurers and shipowners."
+      },
+      "script": {
+        "headline": "Hormuz Traffic Drops",
+        "voiceover": "A tanker was struck near Oman, causing shipping traffic in the Strait of Hormuz to plunge. This immediate disruption signals severe supply chain risks for marine insurers and shipowners navigating critical global trade routes today.",
+        "beats": [
+          "TANKER STRUCK NEAR OMAN",
+          "HORMUZ TRAFFIC PLUNGES",
+          "SUPPLY CHAIN AT RISK",
+          "INSURERS FACE NEW THREATS"
+        ],
+        "facebookCaption": "Tanker traffic is dropping fast in the Strait of Hormuz after a recent attack near Oman. How do you think this impacts your shipping costs?",
+        "linkedinCaption": "The recent tanker incident near Oman has caused a sharp decline in transit volumes through the Strait of Hormuz. This volatility presents immediate compliance and risk management challenges for global trade. Monitor these shifts closely.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#supplychain",
+          "#tanker",
+          "#logistics"
+        ],
+        "imageQuery": "large oil tanker sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNZWIwT2VpUmZsZ3NXVERLczJNRXpJU2F3NlRFVmYteHl3aENfWnloRkV1aFZqUXhWREJ1RzQwM25DRTNTUnpYNEs0Ykd3RkhYSGd0UUtMN2RESU5lTnVOYUJpLS1sVnh0VzZWWFVwXzBfLTVrdDREdlBkNF91VDR2ZUQ5T2xpcTc1aHZEUFZUWkJXZHd0Wnh0WjRfQXYtMVdiYlpiM1NSWnRJRF9SMDZjTVhGTnBzbk1YUEF0X0hWM1lPUQ?oc=5",
+        "sourceName": "Gulf News"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-04T12-27-42.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 12698419,
+        "hasVoiceover": true,
+        "image": {
+          "query": "large oil tanker sea",
+          "source": "pexels",
+          "photographer": "DeLuca G",
+          "sourcePage": "https://www.pexels.com/photo/default-27275198/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "TANKER STRUCK NEAR OMAN"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "HORMUZ TRAFFIC PLUNGES"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "SUPPLY CHAIN AT RISK"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "INSURERS FACE NEW THREATS"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-03T11-44-52",
       "startedAt": "2026-10-03T11:44:52.237Z",
@@ -592,7 +715,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-28T14-03-43.mp4",
+        "videoUrl": null,
         "durationSeconds": 19.99,
         "sizeBytes": 12699541,
         "hasVoiceover": true,
