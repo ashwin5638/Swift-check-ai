@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-04T12:28:18.376Z",
+  "generatedAt": "2026-10-05T14:49:36.490Z",
   "runs": [
+    {
+      "id": "2026-10-05T14-49-00",
+      "startedAt": "2026-10-05T14:49:00.628Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 918,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 563,
+          "detail": "Russia Strikes Liberian-Flagged Cargo Ship At Ukraine’s Odesa Port, Killing One"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 810,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31411,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1440,
+        "completionTokens": 323
+      },
+      "finishedAt": "2026-10-05T14:49:34.334Z",
+      "durationMs": 33706,
+      "event": {
+        "title": "Russia Strikes Liberian-Flagged Cargo Ship At Ukraine’s Odesa Port, Killing One",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbDFjVzRYRWs2cEYtTDRsaDdVVHBRSWdBN1VyYjF4allESV9fQU1XQU1wa0NzVXRTWU9yUUU3bjUzNFBfMkZnWnZ2MzVpWUpXZUpZRVRldXJEWFJYWUxvd1MxdlBtS1FxZ3YtQXZUN19lUmhMbk9ZRy1lM050VVRlNHJsVXZKaU1BTE9hd2tDdldTUEFKOUw2N1l0N1VHdlh6Sk1GRnNXbFhWQWVk?oc=5",
+        "reason": "The sinking of a commercial cargo ship by Russian drones at Odesa port represents a severe safety incident with direct operational and insurance implications."
+      },
+      "script": {
+        "headline": "Odesa Port Drone Strike",
+        "voiceover": "Russian drones struck a Liberian-flagged cargo vessel at Odesa port. One crew member died in the incident. This event underscores the critical insurance and safety risks now facing commercial shipping in the Black Sea region.",
+        "beats": [
+          "RUSSIAN DRONES HIT ODESA",
+          "LIBERIAN FLAGGED VESSEL",
+          "ONE CREW MEMBER DEAD",
+          "BLACK SEA RISK SPOTS",
+          "INSURANCE COSTS RISING"
+        ],
+        "facebookCaption": "A commercial cargo ship was hit by Russian drones in Odesa. The risk landscape for Black Sea shipping is changing fast. How is your company adjusting its routes?",
+        "linkedinCaption": "The strike on a Liberian-flagged vessel in Odesa highlights the escalating security threats to maritime commerce. Insurers and operators must reassess exposure in conflict zones. Operational safety remains the priority despite geopolitical instability.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#odesa",
+          "#fleetmanagement",
+          "#marinesafety",
+          "#logistics"
+        ],
+        "imageQuery": "cargo ship port smoke",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbDFjVzRYRWs2cEYtTDRsaDdVVHBRSWdBN1VyYjF4allESV9fQU1XQU1wa0NzVXRTWU9yUUU3bjUzNFBfMkZnWnZ2MzVpWUpXZUpZRVRldXJEWFJYWUxvd1MxdlBtS1FxZ3YtQXZUN19lUmhMbk9ZRy1lM050VVRlNHJsVXZKaU1BTE9hd2tDdldTUEFKOUw2N1l0N1VHdlh6Sk1GRnNXbFhWQWVk?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-05T14-49-00.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 5801805,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship port smoke",
+          "source": "pexels",
+          "photographer": "akın  akdağ",
+          "sourcePage": "https://www.pexels.com/photo/industrial-ship-sailing-in-istanbul-20220588/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "RUSSIAN DRONES HIT ODESA"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "LIBERIAN FLAGGED VESSEL"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "ONE CREW MEMBER DEAD"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "BLACK SEA RISK SPOTS"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE COSTS RISING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-04T12-27-42",
       "startedAt": "2026-10-04T12:27:42.821Z",
@@ -586,7 +715,7 @@
         "sourceName": "The Peninsula Qatar"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-29T12-59-57.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 10240194,
         "hasVoiceover": true,
