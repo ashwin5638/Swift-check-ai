@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-05T14:49:36.490Z",
+  "generatedAt": "2026-10-06T13:23:59.892Z",
   "runs": [
+    {
+      "id": "2026-10-06T13-23-25",
+      "startedAt": "2026-10-06T13:23:25.343Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 823,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 350,
+          "detail": "Cargo Ship Carrying Indian And Azerbaijani Crew Sinks In Black Sea After Drone Strike, 2 Killed"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 676,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 30685,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1460,
+        "completionTokens": 308
+      },
+      "finishedAt": "2026-10-06T13:23:57.881Z",
+      "durationMs": 32538,
+      "event": {
+        "title": "Cargo Ship Carrying Indian And Azerbaijani Crew Sinks In Black Sea After Drone Strike, 2 Killed",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNZWpEMXQ0T3lWSWNIQVQxdVJmYTcwbWlvbGV5eVFtQklDOWdPbmctSlUwRGRpV0RsOFI4OXM2M2hkS2phVmkzUG1GSjFHN1Mwc0lkZFdVUEZxSXZweUJPbzNXc0pwMUgzMzhicGdjQjlCVVdHcDVpYVplWGtPajdmbmhuMWRuamk0YlNmZWhLYVJvdEdaNjF2eFdwZjNPNUZFcHAwamtwS1VEdkQwbXVHejgxZkU0SDdFNHdXMjJZR3JSOTA?oc=5",
+        "reason": "Two deaths and a vessel sinking from drone strikes in the Black Sea represent a critical safety and insurance risk escalation."
+      },
+      "script": {
+        "headline": "BLACK SEA DRONE STRIKE",
+        "voiceover": "A cargo ship carrying Indian and Azerbaijani crew sank in the Black Sea after a drone strike. Two crew members were killed. This incident marks a sharp rise in active combat threats to commercial shipping lanes.",
+        "beats": [
+          "CARGO SHIP SINKS",
+          "DRONE STRIKE CONFIRMED",
+          "TWO CREW KILLED",
+          "COMBAT ZONE RISK"
+        ],
+        "facebookCaption": "Two crew members lost after a drone strike sank a cargo ship in the Black Sea. How is this changing insurance routes for the region? #MaritimeSafety",
+        "linkedinCaption": "A recent drone attack resulted in the loss of a commercial vessel and two crew members in the Black Sea. This event signals a critical escalation in operational risk for maritime logistics in contested waters. Insurers and operators must reassess current threat assessments.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#blacksea",
+          "#cargo",
+          "#marinesafety",
+          "#logistics"
+        ],
+        "imageQuery": "cargo ship black sea horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNZWpEMXQ0T3lWSWNIQVQxdVJmYTcwbWlvbGV5eVFtQklDOWdPbmctSlUwRGRpV0RsOFI4OXM2M2hkS2phVmkzUG1GSjFHN1Mwc0lkZFdVUEZxSXZweUJPbzNXc0pwMUgzMzhicGdjQjlCVVdHcDVpYVplWGtPajdmbmhuMWRuamk0YlNmZWhLYVJvdEdaNjF2eFdwZjNPNUZFcHAwamtwS1VEdkQwbXVHejgxZkU0SDdFNHdXMjJZR3JSOTA?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-06T13-23-25.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 13762278,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship black sea horizon",
+          "source": "pexels",
+          "photographer": "Paulo gustavo Modesto",
+          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "CARGO SHIP SINKS"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "DRONE STRIKE CONFIRMED"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "TWO CREW KILLED"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "COMBAT ZONE RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-05T14-49-00",
       "startedAt": "2026-10-05T14:49:00.628Z",
@@ -586,7 +709,7 @@
         "sourceName": "The Peninsula Qatar"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-09-30T12-42-08.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8328356,
         "hasVoiceover": true,
