@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-06T13:23:59.892Z",
+  "generatedAt": "2026-10-07T13:31:49.474Z",
   "runs": [
+    {
+      "id": "2026-10-07T13-31-22",
+      "startedAt": "2026-10-07T13:31:22.763Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 737,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 351,
+          "detail": "Two Commercial Ships Hit By Drones In Bulgaria’s EEZ, One Sinks And Crew Remains Missing"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 745,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 20740,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1358,
+        "completionTokens": 286
+      },
+      "finishedAt": "2026-10-07T13:31:45.340Z",
+      "durationMs": 22577,
+      "event": {
+        "title": "Two Commercial Ships Hit By Drones In Bulgaria’s EEZ, One Sinks And Crew Remains Missing",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNN3U2LTNOMkc2aFVMR2lIbDNxdlFhRFRTeEZsOC1uOXA0alJoM1lHZVIxQlhZS3R2Yk45UVJIS05qWHdjS2FHeGVEV1RKeFRaMjhyZm1NVEx5LXFZbnlOQzlUQ3llb2FHZHhiYm1HbFF2czBCR0FLYk9SV0h0WjY1U1Q0TzhONjV1dEVJcnVRVk5WZ3A2RFNnajl3UG5CQVVMZnpNZUt0RlRWaVRmeXM1NzZQTDRvWjYz?oc=5",
+        "reason": "Commercial vessels sinking in the Black Sea with missing crews signals severe safety risks and potential supply chain disruption."
+      },
+      "script": {
+        "headline": "Black Sea Drone Attack",
+        "voiceover": "Two commercial ships were struck by drones in Bulgaria's economic zone. One vessel sank, leaving its crew missing. This incident highlights the escalating security risks for commercial shipping in the Black Sea region.",
+        "beats": [
+          "SHIPS HIT BY DRONES",
+          "BULGARIA'S ECONOMIC ZONE",
+          "ONE VESSEL SANK",
+          "CREW REMAINS MISSING",
+          "BLACK SEA RISK"
+        ],
+        "facebookCaption": "Two commercial ships were hit by drones in the Black Sea, with one sinking and its crew missing. Is this the new normal for maritime routes in the region?",
+        "linkedinCaption": "Recent drone strikes on commercial vessels in Bulgaria's EEZ have resulted in a sinking and missing crew. This incident underscores the growing security vulnerabilities facing commercial shipping in the Black Sea. Operators must reassess risk protocols for the region.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#blacksea",
+          "#vesselsafety",
+          "#logistics",
+          "#maritimeindustry"
+        ],
+        "imageQuery": "cargo ship black sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNN3U2LTNOMkc2aFVMR2lIbDNxdlFhRFRTeEZsOC1uOXA0alJoM1lHZVIxQlhZS3R2Yk45UVJIS05qWHdjS2FHeGVEV1RKeFRaMjhyZm1NVEx5LXFZbnlOQzlUQ3llb2FHZHhiYm1HbFF2czBCR0FLYk9SV0h0WjY1U1Q0TzhONjV1dEVJcnVRVk5WZ3A2RFNnajl3UG5CQVVMZnpNZUt0RlRWaVRmeXM1NzZQTDRvWjYz?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-07T13-31-22.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 13723814,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship black sea",
+          "source": "pexels",
+          "photographer": "Paulo gustavo Modesto",
+          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SHIPS HIT BY DRONES"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "BULGARIA'S ECONOMIC ZONE"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "ONE VESSEL SANK"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "CREW REMAINS MISSING"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "BLACK SEA RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-06T13-23-25",
       "startedAt": "2026-10-06T13:23:25.343Z",
@@ -580,7 +709,7 @@
         "sourceName": "Awani International"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-02T12-43-36.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 18914967,
         "hasVoiceover": true,
