@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-07T13:31:49.474Z",
+  "generatedAt": "2026-10-08T13:38:05.211Z",
   "runs": [
+    {
+      "id": "2026-10-08T13-37-28",
+      "startedAt": "2026-10-08T13:37:28.688Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 768,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 319,
+          "detail": "Iran To Block ‘Illegal Routes’ In Strait Of Hormuz, IRGC Adviser Says"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 655,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31946,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1449,
+        "completionTokens": 301
+      },
+      "finishedAt": "2026-10-08T13:38:02.687Z",
+      "durationMs": 33999,
+      "event": {
+        "title": "Iran To Block ‘Illegal Routes’ In Strait Of Hormuz, IRGC Adviser Says",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMUJYbGE3ei12bTFxSWVGdVlSUHBDeEhrVWtxdGxsRzd5WF9xYnAzbXM4emdMa09TeFFjNXdPZ3B6c1Z6YTVwNWdxcmtmdHZkQWdiQlRnZEFLMzY1dWF5MXBrdGs0Mzd3YXFadjdLalZid1ZMbzl3c3Z0MlAwQlpwWkU4SndqX3FGMHFkTzFGamRaSGwxZnJCTkZteFNWdw?oc=5",
+        "reason": "Iran's threat to block routes in the Strait of Hormuz poses an immediate, severe risk to global oil supply and marine insurance premiums."
+      },
+      "script": {
+        "headline": "HORMUZ ROUTE THREAT",
+        "voiceover": "Iran claims it will block illegal routes in the Strait of Hormuz. This critical chokepoint carries a significant share of global oil. Disruption here would immediately spike freight rates and marine insurance premiums worldwide.",
+        "beats": [
+          "IRAN TARGETS HORMUZ",
+          "ILLEGAL ROUTES BLOCKED",
+          "OIL SUPPLY AT RISK",
+          "INSURANCE PREMIUMS SURGE"
+        ],
+        "facebookCaption": "Iran is threatening to block specific routes in the Strait of Hormuz. How would this change your shipping schedules? Let us know in the comments.",
+        "linkedinCaption": "Recent statements from Iranian officials suggest potential disruption in the Strait of Hormuz. This development warrants close monitoring of route viability and insurance costs. Supply chain resilience is under pressure.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#logistics",
+          "#oil",
+          "#supplychain"
+        ],
+        "imageQuery": "oil tanker strait of hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMUJYbGE3ei12bTFxSWVGdVlSUHBDeEhrVWtxdGxsRzd5WF9xYnAzbXM4emdMa09TeFFjNXdPZ3B6c1Z6YTVwNWdxcmtmdHZkQWdiQlRnZEFLMzY1dWF5MXBrdGs0Mzd3YXFadjdLalZid1ZMbzl3c3Z0MlAwQlpwWkU4SndqX3FGMHFkTzFGamRaSGwxZnJCTkZteFNWdw?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-08T13-37-28.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 11497712,
+        "hasVoiceover": true,
+        "image": {
+          "query": "oil tanker strait of hormuz",
+          "source": "pexels",
+          "photographer": "Nadzli Azlan",
+          "sourcePage": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-in-butterworth-malaysia-37193784/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "IRAN TARGETS HORMUZ"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "ILLEGAL ROUTES BLOCKED"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "OIL SUPPLY AT RISK"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "INSURANCE PREMIUMS SURGE"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-07T13-31-22",
       "startedAt": "2026-10-07T13:31:22.763Z",
@@ -580,7 +703,7 @@
         "sourceName": "marineinsight.com"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-03T11-44-52.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8353012,
         "hasVoiceover": true,
