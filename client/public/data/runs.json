@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-08T13:38:05.211Z",
+  "generatedAt": "2026-10-09T13:24:22.333Z",
   "runs": [
+    {
+      "id": "2026-10-09T13-23-47",
+      "startedAt": "2026-10-09T13:23:47.738Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 2511,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 350,
+          "detail": "Abandoned Cargo Ship Hit By A Drone Drifts 40 Nautical Miles Off Bulgaria With No Crew"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 669,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 29123,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1498,
+        "completionTokens": 307
+      },
+      "finishedAt": "2026-10-09T13:24:20.395Z",
+      "durationMs": 32657,
+      "event": {
+        "title": "Abandoned Cargo Ship Hit By A Drone Drifts 40 Nautical Miles Off Bulgaria With No Crew",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMnRHRlFnODdReHFfUXQ5bncxaFlVLVhiTkxPSFQ0Mjg4VHhKOG5BMmF3NTBCMlhCZnhPRDlnTTlWTE4zSHI3M1Y3U1VHcE5oclprTy00NE80enA2Nk9GTzhfeHFmTEwzUENvQWh3U0pOVlNLc0xhMWduVmFSUDE5TmhjRUVJVFhzM2VHcDc0THk4dUxGNi1QSzZ6OHkxaGVBRkpFeGEzZURnMC03eG82T2JQaHRwa3BH?oc=5",
+        "reason": "An uncrewed, drone-struck vessel drifting 40 nautical miles off Bulgaria poses an immediate, severe collision and environmental hazard to active shipping lanes."
+      },
+      "script": {
+        "headline": "Drone Strike Drift",
+        "voiceover": "A cargo ship, abandoned after a drone strike, now drifts forty nautical miles off Bulgaria. With no crew aboard, it presents a severe collision and environmental hazard to active shipping lanes.",
+        "beats": [
+          "DRONE STRIKE REPORTED",
+          "SHIP ABANDONED",
+          "DRIFTING FORTY MILES",
+          "OFF BULGARIA",
+          "MAJOR COLLISION RISK"
+        ],
+        "facebookCaption": "An uncrewed vessel drifting in active lanes is a serious hazard. How should insurers handle drone-related maritime risks? #MaritimeSafety",
+        "linkedinCaption": "A drone-struck vessel drifting forty nautical miles off Bulgaria highlights emerging security threats. Uncrewed hazards now demand immediate operational attention. The risk profile of maritime logistics is shifting.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#bulgaria",
+          "#droneattack",
+          "#seafaring",
+          "#marinesafety"
+        ],
+        "imageQuery": "cargo ship ocean horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMnRHRlFnODdReHFfUXQ5bncxaFlVLVhiTkxPSFQ0Mjg4VHhKOG5BMmF3NTBCMlhCZnhPRDlnTTlWTE4zSHI3M1Y3U1VHcE5oclprTy00NE80enA2Nk9GTzhfeHFmTEwzUENvQWh3U0pOVlNLc0xhMWduVmFSUDE5TmhjRUVJVFhzM2VHcDc0THk4dUxGNi1QSzZ6OHkxaGVBRkpFeGEzZURnMC03eG82T2JQaHRwa3BH?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-09T13-23-47.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 9239991,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship ocean horizon",
+          "source": "pexels",
+          "photographer": "Rafael Rodrigues",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-calm-ocean-under-cloudy-sky-36638038/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "DRONE STRIKE REPORTED"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "SHIP ABANDONED"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "DRIFTING FORTY MILES"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "OFF BULGARIA"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MAJOR COLLISION RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-08T13-37-28",
       "startedAt": "2026-10-08T13:37:28.688Z",
@@ -579,7 +708,7 @@
         "sourceName": "Gulf News"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-04T12-27-42.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 12698419,
         "hasVoiceover": true,
