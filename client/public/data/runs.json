@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-09T13:24:22.333Z",
+  "generatedAt": "2026-10-10T12:39:11.759Z",
   "runs": [
+    {
+      "id": "2026-10-10T12-38-35",
+      "startedAt": "2026-10-10T12:38:35.498Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 892,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 295,
+          "detail": "IRGC says hit LPG ship seeking to cross Hormuz through ‘illegal’ route"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 709,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31892,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1506,
+        "completionTokens": 315
+      },
+      "finishedAt": "2026-10-10T12:39:09.290Z",
+      "durationMs": 33792,
+      "event": {
+        "title": "IRGC says hit LPG ship seeking to cross Hormuz through ‘illegal’ route",
+        "source": "chinadailyhk",
+        "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9oY1ZBS2tPZEtHc0lXUjJzVHFUOE5HYURxZHlvTUxuLW52Z3NNYjZHNlJNUWFySFA1QjNMSFc5bTJJbEdCaGNmTXdPV05tc0ZtczRLUVpvTEQ?oc=5",
+        "reason": "IRGC attack on an LPG ship in the Strait of Hormuz signals severe escalation, directly impacting marine insurance premiums and global energy supply chains."
+      },
+      "script": {
+        "headline": "Hormuz LPG Strike",
+        "voiceover": "IRGC claims it struck an LPG ship in the Strait of Hormuz. The vessel allegedly used an illegal crossing route. This incident threatens energy supply chains and will likely spike marine insurance rates immediately.",
+        "beats": [
+          "IRGC STRIKES LPG SHIP",
+          "HORMUZ ROUTE DISPUTE",
+          "ENERGY SUPPLY THREAT",
+          "INSURANCE PREMIUMS RISE"
+        ],
+        "facebookCaption": "Tensions in the Strait of Hormuz are heating up after an IRGC attack on an LPG vessel. How do you think this affects global shipping rates? Let us know in the comments.",
+        "linkedinCaption": "The reported IRGC strike on an LPG carrier in the Strait of Hormuz highlights escalating risks for energy logistics. This event signals potential volatility in marine insurance pricing. Expect tighter security protocols in the region.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#energylogistics",
+          "#maritimeinsurance",
+          "#globaltrade"
+        ],
+        "imageQuery": "LPG tanker ship sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9oY1ZBS2tPZEtHc0lXUjJzVHFUOE5HYURxZHlvTUxuLW52Z3NNYjZHNlJNUWFySFA1QjNMSFc5bTJJbEdCaGNmTXdPV05tc0ZtczRLUVpvTEQ?oc=5",
+        "sourceName": "chinadailyhk"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-10T12-38-35.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20146598,
+        "hasVoiceover": true,
+        "image": {
+          "query": "LPG tanker ship sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "IRGC STRIKES LPG SHIP"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "HORMUZ ROUTE DISPUTE"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "ENERGY SUPPLY THREAT"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "INSURANCE PREMIUMS RISE"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-09T13-23-47",
       "startedAt": "2026-10-09T13:23:47.738Z",
@@ -580,7 +703,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-05T14-49-00.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 5801805,
         "hasVoiceover": true,
