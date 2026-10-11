@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-10T12:39:11.759Z",
+  "generatedAt": "2026-10-11T12:57:52.660Z",
   "runs": [
+    {
+      "id": "2026-10-11T12-57-29",
+      "startedAt": "2026-10-11T12:57:29.559Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 723,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 294,
+          "detail": "US forces strike cargo ship attempting to breach Iran blockade in Gulf of Oman"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 690,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 19344,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1487,
+        "completionTokens": 305
+      },
+      "finishedAt": "2026-10-11T12:57:50.613Z",
+      "durationMs": 21054,
+      "event": {
+        "title": "US forces strike cargo ship attempting to breach Iran blockade in Gulf of Oman",
+        "source": "Anadolu Ajansı",
+        "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOVnYyM3VLc3N1YXBETjFQU3dyODNPNnNHRDZJenhWaEJKTkRfNzh0djZOM2xEUERYLWN3VU5OZjlFNC1IaUFGWmdtTVNEdVp2dHgwMU55YkdLQko4dm01eDhHcTJJZjFmUWhtV1hGLWJTc2d5dFh1cElhd0E1SXRRcnE4bUhMNUZzdmtzZ0FVQVlNTDFMRG9pckJ5QXF3NEtKWEZlNzh5Zm9CRzd0VTZJSXRqSmFMU1E?oc=5",
+        "reason": "US military striking a cargo ship in the Gulf of Oman signals severe escalation, directly impacting marine insurance premiums and route safety."
+      },
+      "script": {
+        "headline": "US STRIKES CARGO SHIP",
+        "voiceover": "US forces struck a cargo ship in the Gulf of Oman. The vessel attempted to breach an Iran blockade. This action signals severe escalation. Marine insurance premiums and route safety are now at risk. The shipping landscape is shifting fast.",
+        "beats": [
+          "US STRIKES CARGO SHIP",
+          "IRAN BLOCKADE BREACH ATTEMPT",
+          "GULF OF OMAN",
+          "MARINE INSURANCE RISK RISES",
+          "ROUTE SAFETY UNDER THREAT"
+        ],
+        "facebookCaption": "US forces just struck a cargo ship in the Gulf of Oman. This is a major escalation for maritime security. How do you see this affecting supply chains?",
+        "linkedinCaption": "Military engagement in the Gulf of Oman highlights rising geopolitical risks for commercial shipping. This incident directly impacts route safety and insurance underwriting. The maritime industry must adapt to this new volatility immediately.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#GulfOfOman",
+          "#logistics",
+          "#marinesecurity",
+          "#insurance"
+        ],
+        "imageQuery": "cargo ship gulf oman",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOVnYyM3VLc3N1YXBETjFQU3dyODNPNnNHRDZJenhWaEJKTkRfNzh0djZOM2xEUERYLWN3VU5OZjlFNC1IaUFGWmdtTVNEdVp2dHgwMU55YkdLQko4dm01eDhHcTJJZjFmUWhtV1hGLWJTc2d5dFh1cElhd0E1SXRRcnE4bUhMNUZzdmtzZ0FVQVlNTDFMRG9pckJ5QXF3NEtKWEZlNzh5Zm9CRzd0VTZJSXRqSmFMU1E?oc=5",
+        "sourceName": "Anadolu Ajansı"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-11T12-57-29.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 5966298,
+        "hasVoiceover": true,
+        "image": {
+          "query": "cargo ship gulf oman",
+          "source": "pexels",
+          "photographer": "Doğan Alpaslan  Demir",
+          "sourcePage": "https://www.pexels.com/photo/large-cargo-ship-on-open-sea-horizon-29215510/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "US STRIKES CARGO SHIP"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "IRAN BLOCKADE BREACH ATTEMPT"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "GULF OF OMAN"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "MARINE INSURANCE RISK RISES"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "ROUTE SAFETY UNDER THREAT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-10T12-38-35",
       "startedAt": "2026-10-10T12:38:35.498Z",
@@ -579,7 +708,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-06T13-23-25.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 13762278,
         "hasVoiceover": true,
