@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-11T12:57:52.660Z",
+  "generatedAt": "2026-10-12T15:36:03.427Z",
   "runs": [
+    {
+      "id": "2026-10-12T15-35-27",
+      "startedAt": "2026-10-12T15:35:27.698Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 823,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 440,
+          "detail": "Iran Attacks 3 Tankers Near Oman And Strait Of Hormuz After U.S. Disables Bulker"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 694,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31292,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1396,
+        "completionTokens": 319
+      },
+      "finishedAt": "2026-10-12T15:36:00.952Z",
+      "durationMs": 33254,
+      "event": {
+        "title": "Iran Attacks 3 Tankers Near Oman And Strait Of Hormuz After U.S. Disables Bulker",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOeS1MZ0sycXJXZThBQk1hZ1BqcWcwc3c4VXFoUmF4YXNkNWx5QUJIN05EYi1obk4wTVlwYnkzakg2MWFfaExYTVJwTlloT1BJdGxXOFpvTEFDRzRwRUpMRzFJVW45aUkwQkR5SE9KZUU3cXpRc2tUM09ETDduRXRzckc3R2U2czBIbWh6WFhiM2tieFFLT2ZSX2JrazkxYzFWdHhsNFF5UHVhb0p6VW1B?oc=5",
+        "reason": "Iranian attacks on tankers in the Strait of Hormuz create immediate supply-chain disruption and severe marine insurance risk."
+      },
+      "script": {
+        "headline": "Hormuz Tanker Attacks",
+        "voiceover": "Iran has attacked three tankers near the Strait of Hormuz. This escalation followed U.S. action against a bulk carrier. The disruption highlights immediate marine insurance risks. Supply chains face severe volatility. The region remains a critical flashpoint.",
+        "beats": [
+          "THREE TANKERS HIT",
+          "NEAR OMAN STRAIT",
+          "U.S. DISABLED BULKER",
+          "INSURANCE RISK RISING",
+          "SUPPLY CHAIN ALERT"
+        ],
+        "facebookCaption": "Three tankers were attacked near the Strait of Hormuz after U.S. action against a bulk carrier. How does this impact your logistics?",
+        "linkedinCaption": "Recent Iranian attacks on three tankers near the Strait of Hormuz follow U.S. disabling of a bulk carrier. These events signal significant escalation in maritime security risks. Insurers and operators must reassess exposure immediately.",
+        "hashtags": [
+          "#Shipping",
+          "#Maritime",
+          "#StraitOfHormuz",
+          "#Tankers",
+          "#MarineInsurance",
+          "#Logistics"
+        ],
+        "imageQuery": "oil tanker ship sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOeS1MZ0sycXJXZThBQk1hZ1BqcWcwc3c4VXFoUmF4YXNkNWx5QUJIN05EYi1obk4wTVlwYnkzakg2MWFfaExYTVJwTlloT1BJdGxXOFpvTEFDRzRwRUpMRzFJVW45aUkwQkR5SE9KZUU3cXpRc2tUM09ETDduRXRzckc3R2U2czBIbWh6WFhiM2tieFFLT2ZSX2JrazkxYzFWdHhsNFF5UHVhb0p6VW1B?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-12T15-35-27.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20028330,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker ship sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "THREE TANKERS HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "NEAR OMAN STRAIT"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "U.S. DISABLED BULKER"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE RISK RISING"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "SUPPLY CHAIN ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-11T12-57-29",
       "startedAt": "2026-10-11T12:57:29.559Z",
@@ -580,7 +709,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-07T13-31-22.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 13723814,
         "hasVoiceover": true,
