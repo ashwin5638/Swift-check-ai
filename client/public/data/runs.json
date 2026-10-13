@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-12T15:36:03.427Z",
+  "generatedAt": "2026-10-13T14:18:55.099Z",
   "runs": [
+    {
+      "id": "2026-10-13T14-18-24",
+      "startedAt": "2026-10-13T14:18:24.346Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 692,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 287,
+          "detail": "Iranian attacks target 6 ships near Strait of Hormuz in 1 day, highest since war with US began"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 664,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 26042,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1440,
+        "completionTokens": 321
+      },
+      "finishedAt": "2026-10-13T14:18:52.035Z",
+      "durationMs": 27689,
+      "event": {
+        "title": "Iranian attacks target 6 ships near Strait of Hormuz in 1 day, highest since war with US began",
+        "source": "Anadolu Ajansı",
+        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOOGxibXEtZ2FFRTM2RGpqU0FpNTRfb3RLakt5UENVc0pzUGNTWFl3dVA1ZDlFYkUwQWpnN3dCMkJuT0NIMU1JWkNrWkh1UUczZkE2M0Q4R3pEc3lwN2Y5QzdEQXdJc3RzUVBSOFhDbUdkZW5RZnJtREQ1ZUlmLUlNMFhRMWl2T1Z4NXg1SkJFZnY5NmdPVFE1TlN0RWFDRVNoSkhGOXJfT2JseGxtY1c4MW9lbzdmcjcycnh5VDVUNG9GallPMjQzLU1JZkxWNmluZVg1Rw?oc=5",
+        "reason": "Six ships attacked in the Strait of Hormuz signals severe supply-chain disruption and immediate risk to marine insurers and shipowners."
+      },
+      "script": {
+        "headline": "Hormuz Attacks Spike",
+        "voiceover": "Six ships were attacked near the Strait of Hormuz in just one day. This is the highest volume recorded since the conflict with the United States began. Marine insurers and shipowners now face immediate supply chain risks in this critical global waterway.",
+        "beats": [
+          "SIX SHIPS HIT",
+          "STRAIT OF HORMUZ",
+          "ONE DAY TOTAL",
+          "RECORD ATTACK RATE",
+          "INSURANCE RISK UP"
+        ],
+        "facebookCaption": "Six ships attacked in a single day near Hormuz. Is your supply chain ready for this level of disruption? Tell us in the comments.",
+        "linkedinCaption": "With six vessels targeted in the Strait of Hormuz within twenty-four hours, maritime risk assessment requires immediate recalibration. This surge represents the highest attack frequency since the US-Iran conflict escalated. Insurers and logistics leaders must prioritize route security and premium adjustments.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#supplychain",
+          "#marinesafety",
+          "#logistics"
+        ],
+        "imageQuery": "cargo ship strait water",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOOGxibXEtZ2FFRTM2RGpqU0FpNTRfb3RLakt5UENVc0pzUGNTWFl3dVA1ZDlFYkUwQWpnN3dCMkJuT0NIMU1JWkNrWkh1UUczZkE2M0Q4R3pEc3lwN2Y5QzdEQXdJc3RzUVBSOFhDbUdkZW5RZnJtREQ1ZUlmLUlNMFhRMWl2T1Z4NXg1SkJFZnY5NmdPVFE1TlN0RWFDRVNoSkhGOXJfT2JseGxtY1c4MW9lbzdmcjcycnh5VDVUNG9GallPMjQzLU1JZkxWNmluZVg1Rw?oc=5",
+        "sourceName": "Anadolu Ajansı"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-13T14-18-24.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 5445580,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship strait water",
+          "source": "pexels",
+          "photographer": "Esra  Nurdoğan",
+          "sourcePage": "https://www.pexels.com/photo/a-large-ship-in-the-water-with-a-city-in-the-background-27410425/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SIX SHIPS HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "STRAIT OF HORMUZ"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "ONE DAY TOTAL"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "RECORD ATTACK RATE"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE RISK UP"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-12T15-35-27",
       "startedAt": "2026-10-12T15:35:27.698Z",
@@ -585,7 +714,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-08T13-37-28.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 11497712,
         "hasVoiceover": true,
