@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-13T14:18:55.099Z",
+  "generatedAt": "2026-10-14T12:00:24.222Z",
   "runs": [
+    {
+      "id": "2026-10-14T11-59-50",
+      "startedAt": "2026-10-14T11:59:50.642Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 1285,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 248,
+          "detail": "Ship carrying 2,500 containers hit naval mine, sank in Strait of Hormuz, says Iran"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 716,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 29361,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1391,
+        "completionTokens": 331
+      },
+      "finishedAt": "2026-10-14T12:00:22.257Z",
+      "durationMs": 31615,
+      "event": {
+        "title": "Ship carrying 2,500 containers hit naval mine, sank in Strait of Hormuz, says Iran",
+        "source": "Firstpost",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOWdXNjlDajRRcUFCLTdMNFpaa0NsSmcwMW04a1M0YnZGdVZpZEtaOXcwcGtxZnEzbXVzekVtbG1aS242c2FVUTZmVzVXTWlhcnltc2h0eHI2XzlpUlRTSjkwOXhGQzdmLTdaRnhyOHFMdlBOeVR0VDFEamVhdHZUTjZiU0JMWVFwSGFpdTdaeHp1am9VczktOW4wOTJpMk5hVkZsVk1SemlCV2Q4d1Z1YjlLa05RNlU0bEx0YldVMWNfdkXSAcgBQVVfeXFMTVZxNnFEa0owLVg2ZjZaenFzdGJRTkQ5Y1ZQazBOMngwbHZwaWhKaDVYaHpnemVPcWlkNklsVzJjQUhwaWxEVFZmdWs1RUNRckNERGtPOHNMQ0xPVFVURVlZNnBfaU92RkdhNGUwYzJQOUlNRFU4Mk9rQzl3eUFtZWtjanBxNzhYRnBvdkxNRXZzREpTSmg5eWhlanRUNXpfMnluREY4NUpXb1Uwcm1LZEhrcDl5RmxOWXk4NDVDUlVoZEdwTWNDU3U?oc=5",
+        "reason": "A container ship sinking in the Strait of Hormuz signals severe supply-chain disruption and immediate marine insurance risk."
+      },
+      "script": {
+        "headline": "Hormuz Mine Strike",
+        "voiceover": "Iran reports a container ship hit a naval mine in the Strait of Hormuz. The vessel, carrying two thousand five hundred containers, sank. This incident raises urgent questions about maritime security and potential supply chain disruptions in a critical global trade lane.",
+        "beats": [
+          "SHIP HITS MINE",
+          "STRAIT OF HORMUZ",
+          "TWO THOUSAND FIVE HUNDRED CONTAINERS",
+          "VESSEL SANK",
+          "SUPPLY CHAIN RISK"
+        ],
+        "facebookCaption": "Reports say a ship carrying 2,500 containers sank in the Strait of Hormuz after hitting a mine. How does this affect your shipping timelines?",
+        "linkedinCaption": "Iranian authorities report a container vessel struck a naval mine in the Strait of Hormuz, resulting in the ship sinking. This event underscores the persistent security risks for commercial transit in this critical chokepoint. Supply chain resilience remains a top priority for logistics leaders.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#logistics",
+          "#marinesecurity",
+          "#supplychain"
+        ],
+        "imageQuery": "container ship open sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOWdXNjlDajRRcUFCLTdMNFpaa0NsSmcwMW04a1M0YnZGdVZpZEtaOXcwcGtxZnEzbXVzekVtbG1aS242c2FVUTZmVzVXTWlhcnltc2h0eHI2XzlpUlRTSjkwOXhGQzdmLTdaRnhyOHFMdlBOeVR0VDFEamVhdHZUTjZiU0JMWVFwSGFpdTdaeHp1am9VczktOW4wOTJpMk5hVkZsVk1SemlCV2Q4d1Z1YjlLa05RNlU0bEx0YldVMWNfdkXSAcgBQVVfeXFMTVZxNnFEa0owLVg2ZjZaenFzdGJRTkQ5Y1ZQazBOMngwbHZwaWhKaDVYaHpnemVPcWlkNklsVzJjQUhwaWxEVFZmdWs1RUNRckNERGtPOHNMQ0xPVFVURVlZNnBfaU92RkdhNGUwYzJQOUlNRFU4Mk9rQzl3eUFtZWtjanBxNzhYRnBvdkxNRXZzREpTSmg5eWhlanRUNXpfMnluREY4NUpXb1Uwcm1LZEhrcDl5RmxOWXk4NDVDUlVoZEdwTWNDU3U?oc=5",
+        "sourceName": "Firstpost"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-14T11-59-50.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 6996392,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship open sea",
+          "source": "pexels",
+          "photographer": "William Liu",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-9806482/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SHIP HITS MINE"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "STRAIT OF HORMUZ"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "TWO THOUSAND FIVE HUNDRED CONTAINERS"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "VESSEL SANK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "SUPPLY CHAIN RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-13T14-18-24",
       "startedAt": "2026-10-13T14:18:24.346Z",
@@ -586,7 +715,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-09T13-23-47.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 9239991,
         "hasVoiceover": true,
