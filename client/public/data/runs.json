@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-14T12:00:24.222Z",
+  "generatedAt": "2026-10-15T11:37:11.045Z",
   "runs": [
+    {
+      "id": "2026-10-15T11-36-40",
+      "startedAt": "2026-10-15T11:36:40.964Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 714,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 238,
+          "detail": "Seven Missing as Tanker Fires Rock Romania's Black Sea Coast"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 588,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 24733,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1313,
+        "completionTokens": 293
+      },
+      "finishedAt": "2026-10-15T11:37:07.334Z",
+      "durationMs": 26370,
+      "event": {
+        "title": "Seven Missing as Tanker Fires Rock Romania's Black Sea Coast",
+        "source": "Marine Link",
+        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZ0dWT3g2cC11TjRJaXhTTnpoUVllZ21mVllPd1ljcm9RM2x6clR5SjNaM3pkMDh4eHh4c0ROZG41VVpSbjdBSnFMTWxFZGJqRE00bWZyRjNpNEp5YmJNMkZHQ2M5cDBZV21zOUk3dzIzNVFQNTZETW1MWndicTdSWmdYaTFwdw?oc=5",
+        "reason": "Seven missing crew from a tanker fire in the Black Sea represents a critical safety incident with immediate operational and regulatory implications."
+      },
+      "script": {
+        "headline": "Tanker Fire Black Sea",
+        "voiceover": "Seven crew members are missing after a tanker caught fire off Romania's Black Sea coast. The incident has sparked urgent search and rescue operations. This event underscores the critical need for robust fire safety protocols in high-risk maritime zones to protect lives at sea.",
+        "beats": [
+          "SEVEN MISSING CREW",
+          "TANKER FIRE ERUPTS",
+          "OFF ROMANIA COAST",
+          "SEARCH OPS UNDERWAY",
+          "SAFETY PROTOCOLS CRITICAL"
+        ],
+        "facebookCaption": "A tanker fire off Romania has left seven crew missing. How can we better protect mariners in remote waters? #MarineSafety",
+        "linkedinCaption": "A recent tanker fire in the Black Sea has resulted in seven missing crew members. This incident highlights the persistent risks faced by mariners in remote operational areas. We must prioritize rigorous safety audits to prevent future tragedies.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#BlackSea",
+          "#MarineSafety",
+          "#Tanker",
+          "#SearchAndRescue"
+        ],
+        "imageQuery": "tanker ship fire smoke sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZ0dWT3g2cC11TjRJaXhTTnpoUVllZ21mVllPd1ljcm9RM2x6clR5SjNaM3pkMDh4eHh4c0ROZG41VVpSbjdBSnFMTWxFZGJqRE00bWZyRjNpNEp5YmJNMkZHQ2M5cDBZV21zOUk3dzIzNVFQNTZETW1MWndicTdSWmdYaTFwdw?oc=5",
+        "sourceName": "Marine Link"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-15T11-36-40.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 7533960,
+        "hasVoiceover": false,
+        "image": {
+          "query": "tanker ship fire smoke sea",
+          "source": "pexels",
+          "photographer": "Tomris🇹🇷",
+          "sourcePage": "https://www.pexels.com/photo/opec-victory-ship-sailing-in-istanbul-21937964/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SEVEN MISSING CREW"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "TANKER FIRE ERUPTS"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "OFF ROMANIA COAST"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SEARCH OPS UNDERWAY"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "SAFETY PROTOCOLS CRITICAL"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-14T11-59-50",
       "startedAt": "2026-10-14T11:59:50.642Z",
@@ -591,7 +720,7 @@
         "sourceName": "chinadailyhk"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-10T12-38-35.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 20146598,
         "hasVoiceover": true,
