@@ -1,6 +1,130 @@
 {
-  "generatedAt": "2026-10-15T11:37:11.045Z",
+  "generatedAt": "2026-10-16T11:31:26.968Z",
   "runs": [
+    {
+      "id": "2026-10-16T11-30-52",
+      "startedAt": "2026-10-16T11:30:52.906Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 746,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 249,
+          "detail": "Insurers TT Club, UK P&I set to merge into a far-reaching mutual"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 833,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 29986,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1438,
+        "completionTokens": 311
+      },
+      "finishedAt": "2026-10-16T11:31:24.725Z",
+      "durationMs": 31819,
+      "event": {
+        "title": "Insurers TT Club, UK P&I set to merge into a far-reaching mutual",
+        "source": "Riviera Maritime Media",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNVV9IRVgxUmVweG5Ia0d3ZTBqb0VLQmM2eS1OX21YVjBRYnJOd0VJY0dkekd6Smk1ZHUzYTEwWHJLcl93SkY2am9Db3RTbVhQdHFTOXZJbUROMXNyZ2FIT0hFamZtYkJMNHhEZnFYN19HbzhPZF9IanFxVzRpbXRySnNrdUh1a3FURXpYd0ROVmxSRHotRmJtU3dQZk5FQU5xa0lFQ25MYVpfZnN4b3RpcDIxWQ?oc=5",
+        "reason": "The merger of TT Club and UK P&I creates a dominant marine insurer, fundamentally reshaping the P&I market landscape for shipowners."
+      },
+      "script": {
+        "headline": "MAJOR MARINE MERGER",
+        "voiceover": "Two major marine insurers, TT Club and UK P&I, are merging. This creates a massive mutual that will reshape P&I coverage. Shipowners should review their insurance strategies now.",
+        "beats": [
+          "TT CLUB AND UK P&I MERGE",
+          "FORMING A NEW MUTUAL",
+          "REDEFINING P&I COVERAGE",
+          "SHIPOWNERS MUST ADAPT"
+        ],
+        "facebookCaption": "Big news for marine insurance. Two giants are joining forces. How does this impact your vessel's coverage?",
+        "linkedinCaption": "TT Club and UK P&I are set to merge, creating a dominant force in the marine mutual sector. This consolidation will significantly alter the P&I market landscape for shipowners globally. Expect shifts in coverage terms and market dynamics.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#marineinsurance",
+          "#P&I",
+          "#TTClub",
+          "#UKP&I",
+          "#shipowner"
+        ],
+        "imageQuery": "large cargo ship at sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNVV9IRVgxUmVweG5Ia0d3ZTBqb0VLQmM2eS1OX21YVjBRYnJOd0VJY0dkekd6Smk1ZHUzYTEwWHJLcl93SkY2am9Db3RTbVhQdHFTOXZJbUROMXNyZ2FIT0hFamZtYkJMNHhEZnFYN19HbzhPZF9IanFxVzRpbXRySnNrdUh1a3FURXpYd0ROVmxSRHotRmJtU3dQZk5FQU5xa0lFQ25MYVpfZnN4b3RpcDIxWQ?oc=5",
+        "sourceName": "Riviera Maritime Media"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-16T11-30-52.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 13623412,
+        "hasVoiceover": false,
+        "image": {
+          "query": "large cargo ship at sea",
+          "source": "pexels",
+          "photographer": "Paulo gustavo Modesto",
+          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "TT CLUB AND UK P&I MERGE"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "FORMING A NEW MUTUAL"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "REDEFINING P&I COVERAGE"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "SHIPOWNERS MUST ADAPT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-15T11-36-40",
       "startedAt": "2026-10-15T11:36:40.964Z",
@@ -592,7 +716,7 @@
         "sourceName": "Anadolu Ajansı"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-11T12-57-29.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 5966298,
         "hasVoiceover": true,
