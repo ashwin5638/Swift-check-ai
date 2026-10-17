@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-16T11:31:26.968Z",
+  "generatedAt": "2026-10-17T10:51:16.973Z",
   "runs": [
+    {
+      "id": "2026-10-17T10-50-51",
+      "startedAt": "2026-10-17T10:50:51.662Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 986,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 389,
+          "detail": "CENTCOM Claims Iran Cut Off From Maritime Trade, $25 Billion in Oil Exports Blocked"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 763,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 20579,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1379,
+        "completionTokens": 325
+      },
+      "finishedAt": "2026-10-17T10:51:14.385Z",
+      "durationMs": 22723,
+      "event": {
+        "title": "CENTCOM Claims Iran Cut Off From Maritime Trade, $25 Billion in Oil Exports Blocked",
+        "source": "Arab Times Kuwait News",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxONHFOQnl2WEF3RWMzMlBLQkg3LU5QVGE1a2poYV96QWNCTkNJRmY1LXV2dUZKeHAtVUwyd3hQSXBxVnM5bXF2OG1RcG1ueTFqa3ZKNmFGbmlNcUtiY0syeEtqMUVpaUthMTBqQVRZTGdyX0Jfbnd6UUpjTU51ZmVuNVVrd3lJMUJuMVJhOGkyZFFPWXMxekdURU4zbVRsWXFHQWRvdnVoRHlKaksyREltS0U3T0x2cEk0SHI0?oc=5",
+        "reason": "US military claims Iran is cut off from maritime trade, blocking $25 billion in oil exports and severely disrupting global energy supply chains."
+      },
+      "script": {
+        "headline": "IRAN MARITIME BLOCK",
+        "voiceover": "CENTCOM claims Iran is cut off from maritime trade. This blocks twenty-five billion dollars in oil exports. The move disrupts global energy supply chains. Analysts warn this isolation creates significant volatility for international shipping markets and energy stability.",
+        "beats": [
+          "CENTCOM CLAIMS IRAN CUT OFF",
+          "TWENTY FIVE BILLION DOLLARS BLOCKED",
+          "OIL EXPORTS STOPPED",
+          "GLOBAL SUPPLY CHAINS DISRUPTED",
+          "ENERGY VOLATILITY RISING"
+        ],
+        "facebookCaption": "CENTCOM says Iran is cut off from the sea. Does this really stop their oil exports? Let us know your thoughts.",
+        "linkedinCaption": "CENTCOM asserts Iran is isolated from maritime trade, blocking twenty-five billion dollars in oil exports. This claim highlights the critical role of naval dominance in energy security. The global supply chain is under pressure.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#energy",
+          "#geopolitics",
+          "#oil",
+          "#supplychain",
+          "#centcom"
+        ],
+        "imageQuery": "oil tanker ship sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxONHFOQnl2WEF3RWMzMlBLQkg3LU5QVGE1a2poYV96QWNCTkNJRmY1LXV2dUZKeHAtVUwyd3hQSXBxVnM5bXF2OG1RcG1ueTFqa3ZKNmFGbmlNcUtiY0syeEtqMUVpaUthMTBqQVRZTGdyX0Jfbnd6UUpjTU51ZmVuNVVrd3lJMUJuMVJhOGkyZFFPWXMxekdURU4zbVRsWXFHQWRvdnVoRHlKaksyREltS0U3T0x2cEk0SHI0?oc=5",
+        "sourceName": "Arab Times Kuwait News"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-17T10-50-51.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20042706,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker ship sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "CENTCOM CLAIMS IRAN CUT OFF"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "TWENTY FIVE BILLION DOLLARS BLOCKED"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "OIL EXPORTS STOPPED"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "GLOBAL SUPPLY CHAINS DISRUPTED"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "ENERGY VOLATILITY RISING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-16T11-30-52",
       "startedAt": "2026-10-16T11:30:52.906Z",
@@ -587,7 +717,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-12T15-35-27.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 20028330,
         "hasVoiceover": false,
