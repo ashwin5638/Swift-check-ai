@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-17T10:51:16.973Z",
+  "generatedAt": "2026-10-18T11:15:26.974Z",
   "runs": [
+    {
+      "id": "2026-10-18T11-14-50",
+      "startedAt": "2026-10-18T11:14:50.792Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 646,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 248,
+          "detail": "Tugboat hit by projectiles off UAE, LNG tanker comes under fire near Yemen"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 632,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 30983,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1388,
+        "completionTokens": 302
+      },
+      "finishedAt": "2026-10-18T11:15:23.307Z",
+      "durationMs": 32515,
+      "event": {
+        "title": "Tugboat hit by projectiles off UAE, LNG tanker comes under fire near Yemen",
+        "source": "Türkiye Today",
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPS3VwNGxkOXV4S3hHaXFZLWM4RkVKY2pjdmVDQ2VYcjRjZ2lxSU1XeW1ZQWI4OFU5R3ZPRmNlc1RqNkFQV2NOU1V3NlV0aVF1M1dSMUIwWGJWYm96SGtHZF92S0tSNXJNLXg3LS1qQ2ZGUlFIZkRZa1hUT1Y0NUlHMGh2YU5SbnJpSHpLcTkxU1NLaUdqdHlhb3lieFF1S0tZdFhNZWhqcjdtRHF2WFF5aFBJSVluOFNY?oc=5",
+        "reason": "Direct attacks on commercial vessels in the Gulf signal severe supply-chain disruption and rising marine insurance risks for shipowners."
+      },
+      "script": {
+        "headline": "Gulf Vessel Attacks",
+        "voiceover": "A tugboat off the United Arab Emirates and an LNG tanker near Yemen came under fire. These direct strikes on commercial shipping threaten regional supply chains and sharply increase marine insurance premiums for vessel owners.",
+        "beats": [
+          "VIVID ATTACKS IN GULF",
+          "TUG HIT OFF UAE",
+          "LNG TANKER UNDER FIRE",
+          "SUPPLY CHAINS AT RISK",
+          "INSURANCE COSTS RISING"
+        ],
+        "facebookCaption": "Commercial vessels are facing direct threats in the Gulf. How are you adjusting your logistics routes? Let us know in the comments.",
+        "linkedinCaption": "Recent incidents involving a tugboat and an LNG tanker highlight escalating security risks in the Gulf. Shipowners must prepare for immediate disruptions and rising insurance costs. Prioritize route resilience now.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#LNG",
+          "#supplychain",
+          "#marinesecurity",
+          "#UAE",
+          "#Yemen"
+        ],
+        "imageQuery": "LNG tanker sea horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPS3VwNGxkOXV4S3hHaXFZLWM4RkVKY2pjdmVDQ2VYcjRjZ2lxSU1XeW1ZQWI4OFU5R3ZPRmNlc1RqNkFQV2NOU1V3NlV0aVF1M1dSMUIwWGJWYm96SGtHZF92S0tSNXJNLXg3LS1qQ2ZGUlFIZkRZa1hUT1Y0NUlHMGh2YU5SbnJpSHpLcTkxU1NLaUdqdHlhb3lieFF1S0tZdFhNZWhqcjdtRHF2WFF5aFBJSVluOFNY?oc=5",
+        "sourceName": "Türkiye Today"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-18T11-14-50.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 11976730,
+        "hasVoiceover": false,
+        "image": {
+          "query": "LNG tanker sea horizon",
+          "source": "pexels",
+          "photographer": "Nothing Ahead",
+          "sourcePage": "https://www.pexels.com/photo/coastal-industrial-facility-with-lng-tanker-38601494/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "VIVID ATTACKS IN GULF"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "TUG HIT OFF UAE"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "LNG TANKER UNDER FIRE"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SUPPLY CHAINS AT RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE COSTS RISING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-17T10-50-51",
       "startedAt": "2026-10-17T10:50:51.662Z",
@@ -588,7 +718,7 @@
         "sourceName": "Anadolu Ajansı"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-13T14-18-24.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 5445580,
         "hasVoiceover": false,
