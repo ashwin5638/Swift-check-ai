@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-18T11:15:26.974Z",
+  "generatedAt": "2026-10-19T13:27:17.680Z",
   "runs": [
+    {
+      "id": "2026-10-19T13-26-41",
+      "startedAt": "2026-10-19T13:26:41.722Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 975,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 372,
+          "detail": "6,000 sailors stranded near Strait of Hormuz as UN maritime chief warns against passage amid rising ship a"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 718,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 30798,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1426,
+        "completionTokens": 305
+      },
+      "finishedAt": "2026-10-19T13:27:14.589Z",
+      "durationMs": 32867,
+      "event": {
+        "title": "6,000 sailors stranded near Strait of Hormuz as UN maritime chief warns against passage amid rising ship a",
+        "source": "The Economic Times",
+        "url": "https://news.google.com/rss/articles/CBMivAJBVV95cUxOV3pNdjBzZzBNOVJTZk8xY0NnN0RVS1gwZHpHSWJyb2lfV04yZ2pSWjY1VDV0a3VmbDNfUTZoUmVGRHVqUHRyMXBqb01zOEM3a242YWF2ZjNGVDNKbC1iTnh3UHZFdDZtM2x6Z2hydnlzT1NGb1hwZGNsTFdiOXFlSFJNdl8xWFltbk1YTlprWGZUdlFsQ2FYZGJEX0lWVUw5Y2x3UHg4QUFIT21pU3llaUFiNk5ScW1KSkx1Wmxrc3hPcVlfWmpfcnlzUlJLVUhSUmh6RElzQWtJbi12V3FxVVQyd19UckxBd1lTYkUxN21zNGdvUWRPMkpiMEcxNm53Y29tZzlPM2tLMjNTT2thVmpid1p4QnZnQmVVTldGTkFaSHltLVBzOUhRekgtUW1wZTh3RGhZM1BBUVJU0gHCAkFVX3lxTFBHRFdNeGR5c29yaDF0QzZYZzJ1bWR6Wm5fRmI1NWVUYmFrOThSZUVwR1llQWFBRTIyc1Z0UEZTYXJjaEtraHBUZHRSelZrOHd5SUVISzNYQnhvcGl1dmNfbzRUbHpxSmQxdkJSS0xldVFWbERyUVV6bXdKNEt1Y0Z3Tnd0ZXFDbnloVWM5eU0wX2xlcU5JYldXN21vWV9xQ0JHYWN0VWFOelhtYmZDeDNxZVEtZHlOaWNUajExRWdTVVhuVmZadzUtX19Jb09oLXZ4YXdXd19uQ01HWG9yRGFRMTBQQkJ0WGF4N0t4c2xoWkRPcFFvY2ZhcGstMVd3UWFCUS13YXJ6Qi11QlladFVOYjNKY0M2WXhuZkM0ZjcxTjFjVmlqT1E4eFBZZEh3R1VIYm5jRHZsZjdYUXdRQmN0T3c?oc=5",
+        "reason": "Stranding 6,000 sailors in the Strait of Hormuz signals severe supply-chain disruption and immediate safety risks for global trade."
+      },
+      "script": {
+        "headline": "Hormuz Shipping Crisis",
+        "voiceover": "Six thousand sailors are stranded near the Strait of Hormuz. The UN maritime chief warns against passage due to rising attacks. This severe disruption poses immediate safety risks and threatens global supply chains.",
+        "beats": [
+          "SAILORS STRANDED IN HORMUZ",
+          "UN WARNS AGAINST PASSAGE",
+          "RISING SHIP ATTACKS",
+          "GLOBAL TRADE AT RISK"
+        ],
+        "facebookCaption": "Six thousand sailors are stuck near the Strait of Hormuz. The UN is warning against passage due to rising attacks. How long can this disruption last?",
+        "linkedinCaption": "The UN maritime chief has warned against passage through the Strait of Hormuz, leaving six thousand sailors stranded. This escalation signals severe supply chain disruption and heightened safety risks for global trade. Operational resilience is now critical.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#globaltrade",
+          "#Hormuz",
+          "#supplychain",
+          "#seafarers"
+        ],
+        "imageQuery": "container ship strait hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMivAJBVV95cUxOV3pNdjBzZzBNOVJTZk8xY0NnN0RVS1gwZHpHSWJyb2lfV04yZ2pSWjY1VDV0a3VmbDNfUTZoUmVGRHVqUHRyMXBqb01zOEM3a242YWF2ZjNGVDNKbC1iTnh3UHZFdDZtM2x6Z2hydnlzT1NGb1hwZGNsTFdiOXFlSFJNdl8xWFltbk1YTlprWGZUdlFsQ2FYZGJEX0lWVUw5Y2x3UHg4QUFIT21pU3llaUFiNk5ScW1KSkx1Wmxrc3hPcVlfWmpfcnlzUlJLVUhSUmh6RElzQWtJbi12V3FxVVQyd19UckxBd1lTYkUxN21zNGdvUWRPMkpiMEcxNm53Y29tZzlPM2tLMjNTT2thVmpid1p4QnZnQmVVTldGTkFaSHltLVBzOUhRekgtUW1wZTh3RGhZM1BBUVJU0gHCAkFVX3lxTFBHRFdNeGR5c29yaDF0QzZYZzJ1bWR6Wm5fRmI1NWVUYmFrOThSZUVwR1llQWFBRTIyc1Z0UEZTYXJjaEtraHBUZHRSelZrOHd5SUVISzNYQnhvcGl1dmNfbzRUbHpxSmQxdkJSS0xldVFWbERyUVV6bXdKNEt1Y0Z3Tnd0ZXFDbnloVWM5eU0wX2xlcU5JYldXN21vWV9xQ0JHYWN0VWFOelhtYmZDeDNxZVEtZHlOaWNUajExRWdTVVhuVmZadzUtX19Jb09oLXZ4YXdXd19uQ01HWG9yRGFRMTBQQkJ0WGF4N0t4c2xoWkRPcFFvY2ZhcGstMVd3UWFCUS13YXJ6Qi11QlladFVOYjNKY0M2WXhuZkM0ZjcxTjFjVmlqT1E4eFBZZEh3R1VIYm5jRHZsZjdYUXdRQmN0T3c?oc=5",
+        "sourceName": "The Economic Times"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-19T13-26-41.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8201781,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship strait hormuz",
+          "source": "pexels",
+          "photographer": "Sunny Li",
+          "sourcePage": "https://www.pexels.com/photo/colorful-containers-at-taiwan-s-busy-seaport-39730185/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "SAILORS STRANDED IN HORMUZ"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "UN WARNS AGAINST PASSAGE"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "RISING SHIP ATTACKS"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "GLOBAL TRADE AT RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-18T11-14-50",
       "startedAt": "2026-10-18T11:14:50.792Z",
@@ -589,7 +712,7 @@
         "sourceName": "Firstpost"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-14T11-59-50.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 6996392,
         "hasVoiceover": false,
