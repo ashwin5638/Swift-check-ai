@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-19T13:27:17.680Z",
+  "generatedAt": "2026-10-20T11:46:10.540Z",
   "runs": [
+    {
+      "id": "2026-10-20T11-45-39",
+      "startedAt": "2026-10-20T11:45:39.241Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 668,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 511,
+          "detail": "One in five dry bulk cargo tonnes routed via Cape of Good Hope in H1 2026"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 2628,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 24815,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1371,
+        "completionTokens": 351
+      },
+      "finishedAt": "2026-10-20T11:46:07.879Z",
+      "durationMs": 28638,
+      "event": {
+        "title": "One in five dry bulk cargo tonnes routed via Cape of Good Hope in H1 2026",
+        "source": "safety4sea",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQWDltNV9vSjJpdFpTYUZWTDJHRmNQYTVBSmxBSUxiQUFCT3hWSElmVzVDV3FsRXJxLVNRYWFfUzhFUjVEY0s5VnFWOFVMaDhVQjF4U0h0cEJsZXYtOGZoc2NTR3RXcEhZNWR1RmpUNE81a2FwNDlRTmVtMUJvVmpCWTNFT29yOHNidmM1OVBrU3JCZEJKOHRVYTFEd2U5QQ?oc=5",
+        "reason": "Rerouting one-fifth of global dry bulk via the Cape significantly increases voyage times, fuel consumption, and insurance exposure."
+      },
+      "script": {
+        "headline": "Cape Route Surge",
+        "voiceover": "One in five dry bulk tonnes now routes via the Cape of Good Hope. This detour significantly extends voyage times and fuel costs. For operators, the key takeaway is that insurance exposure has risen sharply in the first half of twenty twenty-six.",
+        "beats": [
+          "ONE IN FIVE TONNES",
+          "CAPE OF GOOD HOPE",
+          "H1 2026 REEL",
+          "LONGER VOYAGES",
+          "HIGHER INSURANCE EXPOSURE"
+        ],
+        "facebookCaption": "Imagine one fifth of the world's dry bulk cargo taking a longer way around the Cape. How is your supply chain handling the increased fuel costs? Let us know in the comments.",
+        "linkedinCaption": "Recent data indicates a significant shift in global trade patterns, with one in five dry bulk tonnes routing via the Cape of Good Hope in H1 2026. This rerouting extends transit times and increases operational costs. The primary takeaway is the immediate impact on insurance exposure and voyage planning.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#drybulk",
+          "#capegoodhope",
+          "#logistics",
+          "#seafreight",
+          "#trade"
+        ],
+        "imageQuery": "large bulk carrier ocean",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxQWDltNV9vSjJpdFpTYUZWTDJHRmNQYTVBSmxBSUxiQUFCT3hWSElmVzVDV3FsRXJxLVNRYWFfUzhFUjVEY0s5VnFWOFVMaDhVQjF4U0h0cEJsZXYtOGZoc2NTR3RXcEhZNWR1RmpUNE81a2FwNDlRTmVtMUJvVmpCWTNFT29yOHNidmM1OVBrU3JCZEJKOHRVYTFEd2U5QQ?oc=5",
+        "sourceName": "safety4sea"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-20T11-45-39.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 13623844,
+        "hasVoiceover": false,
+        "image": {
+          "query": "large bulk carrier ocean",
+          "source": "pexels",
+          "photographer": "Paulo gustavo Modesto",
+          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "ONE IN FIVE TONNES"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "CAPE OF GOOD HOPE"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "H1 2026 REEL"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "LONGER VOYAGES"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "HIGHER INSURANCE EXPOSURE"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-19T13-26-41",
       "startedAt": "2026-10-19T13:26:41.722Z",
@@ -583,7 +713,7 @@
         "sourceName": "Marine Link"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-15T11-36-40.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 7533960,
         "hasVoiceover": false,
