@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-20T11:46:10.540Z",
+  "generatedAt": "2026-10-21T11:58:04.271Z",
   "runs": [
+    {
+      "id": "2026-10-21T11-57-28",
+      "startedAt": "2026-10-21T11:57:28.163Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 795,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 337,
+          "detail": "Tanker struck by unknown projectile off Oman: UK maritime agency"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 691,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 31696,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1426,
+        "completionTokens": 307
+      },
+      "finishedAt": "2026-10-21T11:58:01.687Z",
+      "durationMs": 33524,
+      "event": {
+        "title": "Tanker struck by unknown projectile off Oman: UK maritime agency",
+        "source": "Anadolu Ajansı",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQll2MFhhQTF4aHdKRDRYM0J6VGl6VWpuOTVtZnh6RTQ1aG1TX05UVnJZZzN2RXRKZjN5U0xDZjRmMEFFNzZjc0JUc3Y3bURxTTI2bS1DSGFMNThCLWx0d2F2WXg2a3ZlRVdzd1FtYVVNcE9fTVRTM25kYkZPRnRuNGVFdE1LeEhER0pwc3F2d3JvcU04LWV1cmd2ODZDazdDaFQ0UXdFc3hHNVo1?oc=5",
+        "reason": "A projectile strike on a tanker in the Strait of Hormuz signals immediate safety risks and potential supply-chain disruption."
+      },
+      "script": {
+        "headline": "Oman Tanker Strike",
+        "voiceover": "A tanker in the Strait of Hormuz was struck by an unknown projectile. The UK maritime agency confirmed the incident. This event highlights persistent security risks for critical global shipping lanes and the immediate need for enhanced vigilance in high-traffic waterways.",
+        "beats": [
+          "TANKER STRIKEN IN OMAN",
+          "UNKNOWN PROJECTILE USED",
+          "UK AGENCY CONFIRMS HIT",
+          "HORMUZ SECURITY RISKS",
+          "GLOBAL SHIPWATCH ALERT"
+        ],
+        "facebookCaption": "A tanker in Oman just got hit by an unknown projectile. How does this affect your supply chain expectations? Let us know in the comments.",
+        "linkedinCaption": "Recent reports confirm a projectile strike on a tanker in the Strait of Hormuz. This incident underscores the ongoing security complexities facing commercial shipping in critical chokepoints. Enhanced risk management is required.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#tanker",
+          "#Hormuz",
+          "#oil",
+          "#logistics"
+        ],
+        "imageQuery": "oil tanker ship sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQll2MFhhQTF4aHdKRDRYM0J6VGl6VWpuOTVtZnh6RTQ1aG1TX05UVnJZZzN2RXRKZjN5U0xDZjRmMEFFNzZjc0JUc3Y3bURxTTI2bS1DSGFMNThCLWx0d2F2WXg2a3ZlRVdzd1FtYVVNcE9fTVRTM25kYkZPRnRuNGVFdE1LeEhER0pwc3F2d3JvcU04LWV1cmd2ODZDazdDaFQ0UXdFc3hHNVo1?oc=5",
+        "sourceName": "Anadolu Ajansı"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-21T11-57-28.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20041838,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker ship sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "TANKER STRIKEN IN OMAN"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "UNKNOWN PROJECTILE USED"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "UK AGENCY CONFIRMS HIT"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "HORMUZ SECURITY RISKS"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "GLOBAL SHIPWATCH ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-20T11-45-39",
       "startedAt": "2026-10-20T11:45:39.241Z",
@@ -589,7 +718,7 @@
         "sourceName": "Riviera Maritime Media"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-16T11-30-52.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 13623412,
         "hasVoiceover": false,
