@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-21T11:58:04.271Z",
+  "generatedAt": "2026-10-22T12:00:04.810Z",
   "runs": [
+    {
+      "id": "2026-10-22T11-59-34",
+      "startedAt": "2026-10-22T11:59:34.179Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 807,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 1885,
+          "detail": "Oil Tanker With 21 Indian Seafarers Struck By Unknown Projectile In Strait Of Hormuz"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 704,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 25065,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1458,
+        "completionTokens": 306
+      },
+      "finishedAt": "2026-10-22T12:00:02.645Z",
+      "durationMs": 28466,
+      "event": {
+        "title": "Oil Tanker With 21 Indian Seafarers Struck By Unknown Projectile In Strait Of Hormuz",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWGJsNkNldlAwdHl4WTFETkt2WnVPWnlyM3FkcFpibEVvTi1UZkY1RGNKTXFEa0NHdEc0bnZJbEY1d1c3QWhIa25TLUdzbmkwQzRrU0NidlRnbVliWnVmVkhocE8xcHFVMnBOZE9qc093S1ZoTDlVd1NYektWZ3A0QksyS1V1MkV2cURuSHdNNjRRZU9pQUVUbkJJSGlkZFlzTV9xTkkzWlNEdG44cERTYlZodUxJZw?oc=5",
+        "reason": "Projectile strike in the Strait of Hormuz poses immediate safety risks and potential supply-chain disruption for global oil shipping."
+      },
+      "script": {
+        "headline": "Hormuz Strike Alert",
+        "voiceover": "An oil tanker carrying twenty-one Indian seafarers was struck by an unknown projectile in the Strait of Hormuz. No injuries were reported, but the incident highlights persistent security risks for critical global energy routes.",
+        "beats": [
+          "TANKER HIT IN HORMUZ",
+          "UNKNOWN PROJECTILE STRIKE",
+          "TWENTY ONE CREW SAFE",
+          "GLOBAL OIL ROUTE RISK"
+        ],
+        "facebookCaption": "An oil tanker in the Strait of Hormuz took a direct hit from an unknown projectile. The crew is safe, but the situation remains tense. How concerned are you about future disruptions?",
+        "linkedinCaption": "Security incidents in the Strait of Hormuz continue to challenge global energy logistics. Recent projectile strikes on commercial vessels underscore the need for robust risk mitigation strategies. Supply chain resilience is paramount.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#hormuz",
+          "#oiltransport",
+          "#seafarersafety",
+          "#logistics"
+        ],
+        "imageQuery": "oil tanker strait hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWGJsNkNldlAwdHl4WTFETkt2WnVPWnlyM3FkcFpibEVvTi1UZkY1RGNKTXFEa0NHdEc0bnZJbEY1d1c3QWhIa25TLUdzbmkwQzRrU0NidlRnbVliWnVmVkhocE8xcHFVMnBOZE9qc093S1ZoTDlVd1NYektWZ3A0QksyS1V1MkV2cURuSHdNNjRRZU9pQUVUbkJJSGlkZFlzTV9xTkkzWlNEdG44cERTYlZodUxJZw?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-22T11-59-34.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 11375255,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker strait hormuz",
+          "source": "pexels",
+          "photographer": "Nadzli Azlan",
+          "sourcePage": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-in-butterworth-malaysia-37193784/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "TANKER HIT IN HORMUZ"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "UNKNOWN PROJECTILE STRIKE"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "TWENTY ONE CREW SAFE"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "GLOBAL OIL ROUTE RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-21T11-57-28",
       "startedAt": "2026-10-21T11:57:28.163Z",
@@ -589,7 +712,7 @@
         "sourceName": "Arab Times Kuwait News"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-17T10-50-51.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 20042706,
         "hasVoiceover": false,
