@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-22T12:00:04.810Z",
+  "generatedAt": "2026-10-23T11:46:15.700Z",
   "runs": [
+    {
+      "id": "2026-10-23T11-45-39",
+      "startedAt": "2026-10-23T11:45:39.255Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 695,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 235,
+          "detail": "One dead, three missing after cargo ship reportedly hit by drone in the Black Sea"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 607,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 30659,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1361,
+        "completionTokens": 287
+      },
+      "finishedAt": "2026-10-23T11:46:11.458Z",
+      "durationMs": 32203,
+      "event": {
+        "title": "One dead, three missing after cargo ship reportedly hit by drone in the Black Sea",
+        "source": "safety4sea",
+        "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOa2tjbkdueU9HcFhnazBCaWk4SXJkWU9FdnBrdEJ6VGl4cmJzV1FCQWZvRE9tZ0dBOHlCVTk4TGthTlBvd1BiZnFoQm5ldnVQeE50ZVBaOElSME5ObXUwQ0NDOUU4Yk1mM3BWOFlud1djX25hTnF4a3BvUzY3dlRlWUZmdURzdUhVczY0eUhlckZtNDdlb3JPWm5OSzcxc0p2R3JCTDZ4RQ?oc=5",
+        "reason": "A fatal drone attack on a cargo ship in the Black Sea signals severe safety risks and potential supply-chain disruption for marine insurers and operators."
+      },
+      "script": {
+        "headline": "Black Sea Drone Attack",
+        "voiceover": "A cargo ship hit by a drone in the Black Sea left one crew member dead and three missing. This incident confirms that commercial vessels are now active targets in the region. Insurers and operators must reassess risk exposure immediately.",
+        "beats": [
+          "ONE DEAD THREE MISSING",
+          "DRONE HIT CARGO SHIP",
+          "BLACK SEA INCIDENT",
+          "MARITIME RISK SPIKE"
+        ],
+        "facebookCaption": "A cargo ship in the Black Sea was reportedly hit by a drone, resulting in one death and three missing crew members. How is this changing your insurance views? #maritime",
+        "linkedinCaption": "A recent drone attack on a cargo vessel in the Black Sea has resulted in fatalities and missing personnel. This event highlights the escalating direct threat to commercial shipping lanes in the region. Maritime risk assessment must now account for active aerial targeting.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#blacksea",
+          "#cargo",
+          "#marinesafety",
+          "#insurance"
+        ],
+        "imageQuery": "cargo ship black sea storm",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOa2tjbkdueU9HcFhnazBCaWk4SXJkWU9FdnBrdEJ6VGl4cmJzV1FCQWZvRE9tZ0dBOHlCVTk4TGthTlBvd1BiZnFoQm5ldnVQeE50ZVBaOElSME5ObXUwQ0NDOUU4Yk1mM3BWOFlud1djX25hTnF4a3BvUzY3dlRlWUZmdURzdUhVczY0eUhlckZtNDdlb3JPWm5OSzcxc0p2R3JCTDZ4RQ?oc=5",
+        "sourceName": "safety4sea"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-23T11-45-39.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8030458,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship black sea storm",
+          "source": "pexels",
+          "photographer": "Alexander Popadin",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-stormy-kaliningrad-coastline-40168855/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "ONE DEAD THREE MISSING"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "DRONE HIT CARGO SHIP"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "BLACK SEA INCIDENT"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "MARITIME RISK SPIKE"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-22T11-59-34",
       "startedAt": "2026-10-22T11:59:34.179Z",
@@ -582,7 +705,7 @@
         "sourceName": "Türkiye Today"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-18T11-14-50.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 11976730,
         "hasVoiceover": false,
