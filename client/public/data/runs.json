@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-23T11:46:15.700Z",
+  "generatedAt": "2026-10-24T11:09:32.117Z",
   "runs": [
+    {
+      "id": "2026-10-24T11-09-06",
+      "startedAt": "2026-10-24T11:09:06.016Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 782,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 478,
+          "detail": "News Content Hub - First Russian diesel shipment to US in the making following sanctions waiver"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 604,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 21094,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1537,
+        "completionTokens": 289
+      },
+      "finishedAt": "2026-10-24T11:09:28.978Z",
+      "durationMs": 22962,
+      "event": {
+        "title": "News Content Hub - First Russian diesel shipment to US in the making following sanctions waiver",
+        "source": "Riviera Maritime Media",
+        "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxORkhocFR2UUFvNncyV3BHVnZtUktrRXdJYTlaVWJRWVZTWU8yVmtlc3JMazRRX0tpNDlManZ0OHpBNFlrQnJGTGJXQlR3V2F6RTlqUEpnYmJielpKZUpqMG4ydkhmbXRfZldNcGlFYldxWjlCbTAzYzhTTWhGbEVsazV3cjN1SFYzWWNZOFpQZVBpWTlzcEwtVEt3Q29FSzFaVi1aZFBOSmxFcmI1V09aeWl6YnUtaFBiclZYb0tBMUJVa2tnQVlHeWNYYmVtcFV4bV9MUHpkNS1Xdw?oc=5",
+        "reason": "The first Russian diesel shipment to the US following a sanctions waiver signals a major geopolitical and trade policy shift."
+      },
+      "script": {
+        "headline": "Russia Diesel To US",
+        "voiceover": "Russia is preparing its first diesel shipment to the United States. This move follows a specific sanctions waiver. The event confirms a significant shift in trade policy. Tight fuel markets are driving this rare diplomatic exception.",
+        "beats": [
+          "RUSSIAN DIESEL SHIPMENT",
+          "SANCTIONS WAIVER ISSUED",
+          "FIRST US DELIVERY",
+          "TRADE POLICY SHIFT"
+        ],
+        "facebookCaption": "A sanctions waiver opened the door for Russian diesel to reach US ports. Is this just a temporary fix for the fuel shortage?",
+        "linkedinCaption": "The upcoming shipment of Russian diesel to the United States marks a notable deviation from current sanctions enforcement. This development highlights the tension between energy security needs and geopolitical restrictions. It signals a pragmatic approach to fuel market stability.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#oilandgas",
+          "#sanctions",
+          "#diesel",
+          "#logistics"
+        ],
+        "imageQuery": "diesel tanker ship at sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxORkhocFR2UUFvNncyV3BHVnZtUktrRXdJYTlaVWJRWVZTWU8yVmtlc3JMazRRX0tpNDlManZ0OHpBNFlrQnJGTGJXQlR3V2F6RTlqUEpnYmJielpKZUpqMG4ydkhmbXRfZldNcGlFYldxWjlCbTAzYzhTTWhGbEVsazV3cjN1SFYzWWNZOFpQZVBpWTlzcEwtVEt3Q29FSzFaVi1aZFBOSmxFcmI1V09aeWl6YnUtaFBiclZYb0tBMUJVa2tnQVlHeWNYYmVtcFV4bV9MUHpkNS1Xdw?oc=5",
+        "sourceName": "Riviera Maritime Media"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-24T11-09-06.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20043821,
+        "hasVoiceover": false,
+        "image": {
+          "query": "diesel tanker ship at sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "RUSSIAN DIESEL SHIPMENT"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "SANCTIONS WAIVER ISSUED"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "FIRST US DELIVERY"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "TRADE POLICY SHIFT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-23T11-45-39",
       "startedAt": "2026-10-23T11:45:39.255Z",
@@ -580,7 +703,7 @@
         "sourceName": "The Economic Times"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-19T13-26-41.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8201781,
         "hasVoiceover": false,
