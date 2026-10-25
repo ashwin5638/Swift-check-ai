@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-10-24T11:09:32.117Z",
+  "generatedAt": "2026-10-25T11:39:42.419Z",
   "runs": [
+    {
+      "id": "2026-10-25T11-39-11",
+      "startedAt": "2026-10-25T11:39:11.702Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 1228,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 370,
+          "detail": "The Black Sea is now the world’s deadliest shipping route"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 756,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 24941,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1369,
+        "completionTokens": 294
+      },
+      "finishedAt": "2026-10-25T11:39:39.024Z",
+      "durationMs": 27322,
+      "event": {
+        "title": "The Black Sea is now the world’s deadliest shipping route",
+        "source": "Financial Times",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQY0FtVEhrS2dCX2ZRcFExOTlMeUdZSXVjVjRUU2lUNHZiaWJMQTRQUVo0cV9DSVd4V1NINGVuZ1czaDJLMGxKRnJtX1psZWRlQUlBOU9oRGhwWnNIRi1PWTRlNjJoeEhCMHpVTkh2REtvYVhmbFk2X3VuaklFZDE5ZVQyZFc?oc=5",
+        "reason": "Black Sea becoming the world's deadliest shipping route signals a critical safety and insurance crisis for operators and regulators."
+      },
+      "script": {
+        "headline": "Black Sea Shipping Crisis",
+        "voiceover": "The Black Sea is now the world’s deadliest shipping route. Conflict has turned safe corridors into high-risk zones. Insurers are rethinking exposure, and operators face urgent safety decisions. This shift demands immediate attention from maritime regulators.",
+        "beats": [
+          "WORST ROUTE IN WORLD",
+          "CONFLICT DRIVES RISK",
+          "INSURANCE COSTS SPIKE",
+          "OPERATORS FACE DANGER",
+          "REGULATORS MUST ACT"
+        ],
+        "facebookCaption": "The Black Sea just became the most dangerous place for ships. How are you adjusting your routes? Let us know below.",
+        "linkedinCaption": "Recent data confirms the Black Sea as the world's deadliest shipping route. This escalation significantly impacts insurance premiums and operational safety protocols. Maritime stakeholders must prioritize risk mitigation strategies immediately.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#BlackSea",
+          "#shippingrisk",
+          "#maritimesafety",
+          "#logistics"
+        ],
+        "imageQuery": "cargo ship black sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQY0FtVEhrS2dCX2ZRcFExOTlMeUdZSXVjVjRUU2lUNHZiaWJMQTRQUVo0cV9DSVd4V1NINGVuZ1czaDJLMGxKRnJtX1psZWRlQUlBOU9oRGhwWnNIRi1PWTRlNjJoeEhCMHpVTkh2REtvYVhmbFk2X3VuaklFZDE5ZVQyZFc?oc=5",
+        "sourceName": "Financial Times"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-25T11-39-11.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 13627582,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship black sea",
+          "source": "pexels",
+          "photographer": "Paulo gustavo Modesto",
+          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "WORST ROUTE IN WORLD"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "CONFLICT DRIVES RISK"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "INSURANCE COSTS SPIKE"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "OPERATORS FACE DANGER"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "REGULATORS MUST ACT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-24T11-09-06",
       "startedAt": "2026-10-24T11:09:06.016Z",
@@ -575,7 +704,7 @@
         "sourceName": "safety4sea"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-20T11-45-39.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 13623844,
         "hasVoiceover": false,
