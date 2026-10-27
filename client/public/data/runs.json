@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-10-25T11:39:42.419Z",
+  "generatedAt": "2026-10-27T12:29:59.438Z",
   "runs": [
+    {
+      "id": "2026-10-27T12-29-30",
+      "startedAt": "2026-10-27T12:29:30.908Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 686,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 268,
+          "detail": "Iran warns COSCO Shipping vessels of legal action from 1 November"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 601,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 22334,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1376,
+        "completionTokens": 292
+      },
+      "finishedAt": "2026-10-27T12:29:54.801Z",
+      "durationMs": 23893,
+      "event": {
+        "title": "Iran warns COSCO Shipping vessels of legal action from 1 November",
+        "source": "Latest news from Azerbaijan",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxObkgtYlQ0RHJ4bHZzMHFrQzBPaW5vNXRGMkI2TXN4QXpRWHhFNW14WkNvQ2pEUXpKbmpqa0ZoeFczUnFna2xqWUVzTkxfZHd5cFNZX2s4NnpBYnhQTjFUdXFjTVluZnM0MXNHazNsR2RvRmhaaXhrS2JqeUlva1BQT2xtYmV0ME4teWU0dWgtYw?oc=5",
+        "reason": "Iran's threat of legal action against COSCO vessels signals significant geopolitical risk and potential supply-chain disruption for major shipping lines."
+      },
+      "script": {
+        "headline": "Iran Targets COSCO",
+        "voiceover": "Iran has warned of legal action against COSCO Shipping vessels starting November first. This escalation creates immediate geopolitical risk for major container lines operating in the region, potentially disrupting key supply chains and forcing route adjustments.",
+        "beats": [
+          "IRAN WARNS COSCO",
+          "LEGAL ACTION NOV 1",
+          "GEOPOLITICAL RISK",
+          "SUPPLY CHAIN ALERT"
+        ],
+        "facebookCaption": "Iran is threatening legal moves against COSCO vessels starting next month. How do you see this affecting global trade routes? Let us know in the comments.",
+        "linkedinCaption": "Iran's notification of legal action against COSCO Shipping vessels marks a significant shift in regional maritime risk. This development introduces volatility for logistics planning and insurance assessments. Monitor compliance closely as these provisions take effect.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#COSCO",
+          "#logistics",
+          "#supplychain",
+          "#geopolitics"
+        ],
+        "imageQuery": "large container ship ocean",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMijwFBVV95cUxObkgtYlQ0RHJ4bHZzMHFrQzBPaW5vNXRGMkI2TXN4QXpRWHhFNW14WkNvQ2pEUXpKbmpqa0ZoeFczUnFna2xqWUVzTkxfZHd5cFNZX2s4NnpBYnhQTjFUdXFjTVluZnM0MXNHazNsR2RvRmhaaXhrS2JqeUlva1BQT2xtYmV0ME4teWU0dWgtYw?oc=5",
+        "sourceName": "Latest news from Azerbaijan"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-27T12-29-30.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 9667524,
+        "hasVoiceover": false,
+        "image": {
+          "query": "large container ship ocean",
+          "source": "pexels",
+          "photographer": "Robert So",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-at-sunset-14392678/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "IRAN WARNS COSCO"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "LEGAL ACTION NOV 1"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "GEOPOLITICAL RISK"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "SUPPLY CHAIN ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-25T11-39-11",
       "startedAt": "2026-10-25T11:39:11.702Z",
@@ -574,7 +697,7 @@
         "sourceName": "Anadolu Ajansı"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-21T11-57-28.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 20041838,
         "hasVoiceover": false,
