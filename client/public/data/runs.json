@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-28T13:03:00.555Z",
+  "generatedAt": "2026-10-29T13:11:11.976Z",
   "runs": [
+    {
+      "id": "2026-10-29T13-10-32",
+      "startedAt": "2026-10-29T13:10:32.502Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 641,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 305,
+          "detail": "Iran Says Three Oil Tankers Caught Fire After Hitting Mines in Strait of Hormuz"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 1080,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 32406,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1458,
+        "completionTokens": 296
+      },
+      "finishedAt": "2026-10-29T13:11:06.941Z",
+      "durationMs": 34439,
+      "event": {
+        "title": "Iran Says Three Oil Tankers Caught Fire After Hitting Mines in Strait of Hormuz",
+        "source": "Kurdistan24",
+        "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQdFFJeXAzVEc2RTBEWFVxN3FXa2VNdnN3WEQtQzJkcTM4S3BTUjlaQWdlUVMydFVudGxJam91VWUzTmNTdkVxTEdrSzB4MDRaMG5PZTlkV1UzNkZ3QnotN241MGd1SGxXci1iNTJEN2ZjRXpMX3A4T2xhTWlPbTRyUmg1N0czTFEzVGNPNjRHclpFLV8tLXN5WUljTmRZMG1DeWtpTVp5dlFfYi1taTFQYWw1blJjQWJKcjVXM1FILXY?oc=5",
+        "reason": "Three tankers hitting mines in the Strait of Hormuz signals severe supply-chain disruption and immediate safety risks for marine insurers."
+      },
+      "script": {
+        "headline": "Hormuz Tanker Crisis",
+        "voiceover": "Iran reports three oil tankers hit mines in the Strait of Hormuz. Fires broke out immediately. This event highlights severe supply chain risks. Marine insurers must reassess war risk premiums now.",
+        "beats": [
+          "IRAN REPORTS ATTACK",
+          "TANKERS HIT MINES",
+          "FIRES IN HORMUZ",
+          "SUPPLY CHAIN RISK",
+          "INSURANCE ALERT"
+        ],
+        "facebookCaption": "Three tankers reportedly hit mines in the Strait of Hormuz. How does this impact your shipping schedules?",
+        "linkedinCaption": "Iranian authorities state three oil tankers struck mines in the Strait of Hormuz, causing fires. This incident underscores the volatility of critical maritime chokepoints. Risk mitigation strategies require immediate review.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#straitofhormuz",
+          "#oiltanker",
+          "#supplychain",
+          "#marinesafety",
+          "#logistics"
+        ],
+        "imageQuery": "oil tanker ship sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQdFFJeXAzVEc2RTBEWFVxN3FXa2VNdnN3WEQtQzJkcTM4S3BTUjlaQWdlUVMydFVudGxJam91VWUzTmNTdkVxTEdrSzB4MDRaMG5PZTlkV1UzNkZ3QnotN241MGd1SGxXci1iNTJEN2ZjRXpMX3A4T2xhTWlPbTRyUmg1N0czTFEzVGNPNjRHclpFLV8tLXN5WUljTmRZMG1DeWtpTVp5dlFfYi1taTFQYWw1blJjQWJKcjVXM1FILXY?oc=5",
+        "sourceName": "Kurdistan24"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-29T13-10-32.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 20044565,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker ship sea",
+          "source": "pexels",
+          "photographer": "Zifeng Xiong",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "IRAN REPORTS ATTACK"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "TANKERS HIT MINES"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "FIRES IN HORMUZ"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SUPPLY CHAIN RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-28T13-02-34",
       "startedAt": "2026-10-28T13:02:34.442Z",
@@ -578,7 +708,7 @@
         "sourceName": "safety4sea"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-23T11-45-39.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8030458,
         "hasVoiceover": false,
@@ -3667,129 +3797,6 @@
           "start": 16,
           "end": 20,
           "text": "INSURERS WATCHING"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-09-27T12-08-47",
-      "startedAt": "2026-09-27T12:08:47.683Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 659,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 227,
-          "detail": "India tells UN attacks on shipping in Gulf are simply unacceptable"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 548,
-          "detail": "4 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 23530,
-          "detail": "15s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1341,
-        "completionTokens": 272
-      },
-      "finishedAt": "2026-09-27T12:09:12.652Z",
-      "durationMs": 24969,
-      "event": {
-        "title": "India tells UN attacks on shipping in Gulf are simply unacceptable",
-        "source": "India Today",
-        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOdTRHUE5GVUptUEFVSEtCR0FYZFhmMjh1eXRHNnJranlzdlY5TnZNSU9lTnp2c0UzTTNQS0cwbHNOaDBRcWE2N3BvOWI3THVVN0pvSklaQmpUZDFlSWVGOTliS0dwYUxvMXR6Qlo1Q0tzWUluLTNVZzV4QVplS2hYdi1lYmhnVXZ0bmhNUDV2ZGtPa3p3M2tNbmY3ZlhGQTNMWHB5eUJUcmNaVkZNZXVjaFdiONIBuAFBVV95cUxPZS1aejFRMnVRZmFtdjZrM0ppYnIzNFdvN0MyNTdGTHRMVmhHWXFHdWtiV2hOSHUxamU2LV84NWgxRWxyYXdtTUFQZkRMMzBrOEEyUnhUeE8ySVpzVEdveHVyZzdzNEw2Z0RpaGJLY0UwNmVxVFkyWlNlOGhaWFZIcWtTOXJKY25MaTlOUDh4TVNZRWE2a1NtTTlGZEp4RGFRQTEtS1FmWjFJTFpKRFozUm1VcTFsY2tj?oc=5",
-        "reason": "India's UN condemnation of Gulf attacks signals a major geopolitical shift impacting global war-risk insurance premiums and route security."
-      },
-      "script": {
-        "headline": "India Condemns Gulf Attacks",
-        "voiceover": "India told the United Nations that attacks on shipping in the Gulf are unacceptable. This statement highlights rising geopolitical risks that directly impact global war-risk insurance premiums and maritime route security for all operators.",
-        "beats": [
-          "INDIA TELLS UN",
-          "GULF ATTACKS UNACCEPTABLE",
-          "GEOPOLITICAL RISE",
-          "INSURANCE COSTS UP"
-        ],
-        "facebookCaption": "India just called out attacks on Gulf shipping at the UN. How do you think this affects your route planning? Drop your thoughts below.",
-        "linkedinCaption": "India's formal UN condemnation of recent Gulf shipping attacks signals a significant shift in regional security dynamics. This development is likely to influence global war-risk insurance premiums and route risk assessments. Monitor geopolitical impact on your supply chain resilience.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#gulf",
-          "#insurance",
-          "#logistics",
-          "#geopolitics"
-        ],
-        "imageQuery": "container ship open sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOdTRHUE5GVUptUEFVSEtCR0FYZFhmMjh1eXRHNnJranlzdlY5TnZNSU9lTnp2c0UzTTNQS0cwbHNOaDBRcWE2N3BvOWI3THVVN0pvSklaQmpUZDFlSWVGOTliS0dwYUxvMXR6Qlo1Q0tzWUluLTNVZzV4QVplS2hYdi1lYmhnVXZ0bmhNUDV2ZGtPa3p3M2tNbmY3ZlhGQTNMWHB5eUJUcmNaVkZNZXVjaFdiONIBuAFBVV95cUxPZS1aejFRMnVRZmFtdjZrM0ppYnIzNFdvN0MyNTdGTHRMVmhHWXFHdWtiV2hOSHUxamU2LV84NWgxRWxyYXdtTUFQZkRMMzBrOEEyUnhUeE8ySVpzVEdveHVyZzdzNEw2Z0RpaGJLY0UwNmVxVFkyWlNlOGhaWFZIcWtTOXJKY25MaTlOUDh4TVNZRWE2a1NtTTlGZEp4RGFRQTEtS1FmWjFJTFpKRFozUm1VcTFsY2tj?oc=5",
-        "sourceName": "India Today"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 15,
-        "sizeBytes": 5457368,
-        "hasVoiceover": true,
-        "image": {
-          "query": "container ship open sea",
-          "source": "pexels",
-          "photographer": "William Liu",
-          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-9806482/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.3,
-          "text": "INDIA TELLS UN"
-        },
-        {
-          "start": 3.3,
-          "end": 7.5,
-          "text": "GULF ATTACKS UNACCEPTABLE"
-        },
-        {
-          "start": 7.5,
-          "end": 11.25,
-          "text": "GEOPOLITICAL RISE"
-        },
-        {
-          "start": 11.25,
-          "end": 15,
-          "text": "INSURANCE COSTS UP"
         }
       ],
       "publish": {
