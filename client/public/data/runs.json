@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-30T13:03:41.677Z",
+  "generatedAt": "2026-10-31T12:41:22.237Z",
   "runs": [
+    {
+      "id": "2026-10-31T12-40-48",
+      "startedAt": "2026-10-31T12:40:48.825Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 1050,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 579,
+          "detail": "Iran's Sea Mine Threat Raises Alarm In Hormuz As 8 Vessels Reportedly Hit | Shipping At Risk"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 636,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 28643,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1426,
+        "completionTokens": 270
+      },
+      "finishedAt": "2026-10-31T12:41:19.739Z",
+      "durationMs": 30914,
+      "event": {
+        "title": "Iran's Sea Mine Threat Raises Alarm In Hormuz As 8 Vessels Reportedly Hit | Shipping At Risk",
+        "source": "The Times of India",
+        "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNbWtndjVmcmlxRXd5LVJ2T1pfSHZnV0NnMTJzRmZDdXpJRUV5R0d2N1lNdEZ6d2tCTU1aZmV1aGs3SVYtZW9VajJZWUpxWlJ6QXNnSV9RbzFrTnoyMGpKbkVlNENldHpUNy00dUZkOE9UVVczTGpUay1jTmZydVRjMGc0UHFHYnoySnF0alNobWIxYlRFS3NpcmZHSExMVk1iWUxuUUVCM01VcUFxdUdnRGNlZGpsTlJMNkJYUlk4cnItZzM1NzRkYjUxcXpsa2xHZWhTQVdCaWtvMFJlbkp6QnNSbW4wWnJjTTE2X3VhU3h1cUZ1RWtVMy10UzJ3aUnSAYQCQVVfeXFMTk10b1ZuRTVXejVjMC1fUFJtejZxRU5mTW1FZ2xBNmhjdV93T0hHTGxvYjJCa0dyUXJqMV9EVENKSHlxQTQwc0VRQjJrY0VjOC1KYmNuZXZEcTU0TkotOGRNbWVJOHE3MVRZMGhhY1lFZGdQci13UnhiVE9NZmVKRmg4WXVwdzBXSFRId0FkRG5DT0tEcWhTU2VPcWJDOUk1bkpUNFVES25OenByN0FSTzhvRno3RExMQWVxYTJib2pIYWN3SEpBM1gxR205cjIzeEpIR20yeFY3X2xmS0c3bWNxcUw1RXpSY0t2WFdxdlpVVlV2bWFqbW90bDREeHZDTmx3OC0?oc=5",
+        "reason": "Eight vessels hit by mines in the Strait of Hormuz signals severe supply-chain disruption and immediate risk to marine insurers and shipowners."
+      },
+      "script": {
+        "headline": "Hormuz Mine Threat",
+        "voiceover": "Eight vessels reportedly struck by mines in the Strait of Hormuz. This disruption threatens global supply chains and marine insurance rates. Shipping routes facing immediate risk.",
+        "beats": [
+          "8 VESSELS HIT",
+          "MINES IN HORMUZ",
+          "SUPPLY CHAIN RISK",
+          "INSURANCE RATES UP",
+          "SHIPPING ALERT"
+        ],
+        "facebookCaption": "Reports of eight ships hit by mines in the Strait of Hormuz are raising concerns. How will this impact your supply chain?",
+        "linkedinCaption": "Recent reports indicate eight vessels were struck by mines in the Strait of Hormuz. This development poses significant risks to global logistics and marine insurance premiums. Expect increased volatility in shipping rates.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#Hormuz",
+          "#supplychain",
+          "#logistics",
+          "#securite",
+          "#insurance"
+        ],
+        "imageQuery": "container ship strait hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNbWtndjVmcmlxRXd5LVJ2T1pfSHZnV0NnMTJzRmZDdXpJRUV5R0d2N1lNdEZ6d2tCTU1aZmV1aGs3SVYtZW9VajJZWUpxWlJ6QXNnSV9RbzFrTnoyMGpKbkVlNENldHpUNy00dUZkOE9UVVczTGpUay1jTmZydVRjMGc0UHFHYnoySnF0alNobWIxYlRFS3NpcmZHSExMVk1iWUxuUUVCM01VcUFxdUdnRGNlZGpsTlJMNkJYUlk4cnItZzM1NzRkYjUxcXpsa2xHZWhTQVdCaWtvMFJlbkp6QnNSbW4wWnJjTTE2X3VhU3h1cUZ1RWtVMy10UzJ3aUnSAYQCQVVfeXFMTk10b1ZuRTVXejVjMC1fUFJtejZxRU5mTW1FZ2xBNmhjdV93T0hHTGxvYjJCa0dyUXJqMV9EVENKSHlxQTQwc0VRQjJrY0VjOC1KYmNuZXZEcTU0TkotOGRNbWVJOHE3MVRZMGhhY1lFZGdQci13UnhiVE9NZmVKRmg4WXVwdzBXSFRId0FkRG5DT0tEcWhTU2VPcWJDOUk1bkpUNFVES25OenByN0FSTzhvRno3RExMQWVxYTJib2pIYWN3SEpBM1gxR205cjIzeEpIR20yeFY3X2xmS0c3bWNxcUw1RXpSY0t2WFdxdlpVVlV2bWFqbW90bDREeHZDTmx3OC0?oc=5",
+        "sourceName": "The Times of India"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-31T12-40-48.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 5446053,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship strait hormuz",
+          "source": "pexels",
+          "photographer": "Esra  Nurdoğan",
+          "sourcePage": "https://www.pexels.com/photo/a-large-ship-in-the-water-with-a-city-in-the-background-27410425/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "8 VESSELS HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "MINES IN HORMUZ"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "SUPPLY CHAIN RISK"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE RATES UP"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "SHIPPING ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-30T13-03-17",
       "startedAt": "2026-10-30T13:03:17.199Z",
@@ -586,7 +716,7 @@
         "sourceName": "Financial Times"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-25T11-39-11.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 13627582,
         "hasVoiceover": false,
@@ -3668,135 +3798,6 @@
           "start": 16,
           "end": 20,
           "text": "MARITIME SECURITY ALERT"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-09-29T12-59-57",
-      "startedAt": "2026-09-29T12:59:57.515Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 827,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 285,
-          "detail": "Ship hit in Hormuz, sparking fire: maritime agency"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 637,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 29838,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1347,
-        "completionTokens": 299
-      },
-      "finishedAt": "2026-09-29T13:00:29.106Z",
-      "durationMs": 31591,
-      "event": {
-        "title": "Ship hit in Hormuz, sparking fire: maritime agency",
-        "source": "The Peninsula Qatar",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQ3piMWd5M1lYQXZKVlRPYmNqZ0VsamhvcjdXSkhoQ0FYOEhXVTRpUkhJMWtxeWY4Y3ZjbWRfejFhTFFFMVRHa1RnWmN0ZE53Yk56Ny0xendiT2ptdFNtLVBYOVJiMHJvUGRYLVdtSnZPZDFGcy1idnNhendLcjhsRU0tUWN3VE8yZFBNemx5cHFNR0tiU2tOOHlnQVotQQ?oc=5",
-        "reason": "A vessel struck in the Strait of Hormuz poses immediate supply-chain disruption risks and safety concerns for global energy transit."
-      },
-      "script": {
-        "headline": "Hormuz Fire Alert",
-        "voiceover": "A vessel struck in the Strait of Hormuz is currently on fire, according to the maritime agency. This incident poses immediate risks to global energy transit and safety. Monitor official updates closely for further developments on the situation.",
-        "beats": [
-          "VESSEL STRUCK IN HORMUZ",
-          "FIRE REPORTED ON DECK",
-          "MARITIME AGENCY CONFIRMS",
-          "GLOBAL ENERGY ROUTE AT RISK",
-          "MONITOR OFFICIAL UPDATES"
-        ],
-        "facebookCaption": "A ship has been hit and is on fire in the Strait of Hormuz. The maritime agency has confirmed the incident. How do you think this affects current transit schedules?",
-        "linkedinCaption": "The maritime agency confirmed a vessel struck in the Strait of Hormuz is experiencing a fire. This incident highlights persistent safety and supply chain risks in critical energy corridors. Operational continuity depends on rapid, coordinated response protocols.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#Hormuz",
-          "#logistics",
-          "#energy",
-          "#supplychain"
-        ],
-        "imageQuery": "cargo ship strait of hormuz",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQ3piMWd5M1lYQXZKVlRPYmNqZ0VsamhvcjdXSkhoQ0FYOEhXVTRpUkhJMWtxeWY4Y3ZjbWRfejFhTFFFMVRHa1RnWmN0ZE53Yk56Ny0xendiT2ptdFNtLVBYOVJiMHJvUGRYLVdtSnZPZDFGcy1idnNhendLcjhsRU0tUWN3VE8yZFBNemx5cHFNR0tiU2tOOHlnQVotQQ?oc=5",
-        "sourceName": "The Peninsula Qatar"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 10240194,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship strait of hormuz",
-          "source": "pexels",
-          "photographer": "Şahin Doğdu",
-          "sourcePage": "https://www.pexels.com/photo/a-large-cargo-ship-is-floating-in-the-ocean-27597349/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "VESSEL STRUCK IN HORMUZ"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "FIRE REPORTED ON DECK"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "MARITIME AGENCY CONFIRMS"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "GLOBAL ENERGY ROUTE AT RISK"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "MONITOR OFFICIAL UPDATES"
         }
       ],
       "publish": {
