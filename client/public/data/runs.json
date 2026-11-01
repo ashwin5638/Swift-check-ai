@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-10-31T12:41:22.237Z",
+  "generatedAt": "2026-11-01T13:32:16.780Z",
   "runs": [
+    {
+      "id": "2026-11-01T13-31-51",
+      "startedAt": "2026-11-01T13:31:51.001Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 792,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 340,
+          "detail": "Qatari LNG Carrier Hit Amid Surge In Gulf Shipping Attacks, Rising Insurance Costs"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 720,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 21339,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1438,
+        "completionTokens": 312
+      },
+      "finishedAt": "2026-11-01T13:32:14.196Z",
+      "durationMs": 23195,
+      "event": {
+        "title": "Qatari LNG Carrier Hit Amid Surge In Gulf Shipping Attacks, Rising Insurance Costs",
+        "source": "Forbes Middle East",
+        "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQYkUzM0hSMnRiT3FKaWNQeTllYjhJLUZXMjJoN2F0b0RQc0JZNFEzVWNPNnVWc1pYOWxJbUFxT0oxY3Q5bVR6dEJDcWxfRzN0ZEZlN2c3b2o3UnJUT3AxeWU5TnpzaGozQWZkVXJpTzNjM0VCLVh0MlNMdUFsS1d6V1dsSnJhQzlKdy13QloyM0xvelVHMEhGZTlOUHhBVGgwUXZWU3RtVTdmUDVtT05uM1BfcEZkYXQ5dlNDcy1yQ3pObjdtRWVxOU5TUFZZVnNwZnc?oc=5",
+        "reason": "Direct physical damage to an LNG carrier signals escalating Gulf risks, driving immediate spikes in marine insurance premiums and war-risk surcharges."
+      },
+      "script": {
+        "headline": "Gulf LNG Carrier Attacked",
+        "voiceover": "A Qatari LNG carrier sustained damage in the Gulf. This incident reflects a broader surge in regional maritime attacks. Consequently, war-risk insurance premiums are rising sharply. Insurers now demand higher surcharges to cover these escalating operational threats.",
+        "beats": [
+          "QATARI LNG CARRIER HIT",
+          "GULF ATTACKS SURGING",
+          "WAR RISK PREMIUMS UP",
+          "INSURANCE COSTS SPIKE",
+          "MARITIME RISK ESCALATES"
+        ],
+        "facebookCaption": "A recent hit on a Qatari LNG ship is driving up war-risk insurance costs across the Gulf. Are you seeing these premium increases in your logistics contracts?",
+        "linkedinCaption": "The recent physical damage to a Qatari LNG carrier underscores the escalating security landscape in the Gulf. Consequently, marine underwriters are adjusting war-risk surcharges to reflect heightened exposure. This shift directly impacts freight pricing and route planning for energy exporters.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#LNG",
+          "#insurance",
+          "#gulf",
+          "#riskmanagement",
+          "#energy"
+        ],
+        "imageQuery": "LNG tanker ship at sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQYkUzM0hSMnRiT3FKaWNQeTllYjhJLUZXMjJoN2F0b0RQc0JZNFEzVWNPNnVWc1pYOWxJbUFxT0oxY3Q5bVR6dEJDcWxfRzN0ZEZlN2c3b2o3UnJUT3AxeWU5TnpzaGozQWZkVXJpTzNjM0VCLVh0MlNMdUFsS1d6V1dsSnJhQzlKdy13QloyM0xvelVHMEhGZTlOUHhBVGgwUXZWU3RtVTdmUDVtT05uM1BfcEZkYXQ5dlNDcy1yQ3pObjdtRWVxOU5TUFZZVnNwZnc?oc=5",
+        "sourceName": "Forbes Middle East"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-01T13-31-51.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 11213826,
+        "hasVoiceover": false,
+        "image": {
+          "query": "LNG tanker ship at sea",
+          "source": "pexels",
+          "photographer": "Nothing Ahead",
+          "sourcePage": "https://www.pexels.com/photo/industrial-port-with-mountains-and-lng-tanker-38601496/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "QATARI LNG CARRIER HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "GULF ATTACKS SURGING"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "WAR RISK PREMIUMS UP"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE COSTS SPIKE"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MARITIME RISK ESCALATES"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-10-31T12-40-48",
       "startedAt": "2026-10-31T12:40:48.825Z",
@@ -592,7 +722,7 @@
         "sourceName": "Latest news from Azerbaijan"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-27T12-29-30.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 9667524,
         "hasVoiceover": false,
@@ -3669,135 +3799,6 @@
           "start": 16,
           "end": 20,
           "text": "NAVIGATE WITH CAUTION"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-09-30T12-42-08",
-      "startedAt": "2026-09-30T12:42:08.725Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 982,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 473,
-          "detail": "Three tankers hit Tuesday in Hormuz: maritime agency"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 741,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 32149,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 1,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1350,
-        "completionTokens": 311
-      },
-      "finishedAt": "2026-09-30T12:42:43.074Z",
-      "durationMs": 34349,
-      "event": {
-        "title": "Three tankers hit Tuesday in Hormuz: maritime agency",
-        "source": "The Peninsula Qatar",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOeFR0TWM5X2pkMlJRbmwyRzE3NFNDRUVMejlJZFpRWVlMeldIUEJZbEkweTRHRFA5S3hRS1lCWXhnRndkRjR6alJua2JfYk1udE1UcVg4b28xQ1lGNWJmU1FmQ3BORzRtaDVQdV9KYkVXNkFBbGdQbDhvaWowREtyZUsyVjBXWEdzTEpSYXNDLWJRWWRteW9yVFBRSlJyVFRNMkE?oc=5",
-        "reason": "Multiple tanker strikes in the Strait of Hormuz signal severe supply-chain disruption and immediate risk to marine insurers and shipowners."
-      },
-      "script": {
-        "headline": "Hormuz Tanker Strikes",
-        "voiceover": "Three tankers were hit in the Strait of Hormuz on Tuesday. This immediate disruption threatens global oil supply chains and raises urgent questions for marine insurers and shipowners regarding current transit risk and security protocols.",
-        "beats": [
-          "THREE TANKERS HIT",
-          "HORMUZ STRAIT TUESDAY",
-          "SUPPLY CHAIN DISRUPTION",
-          "INSURANCE RISK RISING",
-          "MARITIME SECURITY ALERT"
-        ],
-        "facebookCaption": "Three tankers were struck in Hormuz on Tuesday. How is your supply chain adapting to this new level of risk?",
-        "linkedinCaption": "Multiple tanker strikes in the Strait of Hormuz have occurred, signaling immediate supply chain disruption. This event necessitates a rapid reassessment of maritime risk and insurance coverage. The primary takeaway is that regional instability now directly impacts global freight stability.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#hormuz",
-          "#logistics",
-          "#oiltanker",
-          "#supplychain"
-        ],
-        "imageQuery": "oil tanker open water",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOeFR0TWM5X2pkMlJRbmwyRzE3NFNDRUVMejlJZFpRWVlMeldIUEJZbEkweTRHRFA5S3hRS1lCWXhnRndkRjR6alJua2JfYk1udE1UcVg4b28xQ1lGNWJmU1FmQ3BORzRtaDVQdV9KYkVXNkFBbGdQbDhvaWowREtyZUsyVjBXWEdzTEpSYXNDLWJRWWRteW9yVFBRSlJyVFRNMkE?oc=5",
-        "sourceName": "The Peninsula Qatar"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 8328356,
-        "hasVoiceover": true,
-        "image": {
-          "query": "oil tanker open water",
-          "source": "pexels",
-          "photographer": "Chengxin Zhao",
-          "sourcePage": "https://www.pexels.com/photo/view-of-an-oil-tanker-on-a-sea-at-sunset-20097614/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "THREE TANKERS HIT"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "HORMUZ STRAIT TUESDAY"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "SUPPLY CHAIN DISRUPTION"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "INSURANCE RISK RISING"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "MARITIME SECURITY ALERT"
         }
       ],
       "publish": {
