@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-01T13:32:16.780Z",
+  "generatedAt": "2026-11-02T16:05:49.555Z",
   "runs": [
+    {
+      "id": "2026-11-02T16-05-09",
+      "startedAt": "2026-11-02T16:05:09.786Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 691,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 311,
+          "detail": "Cargo Ship AS Dream Sinks 90 Nautical Miles Off Cyprus As Passing MSC Vessel Rescues All 10 Crew"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 668,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 33643,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1398,
+        "completionTokens": 319
+      },
+      "finishedAt": "2026-11-02T16:05:45.105Z",
+      "durationMs": 35319,
+      "event": {
+        "title": "Cargo Ship AS Dream Sinks 90 Nautical Miles Off Cyprus As Passing MSC Vessel Rescues All 10 Crew",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOUTJRckREaVNXNUlla1lHbGNycWZSS2tSdHVvdU4xekZkeDBsV3VtRkFQblJTTUpUTUM3YnFZNTZuR1dvc2tUbjFpcEluUW1xUHNEdzZ5U1drNGNZcnotLVlWVTlPdnBxOFVYRXRQM1BxQTdGb2pGTzVNUTd3QUdBVW9weHdlWVB5M2h3UHFTd1Z1bkZqLURiZVJ3WFdtMFJMN3dYeXRsa2pKUVF3UDNCS3Q5cnpQOFdDOGsyV1lmVjRhSjd0UXc?oc=5",
+        "reason": "The sinking of the AS Dream off Cyprus is a major safety incident with immediate operational and insurance implications for the shipping industry."
+      },
+      "script": {
+        "headline": "AS Dream Sinks",
+        "voiceover": "The cargo ship AS Dream sank ninety nautical miles off Cyprus. A passing MSC vessel saved the entire crew. Ten sailors were rescued safely. This incident highlights the critical importance of immediate distress response at sea.",
+        "beats": [
+          "SHIPS SINKS OFF CYPRUS",
+          "NINETY MILES FROM COAST",
+          "MSC VESSEL RESPONDS",
+          "ALL TEN CREW SAFE",
+          "MARITIME SAFETY CRITICAL"
+        ],
+        "facebookCaption": "The AS Dream went down, but the crew made it out. Have you ever been on a vessel during a distress call? Let us know in the comments.",
+        "linkedinCaption": "The sinking of the AS Dream near Cyprus resulted in the successful rescue of all ten crew members by a nearby MSC vessel. This incident underscores the effectiveness of immediate maritime coordination. We must remain vigilant in maintaining high safety standards at sea.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#cyprus",
+          "#safety",
+          "#seafarers",
+          "#incident"
+        ],
+        "imageQuery": "cargo ship at sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOUTJRckREaVNXNUlla1lHbGNycWZSS2tSdHVvdU4xekZkeDBsV3VtRkFQblJTTUpUTUM3YnFZNTZuR1dvc2tUbjFpcEluUW1xUHNEdzZ5U1drNGNZcnotLVlWVTlPdnBxOFVYRXRQM1BxQTdGb2pGTzVNUTd3QUdBVW9weHdlWVB5M2h3UHFTd1Z1bkZqLURiZVJ3WFdtMFJMN3dYeXRsa2pKUVF3UDNCS3Q5cnpQOFdDOGsyV1lmVjRhSjd0UXc?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-02T16-05-09.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 18788708,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship at sea",
+          "source": "pexels",
+          "photographer": "Regan Dsouza",
+          "sourcePage": "https://www.pexels.com/photo/commercial-cargo-ships-on-the-open-sea-36112907/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SHIPS SINKS OFF CYPRUS"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "NINETY MILES FROM COAST"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "MSC VESSEL RESPONDS"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "ALL TEN CREW SAFE"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MARITIME SAFETY CRITICAL"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-01T13-31-51",
       "startedAt": "2026-11-01T13:31:51.001Z",
@@ -594,7 +723,7 @@
         "sourceName": "Oskaloosa Herald"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-28T13-02-34.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 7704242,
         "hasVoiceover": false,
@@ -3670,135 +3799,6 @@
           "start": 16,
           "end": 20,
           "text": "INSURANCE COSTS RISE"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-02T12-43-36",
-      "startedAt": "2026-10-02T12:43:36.613Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 588,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 290,
-          "detail": "US-led maritime center raises threat level for Middle East to severe"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 613,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 22319,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1340,
-        "completionTokens": 284
-      },
-      "finishedAt": "2026-10-02T12:44:00.426Z",
-      "durationMs": 23813,
-      "event": {
-        "title": "US-led maritime center raises threat level for Middle East to severe",
-        "source": "Awani International",
-        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPd0FlWnpBaF9UcWNDTGJuc1FOcXFPR2R0TzV0WWlpUFZYWDhEY2djOGQ2M0JkMC0xQVBtRTRpQUszM1RUTG9DSjVzaU55RXVpZ2xaQXNEc1FIbS1vWXlOV25kUmh4dFp2UjY3RXJvNl9NMHNYUzBpNEFvZWsyWXQ0ankxRlJLNzlRVDY0VVBfOEp6SUlEdS1rRzJ3Mm9FVXp1TGxKX2RZSlRFUElIdl9V?oc=5",
-        "reason": "The US-led center raising the Middle East threat level to severe directly impacts insurance premiums and routing for global shipping."
-      },
-      "script": {
-        "headline": "Middle East Threat Severe",
-        "voiceover": "The US-led maritime center has officially raised the Middle East threat level to severe. This decision directly impacts global shipping routes and insurance premiums. Vessels must now navigate with heightened caution in the region.",
-        "beats": [
-          "THREAT LEVEL RAISED",
-          "US LED CENTER",
-          "MIDDLE EAST SEVERE",
-          "INSURANCE IMPACT",
-          "NAVIGATE WITH CAUTION"
-        ],
-        "facebookCaption": "The threat level for the Middle East is now severe. How does this shift affect your supply chain? Let us know in the comments.",
-        "linkedinCaption": "The US-led maritime center has elevated the Middle East threat level to severe. This development signals immediate implications for route planning and risk assessment. Monitor your exposure accordingly.",
-        "hashtags": [
-          "#maritime",
-          "#shipping",
-          "#security",
-          "#logistics",
-          "#riskmanagement",
-          "#middleeast"
-        ],
-        "imageQuery": "cargo ship open sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPd0FlWnpBaF9UcWNDTGJuc1FOcXFPR2R0TzV0WWlpUFZYWDhEY2djOGQ2M0JkMC0xQVBtRTRpQUszM1RUTG9DSjVzaU55RXVpZ2xaQXNEc1FIbS1vWXlOV25kUmh4dFp2UjY3RXJvNl9NMHNYUzBpNEFvZWsyWXQ0ankxRlJLNzlRVDY0VVBfOEp6SUlEdS1rRzJ3Mm9FVXp1TGxKX2RZSlRFUElIdl9V?oc=5",
-        "sourceName": "Awani International"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 18914967,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship open sea",
-          "source": "pexels",
-          "photographer": "Regan Dsouza",
-          "sourcePage": "https://www.pexels.com/photo/commercial-cargo-ships-on-the-open-sea-36112907/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "THREAT LEVEL RAISED"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "US LED CENTER"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "MIDDLE EAST SEVERE"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "INSURANCE IMPACT"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "NAVIGATE WITH CAUTION"
         }
       ],
       "publish": {
