@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-11-02T16:05:49.555Z",
+  "generatedAt": "2026-11-03T14:24:48.024Z",
   "runs": [
+    {
+      "id": "2026-11-03T14-24-18",
+      "startedAt": "2026-11-03T14:24:18.702Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 5157,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 709,
+          "detail": "Black Sea Ship Attacks Raise NATO Security Concerns as Russia-Ukraine Maritime Conflict Escalates"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 823,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 19320,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1366,
+        "completionTokens": 307
+      },
+      "finishedAt": "2026-11-03T14:24:44.715Z",
+      "durationMs": 26013,
+      "event": {
+        "title": "Black Sea Ship Attacks Raise NATO Security Concerns as Russia-Ukraine Maritime Conflict Escalates",
+        "source": "www.nationpathindia.com",
+        "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOdElLdHVEenp1NUlneDhoZVNzZTFQcFFqeVNCSkoydFctbUhWZ094Wkt0VFRhbTRacXZxbFQycDRuRjZFRmE5bUxCUDZPNmVaYUt2SkU4cFk5SV83cWhHWGdHbGNSNVlOYlhYLXFwakE0ZmFyWHFsR2RuNVhxLUU0R3lPcmlvc1dpNW83V3FURDltcFFGbDNOVi1BYUtrS3VuT2N5U01VQVlmSnR1ZUhRMnNUb0htUGM?oc=5",
+        "reason": "Escalating Black Sea attacks directly threaten commercial shipping routes, increasing war risk premiums and forcing major rerouting decisions for global trade."
+      },
+      "script": {
+        "headline": "Black Sea Shipping Risk",
+        "voiceover": "Black Sea attacks are escalating, directly threatening commercial shipping routes. This volatility forces major rerouting decisions and spikes war risk premiums globally. The maritime conflict is no longer a regional issue; it is now a direct hit on global trade logistics.",
+        "beats": [
+          "ATTACKS ESCALATE IN BLACK SEA",
+          "SHIPPING ROUTES UNDER THREAT",
+          "WAR RISK PREMIUMS RISE",
+          "GLOBAL TRADE REROUTING"
+        ],
+        "facebookCaption": "The Black Sea conflict is now hitting global supply chains hard. Where do you think the biggest chokepoints will form next?",
+        "linkedinCaption": "Escalating maritime conflict in the Black Sea is driving significant war risk premiums and forcing complex rerouting strategies for global trade. Securing alternative routes is becoming a critical operational priority for logistics leaders. Resilience is no longer optional.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#logistics",
+          "#supplychain",
+          "#blacksea",
+          "#warrisk"
+        ],
+        "imageQuery": "cargo ship black sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOdElLdHVEenp1NUlneDhoZVNzZTFQcFFqeVNCSkoydFctbUhWZ094Wkt0VFRhbTRacXZxbFQycDRuRjZFRmE5bUxCUDZPNmVaYUt2SkU4cFk5SV83cWhHWGdHbGNSNVlOYlhYLXFwakE0ZmFyWHFsR2RuNVhxLUU0R3lPcmlvc1dpNW83V3FURDltcFFGbDNOVi1BYUtrS3VuT2N5U01VQVlmSnR1ZUhRMnNUb0htUGM?oc=5",
+        "sourceName": "www.nationpathindia.com"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-03T14-24-18.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 6932515,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship black sea",
+          "source": "pexels",
+          "photographer": "Mathias Reding",
+          "sourcePage": "https://www.pexels.com/photo/container-ship-sailing-in-sea-in-black-and-white-12625304/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "ATTACKS ESCALATE IN BLACK SEA"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "SHIPPING ROUTES UNDER THREAT"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "WAR RISK PREMIUMS RISE"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "GLOBAL TRADE REROUTING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-02T16-05-09",
       "startedAt": "2026-11-02T16:05:09.786Z",
@@ -595,7 +718,7 @@
         "sourceName": "Kurdistan24"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-29T13-10-32.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 20044565,
         "hasVoiceover": false,
@@ -3670,135 +3793,6 @@
           "start": 15,
           "end": 20,
           "text": "INSURERS FACE NEW THREATS"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-03T11-44-52",
-      "startedAt": "2026-10-03T11:44:52.237Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 749,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 341,
-          "detail": "Two Oil Tankers Hit By Unidentified Projectiles Near Strait Of Hormuz"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 659,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 33234,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 1,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1477,
-        "completionTokens": 297
-      },
-      "finishedAt": "2026-10-03T11:45:27.225Z",
-      "durationMs": 34988,
-      "event": {
-        "title": "Two Oil Tankers Hit By Unidentified Projectiles Near Strait Of Hormuz",
-        "source": "marineinsight.com",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPWVowV3NGYnh0SkhtMUNvSEpqd2RTN2hrbjF2VndZUjJ1UDZQeEJSS1d2Wlpfc3NTci1ySk9uYTdGSERONVJubWZUTWJMbWk5OElaQll1TDBnLUxjTG9odzJ0NGt2Z1MxRlhSMHMtc19nNUlWSXF1MTNHMzUyOGpwVTJ4Q2gwV21uRmE5N0FRZDlFYVVyeW0xNHFFRWIwbUtseFE?oc=5",
-        "reason": "Projectile strikes on tankers in the Strait of Hormuz threaten critical oil supply routes, directly impacting marine insurance premiums and global energy logistics."
-      },
-      "script": {
-        "headline": "Hormuz Tanker Strikes",
-        "voiceover": "Two oil tankers were hit by unidentified projectiles near the Strait of Hormuz. While no injuries were reported, this incident highlights persistent security risks. It directly impacts shipping insurance costs and global energy logistics routes.",
-        "beats": [
-          "TWO TANKERS STRUCK",
-          "UNIDENTIFIED PROJECTILES",
-          "STRAIT OF HORMUZ",
-          "NO INJURIES REPORTED",
-          "INSURANCE COSTS RISE"
-        ],
-        "facebookCaption": "Two tankers just took hits near the Strait of Hormuz. Security concerns are back in focus for the industry. Is your route planning ready for this?",
-        "linkedinCaption": "Recent projectile strikes on tankers in the Strait of Hormuz underscore the ongoing volatility in key energy corridors. This event will likely influence marine insurance premiums and risk assessments for operators in the region. Security remains a primary operational concern.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#oil",
-          "#Hormuz",
-          "#logistics",
-          "#marinesecurity"
-        ],
-        "imageQuery": "oil tanker sea horizon",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPWVowV3NGYnh0SkhtMUNvSEpqd2RTN2hrbjF2VndZUjJ1UDZQeEJSS1d2Wlpfc3NTci1ySk9uYTdGSERONVJubWZUTWJMbWk5OElaQll1TDBnLUxjTG9odzJ0NGt2Z1MxRlhSMHMtc19nNUlWSXF1MTNHMzUyOGpwVTJ4Q2gwV21uRmE5N0FRZDlFYVVyeW0xNHFFRWIwbUtseFE?oc=5",
-        "sourceName": "marineinsight.com"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 8353012,
-        "hasVoiceover": true,
-        "image": {
-          "query": "oil tanker sea horizon",
-          "source": "pexels",
-          "photographer": "Chengxin Zhao",
-          "sourcePage": "https://www.pexels.com/photo/view-of-an-oil-tanker-on-a-sea-at-sunset-20097614/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "TWO TANKERS STRUCK"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "UNIDENTIFIED PROJECTILES"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "STRAIT OF HORMUZ"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "NO INJURIES REPORTED"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "INSURANCE COSTS RISE"
         }
       ],
       "publish": {
