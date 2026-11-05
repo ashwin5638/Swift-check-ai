@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-04T14:39:39.906Z",
+  "generatedAt": "2026-11-05T14:44:47.848Z",
   "runs": [
+    {
+      "id": "2026-11-05T14-44-08",
+      "startedAt": "2026-11-05T14:44:08.304Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 711,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 274,
+          "detail": "Finland sentences captain and boatswain over Baltic Sea cable damage"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 596,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 33210,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1326,
+        "completionTokens": 285
+      },
+      "finishedAt": "2026-11-05T14:44:43.101Z",
+      "durationMs": 34797,
+      "event": {
+        "title": "Finland sentences captain and boatswain over Baltic Sea cable damage",
+        "source": "safety4sea",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOdFBnMzBoQjZCNzExVkViX3VKVVI3UzdGMlNXdmQ4azFnNFg2TTZTUlVBdjk1VG5hUV94YVM3U3pjOEU5SzgzZ09QQ3ppMkxnV0tBWFRoM3dqbXo2a1RNaEFIYXIxbDV0QnJrUzZ0TnNUZ21JLTM5WmlRQlY3aUdPNVJTNnVIeDZULVFFTDh5VEtoS3hodjZB?oc=5",
+        "reason": "This legal precedent clarifies liability for subsea cable damage, directly impacting marine insurers and shipowners regarding operational safety and regulatory compliance."
+      },
+      "script": {
+        "headline": "Cable Damage Liability",
+        "voiceover": "Finland sentenced a captain and boatswain for damaging Baltic Sea cables. This ruling clarifies personal criminal liability for subsea infrastructure damage. Shipowners must ensure strict crew training on cable avoidance protocols to prevent similar legal exposure.",
+        "beats": [
+          "FINLAND SENTENCES CAPTAIN",
+          "SUBSEA CABLE DAMAGE",
+          "BALTIC SEA INCIDENT",
+          "PERSONAL LIABILITY",
+          "ENHANCE CREW TRAINING"
+        ],
+        "facebookCaption": "A Finnish court has held a ship's crew criminally liable for damaging undersea cables. How are you updating your navigation protocols?",
+        "linkedinCaption": "Recent Finnish rulings establish clear criminal liability for crew members involved in subsea cable damage. This precedent highlights the critical need for rigorous operational compliance. Ensure your fleet prioritizes cable avoidance training.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#subseacables",
+          "#marinelaw",
+          "#safety",
+          "#balticsea"
+        ],
+        "imageQuery": "cargo ship navigating open sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOdFBnMzBoQjZCNzExVkViX3VKVVI3UzdGMlNXdmQ4azFnNFg2TTZTUlVBdjk1VG5hUV94YVM3U3pjOEU5SzgzZ09QQ3ppMkxnV0tBWFRoM3dqbXo2a1RNaEFIYXIxbDV0QnJrUzZ0TnNUZ21JLTM5WmlRQlY3aUdPNVJTNnVIeDZULVFFTDh5VEtoS3hodjZB?oc=5",
+        "sourceName": "safety4sea"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-05T14-44-08.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 18794800,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship navigating open sea",
+          "source": "pexels",
+          "photographer": "Regan Dsouza",
+          "sourcePage": "https://www.pexels.com/photo/commercial-cargo-ships-on-the-open-sea-36112907/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "FINLAND SENTENCES CAPTAIN"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "SUBSEA CABLE DAMAGE"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "BALTIC SEA INCIDENT"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "PERSONAL LIABILITY"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "ENHANCE CREW TRAINING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-04T14-39-04",
       "startedAt": "2026-11-04T14:39:04.690Z",
@@ -582,7 +711,7 @@
         "sourceName": "The Times of India"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-10-31T12-40-48.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 5446053,
         "hasVoiceover": false,
@@ -3664,135 +3793,6 @@
           "start": 15,
           "end": 20,
           "text": "COMBAT ZONE RISK"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-05T14-49-00",
-      "startedAt": "2026-10-05T14:49:00.628Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 918,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 563,
-          "detail": "Russia Strikes Liberian-Flagged Cargo Ship At Ukraine’s Odesa Port, Killing One"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 810,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 31411,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1440,
-        "completionTokens": 323
-      },
-      "finishedAt": "2026-10-05T14:49:34.334Z",
-      "durationMs": 33706,
-      "event": {
-        "title": "Russia Strikes Liberian-Flagged Cargo Ship At Ukraine’s Odesa Port, Killing One",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbDFjVzRYRWs2cEYtTDRsaDdVVHBRSWdBN1VyYjF4allESV9fQU1XQU1wa0NzVXRTWU9yUUU3bjUzNFBfMkZnWnZ2MzVpWUpXZUpZRVRldXJEWFJYWUxvd1MxdlBtS1FxZ3YtQXZUN19lUmhMbk9ZRy1lM050VVRlNHJsVXZKaU1BTE9hd2tDdldTUEFKOUw2N1l0N1VHdlh6Sk1GRnNXbFhWQWVk?oc=5",
-        "reason": "The sinking of a commercial cargo ship by Russian drones at Odesa port represents a severe safety incident with direct operational and insurance implications."
-      },
-      "script": {
-        "headline": "Odesa Port Drone Strike",
-        "voiceover": "Russian drones struck a Liberian-flagged cargo vessel at Odesa port. One crew member died in the incident. This event underscores the critical insurance and safety risks now facing commercial shipping in the Black Sea region.",
-        "beats": [
-          "RUSSIAN DRONES HIT ODESA",
-          "LIBERIAN FLAGGED VESSEL",
-          "ONE CREW MEMBER DEAD",
-          "BLACK SEA RISK SPOTS",
-          "INSURANCE COSTS RISING"
-        ],
-        "facebookCaption": "A commercial cargo ship was hit by Russian drones in Odesa. The risk landscape for Black Sea shipping is changing fast. How is your company adjusting its routes?",
-        "linkedinCaption": "The strike on a Liberian-flagged vessel in Odesa highlights the escalating security threats to maritime commerce. Insurers and operators must reassess exposure in conflict zones. Operational safety remains the priority despite geopolitical instability.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#odesa",
-          "#fleetmanagement",
-          "#marinesafety",
-          "#logistics"
-        ],
-        "imageQuery": "cargo ship port smoke",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbDFjVzRYRWs2cEYtTDRsaDdVVHBRSWdBN1VyYjF4allESV9fQU1XQU1wa0NzVXRTWU9yUUU3bjUzNFBfMkZnWnZ2MzVpWUpXZUpZRVRldXJEWFJYWUxvd1MxdlBtS1FxZ3YtQXZUN19lUmhMbk9ZRy1lM050VVRlNHJsVXZKaU1BTE9hd2tDdldTUEFKOUw2N1l0N1VHdlh6Sk1GRnNXbFhWQWVk?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 5801805,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship port smoke",
-          "source": "pexels",
-          "photographer": "akın  akdağ",
-          "sourcePage": "https://www.pexels.com/photo/industrial-ship-sailing-in-istanbul-20220588/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "RUSSIAN DRONES HIT ODESA"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "LIBERIAN FLAGGED VESSEL"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "ONE CREW MEMBER DEAD"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "BLACK SEA RISK SPOTS"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "INSURANCE COSTS RISING"
         }
       ],
       "publish": {
