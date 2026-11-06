@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-11-05T14:44:47.848Z",
+  "generatedAt": "2026-11-06T14:22:39.915Z",
   "runs": [
+    {
+      "id": "2026-11-06T14-22-04",
+      "startedAt": "2026-11-06T14:22:04.626Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 726,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 601,
+          "detail": "Adani Ports agrees $2.86b acquisition of liquid storage operator Evos"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 766,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 30338,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1358,
+        "completionTokens": 328
+      },
+      "finishedAt": "2026-11-06T14:22:37.063Z",
+      "durationMs": 32437,
+      "event": {
+        "title": "Adani Ports agrees $2.86b acquisition of liquid storage operator Evos",
+        "source": "Baird Maritime",
+        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQdFRWMjgzUWNwNld4a2dKRGxJSXhpaktESE81Q2lURHk0MV9EUDFSbVNObmQwZ3V3dVhpWnJpUXJCMEpfbWZHS0NZWDh1ZzFra2RKTHdxMENwcTBIbHB6ejVUSkNJNkotNUhCcGdRTFpGZW1ralRFQmpiMVlHNElHQVpHU2xleVnSAZQBQVVfeXFMUFFFVmFPZ0V4N19YTWI3YjdhV3F0VXlJOFc4S1UzcXlPc1dKWFZ6eXVVLWNYNjAxQUt2cVZPdzNlZFFaYUE0SkEwRFpyaFZtVlNJZi1GLXJ6bVVJXzF6eHZxLWpiOEdIb0ZsNWZSS19zTm1WbU1NUGhKd2JvU0pGSGZMR0s3RTVKN0w2RTFOOW8yLXg5bA?oc=5",
+        "reason": "Adani's $2.86 billion acquisition of Evos significantly reshapes the global liquid storage market and port infrastructure landscape."
+      },
+      "script": {
+        "headline": "Adani Evos Deal",
+        "voiceover": "Adani Ports agreed to acquire liquid storage operator Evos for two point eight six billion dollars. This massive move consolidates global port tank capacity. It signals a new era of integrated infrastructure dominance in the maritime sector.",
+        "beats": [
+          "TWO POINT EIGHT SIX BILLION DOLLARS",
+          "ADANI PORTS ACQUIRES EVOS",
+          "LIQUID STORAGE MARKET SHIFT",
+          "GLOBAL TANK INFRASTRUCTURE",
+          "PORT CONSOLIDATION ERA"
+        ],
+        "facebookCaption": "Adani just closed a 2.86 billion dollar deal for Evos. How does this change liquid storage? #shipping",
+        "linkedinCaption": "Adani Ports has agreed to acquire Evos for 2.86 billion dollars. This acquisition significantly reshapes the global liquid storage landscape by integrating key port infrastructure. The consolidation of tank capacity marks a pivotal shift in maritime logistics.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#AdaniPorts",
+          "#Evos",
+          "#liquidstorage",
+          "#portinfrastructure",
+          "#MRO"
+        ],
+        "imageQuery": "large tank farm port",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQdFRWMjgzUWNwNld4a2dKRGxJSXhpaktESE81Q2lURHk0MV9EUDFSbVNObmQwZ3V3dVhpWnJpUXJCMEpfbWZHS0NZWDh1ZzFra2RKTHdxMENwcTBIbHB6ejVUSkNJNkotNUhCcGdRTFpGZW1ralRFQmpiMVlHNElHQVpHU2xleVnSAZQBQVVfeXFMUFFFVmFPZ0V4N19YTWI3YjdhV3F0VXlJOFc4S1UzcXlPc1dKWFZ6eXVVLWNYNjAxQUt2cVZPdzNlZFFaYUE0SkEwRFpyaFZtVlNJZi1GLXJ6bVVJXzF6eHZxLWpiOEdIb0ZsNWZSS19zTm1WbU1NUGhKd2JvU0pGSGZMR0s3RTVKN0w2RTFOOW8yLXg5bA?oc=5",
+        "sourceName": "Baird Maritime"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-06T14-22-04.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 12897575,
+        "hasVoiceover": false,
+        "image": {
+          "query": "large tank farm port",
+          "source": "pexels",
+          "photographer": "Frederick Adegoke Snr.",
+          "sourcePage": "https://www.pexels.com/photo/industrial-storage-tanks-by-the-seaside-39773497/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "TWO POINT EIGHT SIX BILLION DOLLARS"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "ADANI PORTS ACQUIRES EVOS"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "LIQUID STORAGE MARKET SHIFT"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "GLOBAL TANK INFRASTRUCTURE"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "PORT CONSOLIDATION ERA"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-05T14-44-08",
       "startedAt": "2026-11-05T14:44:08.304Z",
@@ -581,7 +711,7 @@
         "sourceName": "Forbes Middle East"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-01T13-31-51.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 11213826,
         "hasVoiceover": false,
@@ -3670,129 +3800,6 @@
           "start": 16,
           "end": 20,
           "text": "BLACK SEA RISK"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-06T13-23-25",
-      "startedAt": "2026-10-06T13:23:25.343Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 823,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 350,
-          "detail": "Cargo Ship Carrying Indian And Azerbaijani Crew Sinks In Black Sea After Drone Strike, 2 Killed"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 676,
-          "detail": "4 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 30685,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 1,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1460,
-        "completionTokens": 308
-      },
-      "finishedAt": "2026-10-06T13:23:57.881Z",
-      "durationMs": 32538,
-      "event": {
-        "title": "Cargo Ship Carrying Indian And Azerbaijani Crew Sinks In Black Sea After Drone Strike, 2 Killed",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNZWpEMXQ0T3lWSWNIQVQxdVJmYTcwbWlvbGV5eVFtQklDOWdPbmctSlUwRGRpV0RsOFI4OXM2M2hkS2phVmkzUG1GSjFHN1Mwc0lkZFdVUEZxSXZweUJPbzNXc0pwMUgzMzhicGdjQjlCVVdHcDVpYVplWGtPajdmbmhuMWRuamk0YlNmZWhLYVJvdEdaNjF2eFdwZjNPNUZFcHAwamtwS1VEdkQwbXVHejgxZkU0SDdFNHdXMjJZR3JSOTA?oc=5",
-        "reason": "Two deaths and a vessel sinking from drone strikes in the Black Sea represent a critical safety and insurance risk escalation."
-      },
-      "script": {
-        "headline": "BLACK SEA DRONE STRIKE",
-        "voiceover": "A cargo ship carrying Indian and Azerbaijani crew sank in the Black Sea after a drone strike. Two crew members were killed. This incident marks a sharp rise in active combat threats to commercial shipping lanes.",
-        "beats": [
-          "CARGO SHIP SINKS",
-          "DRONE STRIKE CONFIRMED",
-          "TWO CREW KILLED",
-          "COMBAT ZONE RISK"
-        ],
-        "facebookCaption": "Two crew members lost after a drone strike sank a cargo ship in the Black Sea. How is this changing insurance routes for the region? #MaritimeSafety",
-        "linkedinCaption": "A recent drone attack resulted in the loss of a commercial vessel and two crew members in the Black Sea. This event signals a critical escalation in operational risk for maritime logistics in contested waters. Insurers and operators must reassess current threat assessments.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#blacksea",
-          "#cargo",
-          "#marinesafety",
-          "#logistics"
-        ],
-        "imageQuery": "cargo ship black sea horizon",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNZWpEMXQ0T3lWSWNIQVQxdVJmYTcwbWlvbGV5eVFtQklDOWdPbmctSlUwRGRpV0RsOFI4OXM2M2hkS2phVmkzUG1GSjFHN1Mwc0lkZFdVUEZxSXZweUJPbzNXc0pwMUgzMzhicGdjQjlCVVdHcDVpYVplWGtPajdmbmhuMWRuamk0YlNmZWhLYVJvdEdaNjF2eFdwZjNPNUZFcHAwamtwS1VEdkQwbXVHejgxZkU0SDdFNHdXMjJZR3JSOTA?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 13762278,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship black sea horizon",
-          "source": "pexels",
-          "photographer": "Paulo gustavo Modesto",
-          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 4.4,
-          "text": "CARGO SHIP SINKS"
-        },
-        {
-          "start": 4.4,
-          "end": 10,
-          "text": "DRONE STRIKE CONFIRMED"
-        },
-        {
-          "start": 10,
-          "end": 15,
-          "text": "TWO CREW KILLED"
-        },
-        {
-          "start": 15,
-          "end": 20,
-          "text": "COMBAT ZONE RISK"
         }
       ],
       "publish": {
