@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-06T14:22:39.915Z",
+  "generatedAt": "2026-11-07T13:11:00.383Z",
   "runs": [
+    {
+      "id": "2026-11-07T13-10-27",
+      "startedAt": "2026-11-07T13:10:27.705Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 4178,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 313,
+          "detail": "Army Reports Oil Tanker Fire in Eastern Strait of Hormuz"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 549,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 23920,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1318,
+        "completionTokens": 272
+      },
+      "finishedAt": "2026-11-07T13:10:56.671Z",
+      "durationMs": 28966,
+      "event": {
+        "title": "Army Reports Oil Tanker Fire in Eastern Strait of Hormuz",
+        "source": "WANA News Agency",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNMHkzMGJoTTB3MkwtYm1scXhzeTVJT0g5dzc5eXVrUU9MUGZwUnBOdkhURkF1emFJbEJKV2xJYUVCTWJiRjVUcGNCRGRkbllTdmtqRGg2NDRVcUhzTm9nUW9fdU9YU1I2alo4VF9LdjNnUHBsWlhMa3p6WGI0UGFyZVZR?oc=5",
+        "reason": "An oil tanker fire in the Strait of Hormuz poses immediate safety risks and potential supply-chain disruption for global energy trade."
+      },
+      "script": {
+        "headline": "Hormuz Tanker Fire Alert",
+        "voiceover": "Army reports an oil tanker fire in the eastern Strait of Hormuz. This incident highlights immediate safety risks for global energy trade. We monitor such events for potential supply chain disruption.",
+        "beats": [
+          "TANKER FIRE REPORTED",
+          "EASTERN HORMUZ STRAIT",
+          "IMMEDIATE SAFETY RISK",
+          "GLOBAL ENERGY WATCH",
+          "SUPPLY CHAIN ALERT"
+        ],
+        "facebookCaption": "An oil tanker fire has been reported in the Strait of Hormuz. How do you assess the current risk to regional shipping lanes?",
+        "linkedinCaption": "Reports indicate an oil tanker fire in the eastern Strait of Hormuz. This event warrants close monitoring for potential impacts on energy logistics. Supply chain resilience remains a priority.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#StraitOfHormuz",
+          "#oilTanker",
+          "#energySecurity",
+          "#logistics"
+        ],
+        "imageQuery": "oil tanker strait horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNMHkzMGJoTTB3MkwtYm1scXhzeTVJT0g5dzc5eXVrUU9MUGZwUnBOdkhURkF1emFJbEJKV2xJYUVCTWJiRjVUcGNCRGRkbllTdmtqRGg2NDRVcUhzTm9nUW9fdU9YU1I2alo4VF9LdjNnUHBsWlhMa3p6WGI0UGFyZVZR?oc=5",
+        "sourceName": "WANA News Agency"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-07T13-10-27.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8320270,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker strait horizon",
+          "source": "pexels",
+          "photographer": "Doğan Alpaslan  Demir",
+          "sourcePage": "https://www.pexels.com/photo/oil-tanker-in-bosphorus-with-istanbul-skyline-40325834/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "TANKER FIRE REPORTED"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "EASTERN HORMUZ STRAIT"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "IMMEDIATE SAFETY RISK"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "GLOBAL ENERGY WATCH"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "SUPPLY CHAIN ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-06T14-22-04",
       "startedAt": "2026-11-06T14:22:04.626Z",
@@ -581,7 +710,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-02T16-05-09.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 18788708,
         "hasVoiceover": false,
@@ -3671,135 +3800,6 @@
           "start": 15,
           "end": 20,
           "text": "INSURANCE PREMIUMS SURGE"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-07T13-31-22",
-      "startedAt": "2026-10-07T13:31:22.763Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 737,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 351,
-          "detail": "Two Commercial Ships Hit By Drones In Bulgaria’s EEZ, One Sinks And Crew Remains Missing"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 745,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 20740,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1358,
-        "completionTokens": 286
-      },
-      "finishedAt": "2026-10-07T13:31:45.340Z",
-      "durationMs": 22577,
-      "event": {
-        "title": "Two Commercial Ships Hit By Drones In Bulgaria’s EEZ, One Sinks And Crew Remains Missing",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNN3U2LTNOMkc2aFVMR2lIbDNxdlFhRFRTeEZsOC1uOXA0alJoM1lHZVIxQlhZS3R2Yk45UVJIS05qWHdjS2FHeGVEV1RKeFRaMjhyZm1NVEx5LXFZbnlOQzlUQ3llb2FHZHhiYm1HbFF2czBCR0FLYk9SV0h0WjY1U1Q0TzhONjV1dEVJcnVRVk5WZ3A2RFNnajl3UG5CQVVMZnpNZUt0RlRWaVRmeXM1NzZQTDRvWjYz?oc=5",
-        "reason": "Commercial vessels sinking in the Black Sea with missing crews signals severe safety risks and potential supply chain disruption."
-      },
-      "script": {
-        "headline": "Black Sea Drone Attack",
-        "voiceover": "Two commercial ships were struck by drones in Bulgaria's economic zone. One vessel sank, leaving its crew missing. This incident highlights the escalating security risks for commercial shipping in the Black Sea region.",
-        "beats": [
-          "SHIPS HIT BY DRONES",
-          "BULGARIA'S ECONOMIC ZONE",
-          "ONE VESSEL SANK",
-          "CREW REMAINS MISSING",
-          "BLACK SEA RISK"
-        ],
-        "facebookCaption": "Two commercial ships were hit by drones in the Black Sea, with one sinking and its crew missing. Is this the new normal for maritime routes in the region?",
-        "linkedinCaption": "Recent drone strikes on commercial vessels in Bulgaria's EEZ have resulted in a sinking and missing crew. This incident underscores the growing security vulnerabilities facing commercial shipping in the Black Sea. Operators must reassess risk protocols for the region.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#blacksea",
-          "#vesselsafety",
-          "#logistics",
-          "#maritimeindustry"
-        ],
-        "imageQuery": "cargo ship black sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNN3U2LTNOMkc2aFVMR2lIbDNxdlFhRFRTeEZsOC1uOXA0alJoM1lHZVIxQlhZS3R2Yk45UVJIS05qWHdjS2FHeGVEV1RKeFRaMjhyZm1NVEx5LXFZbnlOQzlUQ3llb2FHZHhiYm1HbFF2czBCR0FLYk9SV0h0WjY1U1Q0TzhONjV1dEVJcnVRVk5WZ3A2RFNnajl3UG5CQVVMZnpNZUt0RlRWaVRmeXM1NzZQTDRvWjYz?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 13723814,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship black sea",
-          "source": "pexels",
-          "photographer": "Paulo gustavo Modesto",
-          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "SHIPS HIT BY DRONES"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "BULGARIA'S ECONOMIC ZONE"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "ONE VESSEL SANK"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "CREW REMAINS MISSING"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "BLACK SEA RISK"
         }
       ],
       "publish": {
