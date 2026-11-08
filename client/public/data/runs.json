@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-07T13:11:00.383Z",
+  "generatedAt": "2026-11-08T13:32:44.570Z",
   "runs": [
+    {
+      "id": "2026-11-08T13-32-08",
+      "startedAt": "2026-11-08T13:32:08.571Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 609,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 356,
+          "detail": "At Least 25 Seafarers Killed In Strait Of Hormuz Since War Began Says IMO"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 853,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 32104,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1405,
+        "completionTokens": 335
+      },
+      "finishedAt": "2026-11-08T13:32:42.499Z",
+      "durationMs": 33928,
+      "event": {
+        "title": "At Least 25 Seafarers Killed In Strait Of Hormuz Since War Began Says IMO",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNdFBFYm9xazlGckJVb3h3amVHT0JHUzMzc20tY3pTWV93REZ6RUU0enBwbllWSW5MRDRXTnZqeU9BenNEbnpnQzhJdDluSjFXOS1zYVRTNGdhUkNXNHdDQW10Y213WDlnLXlBUlcxd0M0ME5MQXI3M2lrWlgwdElFazNfbklzRlVncjJNanUyMUU?oc=5",
+        "reason": "IMO confirms 25 seafarer deaths in Hormuz, signaling severe safety risks and potential insurance premiums for the critical global energy chokepoint."
+      },
+      "script": {
+        "headline": "Hormuz Seafarer Crisis",
+        "voiceover": "The IMO has confirmed at least twenty-five seafarers have been killed in the Strait of Hormuz since the conflict began. This escalation marks a critical turning point for global maritime safety standards and commercial insurance rates in the region.",
+        "beats": [
+          "IMO CONFIRMS 25 DEATHS",
+          "STRAIT OF HORMUZ",
+          "SINCE CONFLICT BEGAN",
+          "SEVERE SAFETY RISK",
+          "INSURANCE COSTS RISING"
+        ],
+        "facebookCaption": "The IMO just confirmed the death toll in the Strait of Hormuz. It is a serious situation for crew safety. How is this affecting your shipping plans?",
+        "linkedinCaption": "The IMO reports at least 25 seafarer fatalities in the Strait of Hormuz since the conflict began. This data underscores the escalating operational risks for energy transport. Insurers and operators must reassess risk exposure immediately.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#Hormuz",
+          "#seafarers",
+          "#IMO",
+          "#shippingnews"
+        ],
+        "imageQuery": "oil tanker strait hormuz",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNdFBFYm9xazlGckJVb3h3amVHT0JHUzMzc20tY3pTWV93REZ6RUU0enBwbllWSW5MRDRXTnZqeU9BenNEbnpnQzhJdDluSjFXOS1zYVRTNGdhUkNXNHdDQW10Y213WDlnLXlBUlcxd0M0ME5MQXI3M2lrWlgwdElFazNfbklzRlVncjJNanUyMUU?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-08T13-32-08.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 11375230,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker strait hormuz",
+          "source": "pexels",
+          "photographer": "Nadzli Azlan",
+          "sourcePage": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-in-butterworth-malaysia-37193784/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "IMO CONFIRMS 25 DEATHS"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "STRAIT OF HORMUZ"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "SINCE CONFLICT BEGAN"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SEVERE SAFETY RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "INSURANCE COSTS RISING"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-07T13-10-27",
       "startedAt": "2026-11-07T13:10:27.705Z",
@@ -586,7 +715,7 @@
         "sourceName": "www.nationpathindia.com"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-03T14-24-18.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 6932515,
         "hasVoiceover": false,
@@ -3677,129 +3806,6 @@
           "start": 16,
           "end": 20,
           "text": "MAJOR COLLISION RISK"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-08T13-37-28",
-      "startedAt": "2026-10-08T13:37:28.688Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 768,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 319,
-          "detail": "Iran To Block ‘Illegal Routes’ In Strait Of Hormuz, IRGC Adviser Says"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 655,
-          "detail": "4 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 31946,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 1,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1449,
-        "completionTokens": 301
-      },
-      "finishedAt": "2026-10-08T13:38:02.687Z",
-      "durationMs": 33999,
-      "event": {
-        "title": "Iran To Block ‘Illegal Routes’ In Strait Of Hormuz, IRGC Adviser Says",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMUJYbGE3ei12bTFxSWVGdVlSUHBDeEhrVWtxdGxsRzd5WF9xYnAzbXM4emdMa09TeFFjNXdPZ3B6c1Z6YTVwNWdxcmtmdHZkQWdiQlRnZEFLMzY1dWF5MXBrdGs0Mzd3YXFadjdLalZid1ZMbzl3c3Z0MlAwQlpwWkU4SndqX3FGMHFkTzFGamRaSGwxZnJCTkZteFNWdw?oc=5",
-        "reason": "Iran's threat to block routes in the Strait of Hormuz poses an immediate, severe risk to global oil supply and marine insurance premiums."
-      },
-      "script": {
-        "headline": "HORMUZ ROUTE THREAT",
-        "voiceover": "Iran claims it will block illegal routes in the Strait of Hormuz. This critical chokepoint carries a significant share of global oil. Disruption here would immediately spike freight rates and marine insurance premiums worldwide.",
-        "beats": [
-          "IRAN TARGETS HORMUZ",
-          "ILLEGAL ROUTES BLOCKED",
-          "OIL SUPPLY AT RISK",
-          "INSURANCE PREMIUMS SURGE"
-        ],
-        "facebookCaption": "Iran is threatening to block specific routes in the Strait of Hormuz. How would this change your shipping schedules? Let us know in the comments.",
-        "linkedinCaption": "Recent statements from Iranian officials suggest potential disruption in the Strait of Hormuz. This development warrants close monitoring of route viability and insurance costs. Supply chain resilience is under pressure.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#straitofhormuz",
-          "#logistics",
-          "#oil",
-          "#supplychain"
-        ],
-        "imageQuery": "oil tanker strait of hormuz",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMUJYbGE3ei12bTFxSWVGdVlSUHBDeEhrVWtxdGxsRzd5WF9xYnAzbXM4emdMa09TeFFjNXdPZ3B6c1Z6YTVwNWdxcmtmdHZkQWdiQlRnZEFLMzY1dWF5MXBrdGs0Mzd3YXFadjdLalZid1ZMbzl3c3Z0MlAwQlpwWkU4SndqX3FGMHFkTzFGamRaSGwxZnJCTkZteFNWdw?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 11497712,
-        "hasVoiceover": true,
-        "image": {
-          "query": "oil tanker strait of hormuz",
-          "source": "pexels",
-          "photographer": "Nadzli Azlan",
-          "sourcePage": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-in-butterworth-malaysia-37193784/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 4.4,
-          "text": "IRAN TARGETS HORMUZ"
-        },
-        {
-          "start": 4.4,
-          "end": 10,
-          "text": "ILLEGAL ROUTES BLOCKED"
-        },
-        {
-          "start": 10,
-          "end": 15,
-          "text": "OIL SUPPLY AT RISK"
-        },
-        {
-          "start": 15,
-          "end": 20,
-          "text": "INSURANCE PREMIUMS SURGE"
         }
       ],
       "publish": {
