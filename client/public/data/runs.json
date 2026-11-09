@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-08T13:32:44.570Z",
+  "generatedAt": "2026-11-09T16:30:22.674Z",
   "runs": [
+    {
+      "id": "2026-11-09T16-29-51",
+      "startedAt": "2026-11-09T16:29:51.035Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 820,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 263,
+          "detail": "Safety elusive for shipping crews in Hormuz as death toll climbs"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 695,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 26247,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1314,
+        "completionTokens": 327
+      },
+      "finishedAt": "2026-11-09T16:30:19.066Z",
+      "durationMs": 28031,
+      "event": {
+        "title": "Safety elusive for shipping crews in Hormuz as death toll climbs",
+        "source": "The National",
+        "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQSVY1Q0lETDZHMTcyQnNOeXZQUnNNa1NDVVdPT1F4em9oTE5sU2ZIVnFCZ3JBVUpxdTc5MDdxbGYzVWt3N3NIV3lGbjBvekdTY3RWZS1zMTh1U0NrMTFZT0U1dHNrRVNZRjRLZ2h0UEdBb1BnQ2lNY3ozNnQyT3h0V194YUxjQ2FHTkVpSURTcHJIbmYtZkxLU0tueUtxMzdoai1hcjcxdk5uRlV4MTMxaGxRY0xkUXBpUVQ2Z1FJSmV1aGUtSldHTERlSQ?oc=5",
+        "reason": "Rising death toll in the Strait of Hormuz signals severe safety risks, directly impacting marine insurers, shipowners, and global energy supply chains."
+      },
+      "script": {
+        "headline": "Hormuz Safety Crisis",
+        "voiceover": "Crew deaths in the Strait of Hormuz are climbing rapidly. This surge in fatalities highlights a critical gap in maritime safety. Insurers and shipowners face immediate operational and financial risks. We need urgent intervention to secure these vital energy corridors.",
+        "beats": [
+          "DEATH TOLL RISING",
+          "STRAIT OF HORMUZ",
+          "CREW SAFETY AT RISK",
+          "INSURANCE COSTS UP",
+          "URGENT ACTION NEEDED"
+        ],
+        "facebookCaption": "The death toll in the Strait of Hormuz is climbing, putting crew safety under serious strain. What do you think is the biggest safety challenge facing crews in this region right now?",
+        "linkedinCaption": "Rising fatalities in the Strait of Hormuz are exposing severe safety vulnerabilities for commercial shipping. This trend directly impacts marine underwriting and global energy supply chain stability. Industry stakeholders must prioritize immediate safety interventions.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#Hormuz",
+          "#shipsafety",
+          "#maritimeinsurance",
+          "#energytrade"
+        ],
+        "imageQuery": "container ship strait horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQSVY1Q0lETDZHMTcyQnNOeXZQUnNNa1NDVVdPT1F4em9oTE5sU2ZIVnFCZ3JBVUpxdTc5MDdxbGYzVWt3N3NIV3lGbjBvekdTY3RWZS1zMTh1U0NrMTFZT0U1dHNrRVNZRjRLZ2h0UEdBb1BnQ2lNY3ozNnQyT3h0V194YUxjQ2FHTkVpSURTcHJIbmYtZkxLU0tueUtxMzdoai1hcjcxdk5uRlV4MTMxaGxRY0xkUXBpUVQ2Z1FJSmV1aGUtSldHTERlSQ?oc=5",
+        "sourceName": "The National"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-09T16-29-51.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8202061,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship strait horizon",
+          "source": "pexels",
+          "photographer": "Sunny Li",
+          "sourcePage": "https://www.pexels.com/photo/colorful-containers-at-taiwan-s-busy-seaport-39730185/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "DEATH TOLL RISING"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "STRAIT OF HORMUZ"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "CREW SAFETY AT RISK"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE COSTS UP"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "URGENT ACTION NEEDED"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-08T13-32-08",
       "startedAt": "2026-11-08T13:32:08.571Z",
@@ -592,7 +721,7 @@
         "sourceName": "INSIGHT EU MONITORING"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-04T14-39-04.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 18797061,
         "hasVoiceover": false,
@@ -3677,135 +3806,6 @@
           "start": 15,
           "end": 20,
           "text": "INSURANCE PREMIUMS RISE"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-09T13-23-47",
-      "startedAt": "2026-10-09T13:23:47.738Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 2511,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 350,
-          "detail": "Abandoned Cargo Ship Hit By A Drone Drifts 40 Nautical Miles Off Bulgaria With No Crew"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 669,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 29123,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1498,
-        "completionTokens": 307
-      },
-      "finishedAt": "2026-10-09T13:24:20.395Z",
-      "durationMs": 32657,
-      "event": {
-        "title": "Abandoned Cargo Ship Hit By A Drone Drifts 40 Nautical Miles Off Bulgaria With No Crew",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMnRHRlFnODdReHFfUXQ5bncxaFlVLVhiTkxPSFQ0Mjg4VHhKOG5BMmF3NTBCMlhCZnhPRDlnTTlWTE4zSHI3M1Y3U1VHcE5oclprTy00NE80enA2Nk9GTzhfeHFmTEwzUENvQWh3U0pOVlNLc0xhMWduVmFSUDE5TmhjRUVJVFhzM2VHcDc0THk4dUxGNi1QSzZ6OHkxaGVBRkpFeGEzZURnMC03eG82T2JQaHRwa3BH?oc=5",
-        "reason": "An uncrewed, drone-struck vessel drifting 40 nautical miles off Bulgaria poses an immediate, severe collision and environmental hazard to active shipping lanes."
-      },
-      "script": {
-        "headline": "Drone Strike Drift",
-        "voiceover": "A cargo ship, abandoned after a drone strike, now drifts forty nautical miles off Bulgaria. With no crew aboard, it presents a severe collision and environmental hazard to active shipping lanes.",
-        "beats": [
-          "DRONE STRIKE REPORTED",
-          "SHIP ABANDONED",
-          "DRIFTING FORTY MILES",
-          "OFF BULGARIA",
-          "MAJOR COLLISION RISK"
-        ],
-        "facebookCaption": "An uncrewed vessel drifting in active lanes is a serious hazard. How should insurers handle drone-related maritime risks? #MaritimeSafety",
-        "linkedinCaption": "A drone-struck vessel drifting forty nautical miles off Bulgaria highlights emerging security threats. Uncrewed hazards now demand immediate operational attention. The risk profile of maritime logistics is shifting.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#bulgaria",
-          "#droneattack",
-          "#seafaring",
-          "#marinesafety"
-        ],
-        "imageQuery": "cargo ship ocean horizon",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMnRHRlFnODdReHFfUXQ5bncxaFlVLVhiTkxPSFQ0Mjg4VHhKOG5BMmF3NTBCMlhCZnhPRDlnTTlWTE4zSHI3M1Y3U1VHcE5oclprTy00NE80enA2Nk9GTzhfeHFmTEwzUENvQWh3U0pOVlNLc0xhMWduVmFSUDE5TmhjRUVJVFhzM2VHcDc0THk4dUxGNi1QSzZ6OHkxaGVBRkpFeGEzZURnMC03eG82T2JQaHRwa3BH?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 9239991,
-        "hasVoiceover": true,
-        "image": {
-          "query": "cargo ship ocean horizon",
-          "source": "pexels",
-          "photographer": "Rafael Rodrigues",
-          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-calm-ocean-under-cloudy-sky-36638038/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "DRONE STRIKE REPORTED"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "SHIP ABANDONED"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "DRIFTING FORTY MILES"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "OFF BULGARIA"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "MAJOR COLLISION RISK"
         }
       ],
       "publish": {
