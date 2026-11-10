@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-09T16:30:22.674Z",
+  "generatedAt": "2026-11-10T14:58:55.386Z",
   "runs": [
+    {
+      "id": "2026-11-10T14-58-24",
+      "startedAt": "2026-11-10T14:58:24.317Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 826,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 268,
+          "detail": "Suez return could limit November freight rate increases, Sogese warns"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 622,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 25797,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1336,
+        "completionTokens": 303
+      },
+      "finishedAt": "2026-11-10T14:58:51.835Z",
+      "durationMs": 27518,
+      "event": {
+        "title": "Suez return could limit November freight rate increases, Sogese warns",
+        "source": "Container News",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNVUFkRU1Iamt3dC1PZXV3Y19lYlpEMlByVlllRjYtdTNZRnhmUHVGY1NYTm9HSWlNbGpFLUNPeXpJbWxNOGZPRmQxY3drX2RDX0ZSZXRaMjJobzVqUkJadWR1eEJPU3U4eUlYTUFJMm5NYXVoWXJUWXZWX3J6TGY4LUVFWWVTX3hLbnA3MVQxY043Nnh4azFHVGNWdjQ?oc=5",
+        "reason": "Suez return directly impacts November freight rates, offering critical operational and financial data for shipowners and charterers."
+      },
+      "script": {
+        "headline": "Suez Return Limits Rates",
+        "voiceover": "Sogese warns that reopening the Suez Canal will likely cap November freight rate increases. More available capacity means less leverage for shippers to demand higher prices. Charterers should expect a more stable market this month.",
+        "beats": [
+          "SUEZ REOPENING IMPACT",
+          "NOVEMBER RATE CEILING",
+          "CAPACITY SUPPLY SURGE",
+          "LESS RATE LEVERAGE",
+          "MARKET STABILIZATION"
+        ],
+        "facebookCaption": "The Suez Canal reopening might keep November freight rates in check. Do you expect a spike or a slowdown in pricing?",
+        "linkedinCaption": "Sogese suggests that the return of Suez transits will limit upward pressure on November freight rates. Increased capacity reduces the leverage for significant price hikes. Market stability remains the key takeaway for Q4 planning.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#freightrates",
+          "#suezcanal",
+          "#logistics",
+          "#containertransport"
+        ],
+        "imageQuery": "container ship canal traffic",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNVUFkRU1Iamt3dC1PZXV3Y19lYlpEMlByVlllRjYtdTNZRnhmUHVGY1NYTm9HSWlNbGpFLUNPeXpJbWxNOGZPRmQxY3drX2RDX0ZSZXRaMjJobzVqUkJadWR1eEJPU3U4eUlYTUFJMm5NYXVoWXJUWXZWX3J6TGY4LUVFWWVTX3hLbnA3MVQxY043Nnh4azFHVGNWdjQ?oc=5",
+        "sourceName": "Container News"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-10T14-58-24.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 9733034,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship canal traffic",
+          "source": "pexels",
+          "photographer": "Victor Puente",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-sea-7276216/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "SUEZ REOPENING IMPACT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "NOVEMBER RATE CEILING"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "CAPACITY SUPPLY SURGE"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "LESS RATE LEVERAGE"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MARKET STABILIZATION"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-09T16-29-51",
       "startedAt": "2026-11-09T16:29:51.035Z",
@@ -593,7 +722,7 @@
         "sourceName": "safety4sea"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-05T14-44-08.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 18794800,
         "hasVoiceover": false,
@@ -3683,129 +3812,6 @@
           "start": 16,
           "end": 20,
           "text": "ROUTE SAFETY UNDER THREAT"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-10T12-38-35",
-      "startedAt": "2026-10-10T12:38:35.498Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 892,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 295,
-          "detail": "IRGC says hit LPG ship seeking to cross Hormuz through ‘illegal’ route"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 709,
-          "detail": "4 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 31892,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1506,
-        "completionTokens": 315
-      },
-      "finishedAt": "2026-10-10T12:39:09.290Z",
-      "durationMs": 33792,
-      "event": {
-        "title": "IRGC says hit LPG ship seeking to cross Hormuz through ‘illegal’ route",
-        "source": "chinadailyhk",
-        "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9oY1ZBS2tPZEtHc0lXUjJzVHFUOE5HYURxZHlvTUxuLW52Z3NNYjZHNlJNUWFySFA1QjNMSFc5bTJJbEdCaGNmTXdPV05tc0ZtczRLUVpvTEQ?oc=5",
-        "reason": "IRGC attack on an LPG ship in the Strait of Hormuz signals severe escalation, directly impacting marine insurance premiums and global energy supply chains."
-      },
-      "script": {
-        "headline": "Hormuz LPG Strike",
-        "voiceover": "IRGC claims it struck an LPG ship in the Strait of Hormuz. The vessel allegedly used an illegal crossing route. This incident threatens energy supply chains and will likely spike marine insurance rates immediately.",
-        "beats": [
-          "IRGC STRIKES LPG SHIP",
-          "HORMUZ ROUTE DISPUTE",
-          "ENERGY SUPPLY THREAT",
-          "INSURANCE PREMIUMS RISE"
-        ],
-        "facebookCaption": "Tensions in the Strait of Hormuz are heating up after an IRGC attack on an LPG vessel. How do you think this affects global shipping rates? Let us know in the comments.",
-        "linkedinCaption": "The reported IRGC strike on an LPG carrier in the Strait of Hormuz highlights escalating risks for energy logistics. This event signals potential volatility in marine insurance pricing. Expect tighter security protocols in the region.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#straitofhormuz",
-          "#energylogistics",
-          "#maritimeinsurance",
-          "#globaltrade"
-        ],
-        "imageQuery": "LPG tanker ship sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9oY1ZBS2tPZEtHc0lXUjJzVHFUOE5HYURxZHlvTUxuLW52Z3NNYjZHNlJNUWFySFA1QjNMSFc5bTJJbEdCaGNmTXdPV05tc0ZtczRLUVpvTEQ?oc=5",
-        "sourceName": "chinadailyhk"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 20146598,
-        "hasVoiceover": true,
-        "image": {
-          "query": "LPG tanker ship sea",
-          "source": "pexels",
-          "photographer": "Zifeng Xiong",
-          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 4.4,
-          "text": "IRGC STRIKES LPG SHIP"
-        },
-        {
-          "start": 4.4,
-          "end": 10,
-          "text": "HORMUZ ROUTE DISPUTE"
-        },
-        {
-          "start": 10,
-          "end": 15,
-          "text": "ENERGY SUPPLY THREAT"
-        },
-        {
-          "start": 15,
-          "end": 20,
-          "text": "INSURANCE PREMIUMS RISE"
         }
       ],
       "publish": {
