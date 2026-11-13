@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-12T15:22:17.566Z",
+  "generatedAt": "2026-11-13T14:40:28.911Z",
   "runs": [
+    {
+      "id": "2026-11-13T14-40-01",
+      "startedAt": "2026-11-13T14:40:01.731Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 688,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 617,
+          "detail": "This Shipping Lane Is Now the World’s Deadliest. It Isn’t Hormuz."
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 856,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 23073,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1378,
+        "completionTokens": 315
+      },
+      "finishedAt": "2026-11-13T14:40:26.970Z",
+      "durationMs": 25239,
+      "event": {
+        "title": "This Shipping Lane Is Now the World’s Deadliest. It Isn’t Hormuz.",
+        "source": "WSJ",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNVW1kdTd5Wjl6ZWx1cWFubkJ0QmZJdXFFN2dTT2lhb25TSzhkbWhtOTRCeHBTRTNVLV9QbFV3X2h1Rk5EQ3A0ZUs1REFiUDE3TE5tdE9aOVp4d2g2OFJVdWc5cDE1ZXJqT3ZlMG85cElubTVUUGMwa1VOeEpWc1FHSEFtQ0hmejJkUjBLOUl3SGVlbUVpSUltNEZ3M2w?oc=5",
+        "reason": "Identifying a new deadliest shipping lane signals critical safety risks and potential insurance premium spikes for operators in that region."
+      },
+      "script": {
+        "headline": "DEADLIEST LANE SHIFT",
+        "voiceover": "The Strait of Hormuz is no longer the most dangerous waterway. A new shipping lane now holds that grim title. This shift signals rising operational risks and potential insurance spikes for vessels transiting this specific, high-threat maritime corridor.",
+        "beats": [
+          "NOT HORMUZ ANYMORE",
+          "NEW DEADLIEST LANE",
+          "SAFETY RISKS RISING",
+          "INSURANCE COSTS CLIMB",
+          "OPERATOR VIGILANCE KEY"
+        ],
+        "facebookCaption": "The map of dangerous shipping lanes just changed. Where do you think the biggest risks are headed next?",
+        "linkedinCaption": "Recent data indicates a shift in the world’s most hazardous shipping routes, moving focus away from the Strait of Hormuz. This development warrants immediate review of risk management and insurance strategies. Operators should reassess their exposure in this new high-risk zone.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#shippinglanes",
+          "#maritimesafety",
+          "#riskmanagement",
+          "#logistics"
+        ],
+        "imageQuery": "container ship open ocean",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNVW1kdTd5Wjl6ZWx1cWFubkJ0QmZJdXFFN2dTT2lhb25TSzhkbWhtOTRCeHBTRTNVLV9QbFV3X2h1Rk5EQ3A0ZUs1REFiUDE3TE5tdE9aOVp4d2g2OFJVdWc5cDE1ZXJqT3ZlMG85cElubTVUUGMwa1VOeEpWc1FHSEFtQ0hmejJkUjBLOUl3SGVlbUVpSUltNEZ3M2w?oc=5",
+        "sourceName": "WSJ"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-13T14-40-01.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 6995342,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship open ocean",
+          "source": "pexels",
+          "photographer": "William Liu",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-9806482/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "NOT HORMUZ ANYMORE"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "NEW DEADLIEST LANE"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "SAFETY RISKS RISING"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "INSURANCE COSTS CLIMB"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "OPERATOR VIGILANCE KEY"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-12T15-21-40",
       "startedAt": "2026-11-12T15:21:40.707Z",
@@ -592,7 +721,7 @@
         "sourceName": "WANA News Agency"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-07T13-10-27.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8320270,
         "hasVoiceover": false,
@@ -3683,135 +3812,6 @@
           "start": 16,
           "end": 20,
           "text": "INSURANCE RISK UP"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-12T15-35-27",
-      "startedAt": "2026-10-12T15:35:27.698Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 823,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 440,
-          "detail": "Iran Attacks 3 Tankers Near Oman And Strait Of Hormuz After U.S. Disables Bulker"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 694,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 31292,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1396,
-        "completionTokens": 319
-      },
-      "finishedAt": "2026-10-12T15:36:00.952Z",
-      "durationMs": 33254,
-      "event": {
-        "title": "Iran Attacks 3 Tankers Near Oman And Strait Of Hormuz After U.S. Disables Bulker",
-        "source": "Marine Insight",
-        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOeS1MZ0sycXJXZThBQk1hZ1BqcWcwc3c4VXFoUmF4YXNkNWx5QUJIN05EYi1obk4wTVlwYnkzakg2MWFfaExYTVJwTlloT1BJdGxXOFpvTEFDRzRwRUpMRzFJVW45aUkwQkR5SE9KZUU3cXpRc2tUM09ETDduRXRzckc3R2U2czBIbWh6WFhiM2tieFFLT2ZSX2JrazkxYzFWdHhsNFF5UHVhb0p6VW1B?oc=5",
-        "reason": "Iranian attacks on tankers in the Strait of Hormuz create immediate supply-chain disruption and severe marine insurance risk."
-      },
-      "script": {
-        "headline": "Hormuz Tanker Attacks",
-        "voiceover": "Iran has attacked three tankers near the Strait of Hormuz. This escalation followed U.S. action against a bulk carrier. The disruption highlights immediate marine insurance risks. Supply chains face severe volatility. The region remains a critical flashpoint.",
-        "beats": [
-          "THREE TANKERS HIT",
-          "NEAR OMAN STRAIT",
-          "U.S. DISABLED BULKER",
-          "INSURANCE RISK RISING",
-          "SUPPLY CHAIN ALERT"
-        ],
-        "facebookCaption": "Three tankers were attacked near the Strait of Hormuz after U.S. action against a bulk carrier. How does this impact your logistics?",
-        "linkedinCaption": "Recent Iranian attacks on three tankers near the Strait of Hormuz follow U.S. disabling of a bulk carrier. These events signal significant escalation in maritime security risks. Insurers and operators must reassess exposure immediately.",
-        "hashtags": [
-          "#Shipping",
-          "#Maritime",
-          "#StraitOfHormuz",
-          "#Tankers",
-          "#MarineInsurance",
-          "#Logistics"
-        ],
-        "imageQuery": "oil tanker ship sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOeS1MZ0sycXJXZThBQk1hZ1BqcWcwc3c4VXFoUmF4YXNkNWx5QUJIN05EYi1obk4wTVlwYnkzakg2MWFfaExYTVJwTlloT1BJdGxXOFpvTEFDRzRwRUpMRzFJVW45aUkwQkR5SE9KZUU3cXpRc2tUM09ETDduRXRzckc3R2U2czBIbWh6WFhiM2tieFFLT2ZSX2JrazkxYzFWdHhsNFF5UHVhb0p6VW1B?oc=5",
-        "sourceName": "Marine Insight"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 20028330,
-        "hasVoiceover": false,
-        "image": {
-          "query": "oil tanker ship sea",
-          "source": "pexels",
-          "photographer": "Zifeng Xiong",
-          "sourcePage": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "THREE TANKERS HIT"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "NEAR OMAN STRAIT"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "U.S. DISABLED BULKER"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "INSURANCE RISK RISING"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "SUPPLY CHAIN ALERT"
         }
       ],
       "publish": {
