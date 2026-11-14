@@ -1,6 +1,136 @@
 {
-  "generatedAt": "2026-11-13T14:40:28.911Z",
+  "generatedAt": "2026-11-14T13:37:56.422Z",
   "runs": [
+    {
+      "id": "2026-11-14T13-37-29",
+      "startedAt": "2026-11-14T13:37:29.913Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 588,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 479,
+          "detail": "Black Sea Shipping Attacks Kill Seafarers, Disrupt Trade"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 756,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 22976,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1511,
+        "completionTokens": 320
+      },
+      "finishedAt": "2026-11-14T13:37:54.779Z",
+      "durationMs": 24866,
+      "event": {
+        "title": "Black Sea Shipping Attacks Kill Seafarers, Disrupt Trade",
+        "source": "WSJ",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOTmdzYmo2bzJtOUV6bFRiUEhDUk5rcVFueThqME0yOUVPZ2NKZERfSTRHR0syU1VmZXpfSVVpb3FidF9RVng0Ul9SODlreERicHh1OU1BODVPVkVjU0dWV2l4TV9sRFhlbXFlNVoxM2NPTGF0MjFrZ0xJMGFqX1lQWGhwQWw4aWR0M2JrWE5GbjROUU5GLTkyZ1hXOS1Hd0xRWXdv?oc=5",
+        "reason": "Active attacks killing seafarers in the Black Sea represent a critical safety incident with immediate, severe disruption to trade routes."
+      },
+      "script": {
+        "headline": "Black Sea Shipping Crisis",
+        "voiceover": "Active attacks in the Black Sea have killed seafarers and severely disrupted regional trade. This ongoing violence threatens maritime safety and global supply chain stability, forcing carriers to reassess risk exposure in this critical corridor.",
+        "beats": [
+          "BLACK SEA ATTACKS",
+          "SEAFARERS KILLED",
+          "TRADE DISRUPTED",
+          "MARITIME SAFETY CRISIS",
+          "RISK ASSESSMENT NEEDED"
+        ],
+        "facebookCaption": "The Black Sea is seeing active attacks that are killing seafarers and halting trade. How is your operation adjusting to these new safety threats? #MaritimeSafety",
+        "linkedinCaption": "Recent attacks in the Black Sea have resulted in fatalities and significant trade disruptions. This incident highlights the escalating risks facing commercial shipping in contested waters. Carriers must now prioritize rigorous risk assessment for this route.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#BlackSea",
+          "#seafarers",
+          "#logistics",
+          "#supplychain",
+          "#marinesafety"
+        ],
+        "imageQuery": "cargo ship black sea",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOTmdzYmo2bzJtOUV6bFRiUEhDUk5rcVFueThqME0yOUVPZ2NKZERfSTRHR0syU1VmZXpfSVVpb3FidF9RVng0Ul9SODlreERicHh1OU1BODVPVkVjU0dWV2l4TV9sRFhlbXFlNVoxM2NPTGF0MjFrZ0xJMGFqX1lQWGhwQWw4aWR0M2JrWE5GbjROUU5GLTkyZ1hXOS1Hd0xRWXdv?oc=5",
+        "sourceName": "WSJ"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-14T13-37-29.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 6920084,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship black sea",
+          "source": "pexels",
+          "photographer": "Mathias Reding",
+          "sourcePage": "https://www.pexels.com/photo/container-ship-sailing-in-sea-in-black-and-white-12625304/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "BLACK SEA ATTACKS"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "SEAFARERS KILLED"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "TRADE DISRUPTED"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "MARITIME SAFETY CRISIS"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "RISK ASSESSMENT NEEDED"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-13T14-40-01",
       "startedAt": "2026-11-13T14:40:01.731Z",
@@ -592,7 +722,7 @@
         "sourceName": "Marine Insight"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-08T13-32-08.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 11375230,
         "hasVoiceover": false,
@@ -3683,135 +3813,6 @@
           "start": 16,
           "end": 20,
           "text": "SUPPLY CHAIN RISK"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-13T14-18-24",
-      "startedAt": "2026-10-13T14:18:24.346Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 692,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 287,
-          "detail": "Iranian attacks target 6 ships near Strait of Hormuz in 1 day, highest since war with US began"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 664,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 26042,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 1,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1440,
-        "completionTokens": 321
-      },
-      "finishedAt": "2026-10-13T14:18:52.035Z",
-      "durationMs": 27689,
-      "event": {
-        "title": "Iranian attacks target 6 ships near Strait of Hormuz in 1 day, highest since war with US began",
-        "source": "Anadolu Ajansı",
-        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOOGxibXEtZ2FFRTM2RGpqU0FpNTRfb3RLakt5UENVc0pzUGNTWFl3dVA1ZDlFYkUwQWpnN3dCMkJuT0NIMU1JWkNrWkh1UUczZkE2M0Q4R3pEc3lwN2Y5QzdEQXdJc3RzUVBSOFhDbUdkZW5RZnJtREQ1ZUlmLUlNMFhRMWl2T1Z4NXg1SkJFZnY5NmdPVFE1TlN0RWFDRVNoSkhGOXJfT2JseGxtY1c4MW9lbzdmcjcycnh5VDVUNG9GallPMjQzLU1JZkxWNmluZVg1Rw?oc=5",
-        "reason": "Six ships attacked in the Strait of Hormuz signals severe supply-chain disruption and immediate risk to marine insurers and shipowners."
-      },
-      "script": {
-        "headline": "Hormuz Attacks Spike",
-        "voiceover": "Six ships were attacked near the Strait of Hormuz in just one day. This is the highest volume recorded since the conflict with the United States began. Marine insurers and shipowners now face immediate supply chain risks in this critical global waterway.",
-        "beats": [
-          "SIX SHIPS HIT",
-          "STRAIT OF HORMUZ",
-          "ONE DAY TOTAL",
-          "RECORD ATTACK RATE",
-          "INSURANCE RISK UP"
-        ],
-        "facebookCaption": "Six ships attacked in a single day near Hormuz. Is your supply chain ready for this level of disruption? Tell us in the comments.",
-        "linkedinCaption": "With six vessels targeted in the Strait of Hormuz within twenty-four hours, maritime risk assessment requires immediate recalibration. This surge represents the highest attack frequency since the US-Iran conflict escalated. Insurers and logistics leaders must prioritize route security and premium adjustments.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#straitofhormuz",
-          "#supplychain",
-          "#marinesafety",
-          "#logistics"
-        ],
-        "imageQuery": "cargo ship strait water",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOOGxibXEtZ2FFRTM2RGpqU0FpNTRfb3RLakt5UENVc0pzUGNTWFl3dVA1ZDlFYkUwQWpnN3dCMkJuT0NIMU1JWkNrWkh1UUczZkE2M0Q4R3pEc3lwN2Y5QzdEQXdJc3RzUVBSOFhDbUdkZW5RZnJtREQ1ZUlmLUlNMFhRMWl2T1Z4NXg1SkJFZnY5NmdPVFE1TlN0RWFDRVNoSkhGOXJfT2JseGxtY1c4MW9lbzdmcjcycnh5VDVUNG9GallPMjQzLU1JZkxWNmluZVg1Rw?oc=5",
-        "sourceName": "Anadolu Ajansı"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 5445580,
-        "hasVoiceover": false,
-        "image": {
-          "query": "cargo ship strait water",
-          "source": "pexels",
-          "photographer": "Esra  Nurdoğan",
-          "sourcePage": "https://www.pexels.com/photo/a-large-ship-in-the-water-with-a-city-in-the-background-27410425/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "SIX SHIPS HIT"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "STRAIT OF HORMUZ"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "ONE DAY TOTAL"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "RECORD ATTACK RATE"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "INSURANCE RISK UP"
         }
       ],
       "publish": {
