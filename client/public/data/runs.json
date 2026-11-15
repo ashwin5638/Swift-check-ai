@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-14T13:37:56.422Z",
+  "generatedAt": "2026-11-15T14:01:18.327Z",
   "runs": [
+    {
+      "id": "2026-11-15T14-00-45",
+      "startedAt": "2026-11-15T14:00:45.365Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 662,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 400,
+          "detail": "Three ships struck by drones in Black Sea near Romanian shipping canal, PM says"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 566,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 27542,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1380,
+        "completionTokens": 286
+      },
+      "finishedAt": "2026-11-15T14:01:14.542Z",
+      "durationMs": 29177,
+      "event": {
+        "title": "Three ships struck by drones in Black Sea near Romanian shipping canal, PM says",
+        "source": "Internazionale",
+        "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQVF9UbGsySGpfZ3dNVXBfTmd2b0tiZzJJRTRJMnZYOGRXdFZXWVpxTGtwcXNzTW5tUjRIX2QwTTNIbUFVVnEybmZOM0UxTFllQzNlaHp2Q1UxbWYtQTBmOGhCcWU0WUVxakhTN0pKTnAwZWJZcjhwTjcwQjFSVF9CeDZnRWxnZDN5Z1NSQ0VyN3htQTh3c0p1anNXWTZRLWVMemdQbG9DdFNkSHY2ZzJUZ1U1aEZIODVNTzk2aGUzdUYySGIzZlJnMXpGdXdSYTVtMmRrZ280OTROUQ?oc=5",
+        "reason": "Three ships struck by drones near the Romanian canal signals severe Black Sea supply-chain disruption and safety risks."
+      },
+      "script": {
+        "headline": "Black Sea Drone Strikes",
+        "voiceover": "Three vessels were struck by drones near Romania's Black Sea canal, according to the Prime Minister. This incident highlights the escalating security risks facing commercial shipping in the region, directly threatening vital global supply chain routes.",
+        "beats": [
+          "THREE SHIPS HIT",
+          "BLACK SEA CANAL",
+          "PM CONFIRMS STRIKES",
+          "SUPPLY CHAIN RISK",
+          "MARITIME SECURITY ALERT"
+        ],
+        "facebookCaption": "Three ships were hit by drones near the Romanian canal. How is this affecting your logistics? Let us know below.",
+        "linkedinCaption": "Recent drone strikes on three vessels near the Romanian Black Sea canal underscore growing maritime security challenges. This event poses significant risks to regional trade routes and global supply chain stability. Strategic risk assessment is critical.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#BlackSea",
+          "#logistics",
+          "#supplychain",
+          "#maritimesafety"
+        ],
+        "imageQuery": "container ship sea horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQVF9UbGsySGpfZ3dNVXBfTmd2b0tiZzJJRTRJMnZYOGRXdFZXWVpxTGtwcXNzTW5tUjRIX2QwTTNIbUFVVnEybmZOM0UxTFllQzNlaHp2Q1UxbWYtQTBmOGhCcWU0WUVxakhTN0pKTnAwZWJZcjhwTjcwQjFSVF9CeDZnRWxnZDN5Z1NSQ0VyN3htQTh3c0p1anNXWTZRLWVMemdQbG9DdFNkSHY2ZzJUZ1U1aEZIODVNTzk2aGUzdUYySGIzZlJnMXpGdXdSYTVtMmRrZ280OTROUQ?oc=5",
+        "sourceName": "Internazionale"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-15T14-00-45.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 7704307,
+        "hasVoiceover": false,
+        "image": {
+          "query": "container ship sea horizon",
+          "source": "pexels",
+          "photographer": "Quang Nguyen Vinh",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-sailing-in-sea-6876835/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "THREE SHIPS HIT"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "BLACK SEA CANAL"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "PM CONFIRMS STRIKES"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "SUPPLY CHAIN RISK"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "MARITIME SECURITY ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-14T13-37-29",
       "startedAt": "2026-11-14T13:37:29.913Z",
@@ -593,7 +722,7 @@
         "sourceName": "The National"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-09T16-29-51.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 8202061,
         "hasVoiceover": false,
@@ -3684,135 +3813,6 @@
           "start": 16,
           "end": 20,
           "text": "SAFETY PROTOCOLS CRITICAL"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-14T11-59-50",
-      "startedAt": "2026-10-14T11:59:50.642Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 1285,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 248,
-          "detail": "Ship carrying 2,500 containers hit naval mine, sank in Strait of Hormuz, says Iran"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 716,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 29361,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1391,
-        "completionTokens": 331
-      },
-      "finishedAt": "2026-10-14T12:00:22.257Z",
-      "durationMs": 31615,
-      "event": {
-        "title": "Ship carrying 2,500 containers hit naval mine, sank in Strait of Hormuz, says Iran",
-        "source": "Firstpost",
-        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOWdXNjlDajRRcUFCLTdMNFpaa0NsSmcwMW04a1M0YnZGdVZpZEtaOXcwcGtxZnEzbXVzekVtbG1aS242c2FVUTZmVzVXTWlhcnltc2h0eHI2XzlpUlRTSjkwOXhGQzdmLTdaRnhyOHFMdlBOeVR0VDFEamVhdHZUTjZiU0JMWVFwSGFpdTdaeHp1am9VczktOW4wOTJpMk5hVkZsVk1SemlCV2Q4d1Z1YjlLa05RNlU0bEx0YldVMWNfdkXSAcgBQVVfeXFMTVZxNnFEa0owLVg2ZjZaenFzdGJRTkQ5Y1ZQazBOMngwbHZwaWhKaDVYaHpnemVPcWlkNklsVzJjQUhwaWxEVFZmdWs1RUNRckNERGtPOHNMQ0xPVFVURVlZNnBfaU92RkdhNGUwYzJQOUlNRFU4Mk9rQzl3eUFtZWtjanBxNzhYRnBvdkxNRXZzREpTSmg5eWhlanRUNXpfMnluREY4NUpXb1Uwcm1LZEhrcDl5RmxOWXk4NDVDUlVoZEdwTWNDU3U?oc=5",
-        "reason": "A container ship sinking in the Strait of Hormuz signals severe supply-chain disruption and immediate marine insurance risk."
-      },
-      "script": {
-        "headline": "Hormuz Mine Strike",
-        "voiceover": "Iran reports a container ship hit a naval mine in the Strait of Hormuz. The vessel, carrying two thousand five hundred containers, sank. This incident raises urgent questions about maritime security and potential supply chain disruptions in a critical global trade lane.",
-        "beats": [
-          "SHIP HITS MINE",
-          "STRAIT OF HORMUZ",
-          "TWO THOUSAND FIVE HUNDRED CONTAINERS",
-          "VESSEL SANK",
-          "SUPPLY CHAIN RISK"
-        ],
-        "facebookCaption": "Reports say a ship carrying 2,500 containers sank in the Strait of Hormuz after hitting a mine. How does this affect your shipping timelines?",
-        "linkedinCaption": "Iranian authorities report a container vessel struck a naval mine in the Strait of Hormuz, resulting in the ship sinking. This event underscores the persistent security risks for commercial transit in this critical chokepoint. Supply chain resilience remains a top priority for logistics leaders.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#straitofhormuz",
-          "#logistics",
-          "#marinesecurity",
-          "#supplychain"
-        ],
-        "imageQuery": "container ship open sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOWdXNjlDajRRcUFCLTdMNFpaa0NsSmcwMW04a1M0YnZGdVZpZEtaOXcwcGtxZnEzbXVzekVtbG1aS242c2FVUTZmVzVXTWlhcnltc2h0eHI2XzlpUlRTSjkwOXhGQzdmLTdaRnhyOHFMdlBOeVR0VDFEamVhdHZUTjZiU0JMWVFwSGFpdTdaeHp1am9VczktOW4wOTJpMk5hVkZsVk1SemlCV2Q4d1Z1YjlLa05RNlU0bEx0YldVMWNfdkXSAcgBQVVfeXFMTVZxNnFEa0owLVg2ZjZaenFzdGJRTkQ5Y1ZQazBOMngwbHZwaWhKaDVYaHpnemVPcWlkNklsVzJjQUhwaWxEVFZmdWs1RUNRckNERGtPOHNMQ0xPVFVURVlZNnBfaU92RkdhNGUwYzJQOUlNRFU4Mk9rQzl3eUFtZWtjanBxNzhYRnBvdkxNRXZzREpTSmg5eWhlanRUNXpfMnluREY4NUpXb1Uwcm1LZEhrcDl5RmxOWXk4NDVDUlVoZEdwTWNDU3U?oc=5",
-        "sourceName": "Firstpost"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 6996392,
-        "hasVoiceover": false,
-        "image": {
-          "query": "container ship open sea",
-          "source": "pexels",
-          "photographer": "William Liu",
-          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-the-sea-9806482/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "SHIP HITS MINE"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "STRAIT OF HORMUZ"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "TWO THOUSAND FIVE HUNDRED CONTAINERS"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "VESSEL SANK"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "SUPPLY CHAIN RISK"
         }
       ],
       "publish": {
