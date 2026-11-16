@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-15T14:01:18.327Z",
+  "generatedAt": "2026-11-16T15:55:34.733Z",
   "runs": [
+    {
+      "id": "2026-11-16T15-55-02",
+      "startedAt": "2026-11-16T15:55:02.048Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 730,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 397,
+          "detail": "Drone strike behind sinking of cargo ship off Bulgaria's coast, maritime security sources say"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 1032,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 28364,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1372,
+        "completionTokens": 302
+      },
+      "finishedAt": "2026-11-16T15:55:32.578Z",
+      "durationMs": 30530,
+      "event": {
+        "title": "Drone strike behind sinking of cargo ship off Bulgaria's coast, maritime security sources say",
+        "source": "TradingView",
+        "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxOZVoydHhaQVZJVGgyYjdKNlA3TUhxQTJSRk9hR3hLbC1EYnF6UV9RbXEtMzZWRlZKMEs3YmxySEMwbGZoTk5RdHFpMTNiS1ZSb051cmhUYXlnbzZJOWZRcTI2WEljaFBuOGF1eDZnWGNJM2ozdkpZb2xHNjRiYTNvSERXQzFrd2J2ZXNkU3IxYTNIQXRsWlVrNFRYQ2E3WXhSaVhIYl82Mm5YUG54NjljQ1dEc016UmhyVzVxdUxVWnZydjBnWHVrZ3Z1T1BKbFNuMVBVbU45ZVktUzFuSnJQNEZkc1RneHRtNm1rNjMtWE0xS2wt?oc=5",
+        "reason": "A drone strike sinking a cargo ship in the Black Sea signals a critical escalation in maritime security risks for insurers and operators."
+      },
+      "script": {
+        "headline": "Black Sea Drone Strike",
+        "voiceover": "A drone strike sank a cargo ship off Bulgaria's coast. Maritime security sources confirm this event. This marks a critical escalation for Black Sea freight. Insurers and operators must now reassess immediate risk exposure.",
+        "beats": [
+          "CARGO SHIP SUNK",
+          "OFF BULGARIA COAST",
+          "DRONE STRIKE CONFIRMED",
+          "MARITIME SECURITY ALERT",
+          "RISK REASSESSMENT URGENT"
+        ],
+        "facebookCaption": "A cargo ship has been sunk by a drone strike off Bulgaria. How is this changing your shipping routes? Let us know in the comments.",
+        "linkedinCaption": "Maritime security sources confirm a drone strike sank a cargo vessel off Bulgaria's coast. This incident represents a significant escalation in Black Sea operational risks. Reevaluate your insurance and routing strategies immediately.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#blacksea",
+          "#cargo",
+          "#security",
+          "#logistics"
+        ],
+        "imageQuery": "cargo ship sea horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxOZVoydHhaQVZJVGgyYjdKNlA3TUhxQTJSRk9hR3hLbC1EYnF6UV9RbXEtMzZWRlZKMEs3YmxySEMwbGZoTk5RdHFpMTNiS1ZSb051cmhUYXlnbzZJOWZRcTI2WEljaFBuOGF1eDZnWGNJM2ozdkpZb2xHNjRiYTNvSERXQzFrd2J2ZXNkU3IxYTNIQXRsWlVrNFRYQ2E3WXhSaVhIYl82Mm5YUG54NjljQ1dEc016UmhyVzVxdUxVWnZydjBnWHVrZ3Z1T1BKbFNuMVBVbU45ZVktUzFuSnJQNEZkc1RneHRtNm1rNjMtWE0xS2wt?oc=5",
+        "sourceName": "TradingView"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-16T15-55-02.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 9121324,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship sea horizon",
+          "source": "pexels",
+          "photographer": "Rafael Rodrigues",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-calm-ocean-under-cloudy-sky-36638038/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "CARGO SHIP SUNK"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "OFF BULGARIA COAST"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "DRONE STRIKE CONFIRMED"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "MARITIME SECURITY ALERT"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "RISK REASSESSMENT URGENT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-15T14-00-45",
       "startedAt": "2026-11-15T14:00:45.365Z",
@@ -593,7 +722,7 @@
         "sourceName": "Container News"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-10T14-58-24.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 9733034,
         "hasVoiceover": false,
@@ -3684,135 +3813,6 @@
           "start": 15,
           "end": 20,
           "text": "SHIPOWNERS MUST ADAPT"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-15T11-36-40",
-      "startedAt": "2026-10-15T11:36:40.964Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 714,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 238,
-          "detail": "Seven Missing as Tanker Fires Rock Romania's Black Sea Coast"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 588,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 24733,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1313,
-        "completionTokens": 293
-      },
-      "finishedAt": "2026-10-15T11:37:07.334Z",
-      "durationMs": 26370,
-      "event": {
-        "title": "Seven Missing as Tanker Fires Rock Romania's Black Sea Coast",
-        "source": "Marine Link",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZ0dWT3g2cC11TjRJaXhTTnpoUVllZ21mVllPd1ljcm9RM2x6clR5SjNaM3pkMDh4eHh4c0ROZG41VVpSbjdBSnFMTWxFZGJqRE00bWZyRjNpNEp5YmJNMkZHQ2M5cDBZV21zOUk3dzIzNVFQNTZETW1MWndicTdSWmdYaTFwdw?oc=5",
-        "reason": "Seven missing crew from a tanker fire in the Black Sea represents a critical safety incident with immediate operational and regulatory implications."
-      },
-      "script": {
-        "headline": "Tanker Fire Black Sea",
-        "voiceover": "Seven crew members are missing after a tanker caught fire off Romania's Black Sea coast. The incident has sparked urgent search and rescue operations. This event underscores the critical need for robust fire safety protocols in high-risk maritime zones to protect lives at sea.",
-        "beats": [
-          "SEVEN MISSING CREW",
-          "TANKER FIRE ERUPTS",
-          "OFF ROMANIA COAST",
-          "SEARCH OPS UNDERWAY",
-          "SAFETY PROTOCOLS CRITICAL"
-        ],
-        "facebookCaption": "A tanker fire off Romania has left seven crew missing. How can we better protect mariners in remote waters? #MarineSafety",
-        "linkedinCaption": "A recent tanker fire in the Black Sea has resulted in seven missing crew members. This incident highlights the persistent risks faced by mariners in remote operational areas. We must prioritize rigorous safety audits to prevent future tragedies.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#BlackSea",
-          "#MarineSafety",
-          "#Tanker",
-          "#SearchAndRescue"
-        ],
-        "imageQuery": "tanker ship fire smoke sea",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQZ0dWT3g2cC11TjRJaXhTTnpoUVllZ21mVllPd1ljcm9RM2x6clR5SjNaM3pkMDh4eHh4c0ROZG41VVpSbjdBSnFMTWxFZGJqRE00bWZyRjNpNEp5YmJNMkZHQ2M5cDBZV21zOUk3dzIzNVFQNTZETW1MWndicTdSWmdYaTFwdw?oc=5",
-        "sourceName": "Marine Link"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 7533960,
-        "hasVoiceover": false,
-        "image": {
-          "query": "tanker ship fire smoke sea",
-          "source": "pexels",
-          "photographer": "Tomris🇹🇷",
-          "sourcePage": "https://www.pexels.com/photo/opec-victory-ship-sailing-in-istanbul-21937964/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "SEVEN MISSING CREW"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "TANKER FIRE ERUPTS"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "OFF ROMANIA COAST"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "SEARCH OPS UNDERWAY"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "SAFETY PROTOCOLS CRITICAL"
         }
       ],
       "publish": {
