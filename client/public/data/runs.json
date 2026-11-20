@@ -1,6 +1,135 @@
 {
-  "generatedAt": "2026-11-19T15:51:07.764Z",
+  "generatedAt": "2026-11-20T15:33:20.813Z",
   "runs": [
+    {
+      "id": "2026-11-20T15-32-47",
+      "startedAt": "2026-11-20T15:32:47.213Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 766,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 527,
+          "detail": "Armed men fire at cargo ship off Yemen's coast, no injuries reported: UK maritime agency"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 1071,
+          "detail": "5 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 29176,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 0,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1377,
+        "completionTokens": 311
+      },
+      "finishedAt": "2026-11-20T15:33:18.759Z",
+      "durationMs": 31546,
+      "event": {
+        "title": "Armed men fire at cargo ship off Yemen's coast, no injuries reported: UK maritime agency",
+        "source": "Anadolu Ajansı",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNa3AtMzZHcGlkR1lGb2NjVi1DV0ZtUG9TMmVjT1hSbmotREliaTB6X3VYQXk2VngwbkZIdzFKNVF3cGs4R3hyQmVpWWRrVks0amlGZUl6RnFmSWhyR3NqbkgtQmFwUVVvcnVzMHBvWURoMFVaTWgzUTM2UXY2QWtnNWxSRGxMWW5yamk2UmlLSWZlY2pVU0FFTmkxdTZGWDVZTUFEUFFRUXZoc1IwQWpPQnJUbHE0dTNtbDMxTk5IZzlRSEdYQUdXR2tB?oc=5",
+        "reason": "Active armed attacks on commercial vessels in the Red Sea represent an immediate, high-severity safety and insurance risk for global shipping."
+      },
+      "script": {
+        "headline": "Red Sea Attack Alert",
+        "voiceover": "Armed men fired at a cargo ship off Yemen's coast. The UK maritime agency reports no injuries. This confirms active threats remain in the Red Sea. Vessel safety protocols are now critical for insurers and operators navigating this high-risk zone.",
+        "beats": [
+          "YEMEN COAST",
+          "ARMED FIRE REPORTED",
+          "NO INJURIES",
+          "HIGHER RISK STATUS",
+          "STAY ALERT"
+        ],
+        "facebookCaption": "A cargo ship was targeted off Yemen, though no one was hurt. How is your team adjusting routes for this ongoing threat? Let us know below.",
+        "linkedinCaption": "The UK Maritime Trade Operations confirmed an armed attack on a vessel near Yemen. While no injuries were reported, the incident underscores persistent security challenges in the Red Sea. Operators must maintain heightened vigilance and review insurance implications immediately.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#redsea",
+          "#logistics",
+          "#yemen",
+          "#vesselsafety"
+        ],
+        "imageQuery": "cargo ship ocean horizon",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNa3AtMzZHcGlkR1lGb2NjVi1DV0ZtUG9TMmVjT1hSbmotREliaTB6X3VYQXk2VngwbkZIdzFKNVF3cGs4R3hyQmVpWWRrVks0amlGZUl6RnFmSWhyR3NqbkgtQmFwUVVvcnVzMHBvWURoMFVaTWgzUTM2UXY2QWtnNWxSRGxMWW5yamk2UmlLSWZlY2pVU0FFTmkxdTZGWDVZTUFEUFFRUXZoc1IwQWpPQnJUbHE0dTNtbDMxTk5IZzlRSEdYQUdXR2tB?oc=5",
+        "sourceName": "Anadolu Ajansı"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-20T15-32-47.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 9119425,
+        "hasVoiceover": false,
+        "image": {
+          "query": "cargo ship ocean horizon",
+          "source": "pexels",
+          "photographer": "Rafael Rodrigues",
+          "sourcePage": "https://www.pexels.com/photo/cargo-ship-on-calm-ocean-under-cloudy-sky-36638038/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 3.6,
+          "text": "YEMEN COAST"
+        },
+        {
+          "start": 3.6,
+          "end": 8,
+          "text": "ARMED FIRE REPORTED"
+        },
+        {
+          "start": 8,
+          "end": 12,
+          "text": "NO INJURIES"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "text": "HIGHER RISK STATUS"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "text": "STAY ALERT"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-19T15-50-37",
       "startedAt": "2026-11-19T15:50:37.216Z",
@@ -586,7 +715,7 @@
         "sourceName": "Internazionale"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-15T14-00-45.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 7704307,
         "hasVoiceover": false,
@@ -3687,129 +3816,6 @@
           "start": 16,
           "end": 20,
           "text": "HIGHER INSURANCE EXPOSURE"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-19T13-26-41",
-      "startedAt": "2026-10-19T13:26:41.722Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 975,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 372,
-          "detail": "6,000 sailors stranded near Strait of Hormuz as UN maritime chief warns against passage amid rising ship a"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 718,
-          "detail": "4 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 30798,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1426,
-        "completionTokens": 305
-      },
-      "finishedAt": "2026-10-19T13:27:14.589Z",
-      "durationMs": 32867,
-      "event": {
-        "title": "6,000 sailors stranded near Strait of Hormuz as UN maritime chief warns against passage amid rising ship a",
-        "source": "The Economic Times",
-        "url": "https://news.google.com/rss/articles/CBMivAJBVV95cUxOV3pNdjBzZzBNOVJTZk8xY0NnN0RVS1gwZHpHSWJyb2lfV04yZ2pSWjY1VDV0a3VmbDNfUTZoUmVGRHVqUHRyMXBqb01zOEM3a242YWF2ZjNGVDNKbC1iTnh3UHZFdDZtM2x6Z2hydnlzT1NGb1hwZGNsTFdiOXFlSFJNdl8xWFltbk1YTlprWGZUdlFsQ2FYZGJEX0lWVUw5Y2x3UHg4QUFIT21pU3llaUFiNk5ScW1KSkx1Wmxrc3hPcVlfWmpfcnlzUlJLVUhSUmh6RElzQWtJbi12V3FxVVQyd19UckxBd1lTYkUxN21zNGdvUWRPMkpiMEcxNm53Y29tZzlPM2tLMjNTT2thVmpid1p4QnZnQmVVTldGTkFaSHltLVBzOUhRekgtUW1wZTh3RGhZM1BBUVJU0gHCAkFVX3lxTFBHRFdNeGR5c29yaDF0QzZYZzJ1bWR6Wm5fRmI1NWVUYmFrOThSZUVwR1llQWFBRTIyc1Z0UEZTYXJjaEtraHBUZHRSelZrOHd5SUVISzNYQnhvcGl1dmNfbzRUbHpxSmQxdkJSS0xldVFWbERyUVV6bXdKNEt1Y0Z3Tnd0ZXFDbnloVWM5eU0wX2xlcU5JYldXN21vWV9xQ0JHYWN0VWFOelhtYmZDeDNxZVEtZHlOaWNUajExRWdTVVhuVmZadzUtX19Jb09oLXZ4YXdXd19uQ01HWG9yRGFRMTBQQkJ0WGF4N0t4c2xoWkRPcFFvY2ZhcGstMVd3UWFCUS13YXJ6Qi11QlladFVOYjNKY0M2WXhuZkM0ZjcxTjFjVmlqT1E4eFBZZEh3R1VIYm5jRHZsZjdYUXdRQmN0T3c?oc=5",
-        "reason": "Stranding 6,000 sailors in the Strait of Hormuz signals severe supply-chain disruption and immediate safety risks for global trade."
-      },
-      "script": {
-        "headline": "Hormuz Shipping Crisis",
-        "voiceover": "Six thousand sailors are stranded near the Strait of Hormuz. The UN maritime chief warns against passage due to rising attacks. This severe disruption poses immediate safety risks and threatens global supply chains.",
-        "beats": [
-          "SAILORS STRANDED IN HORMUZ",
-          "UN WARNS AGAINST PASSAGE",
-          "RISING SHIP ATTACKS",
-          "GLOBAL TRADE AT RISK"
-        ],
-        "facebookCaption": "Six thousand sailors are stuck near the Strait of Hormuz. The UN is warning against passage due to rising attacks. How long can this disruption last?",
-        "linkedinCaption": "The UN maritime chief has warned against passage through the Strait of Hormuz, leaving six thousand sailors stranded. This escalation signals severe supply chain disruption and heightened safety risks for global trade. Operational resilience is now critical.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#globaltrade",
-          "#Hormuz",
-          "#supplychain",
-          "#seafarers"
-        ],
-        "imageQuery": "container ship strait hormuz",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMivAJBVV95cUxOV3pNdjBzZzBNOVJTZk8xY0NnN0RVS1gwZHpHSWJyb2lfV04yZ2pSWjY1VDV0a3VmbDNfUTZoUmVGRHVqUHRyMXBqb01zOEM3a242YWF2ZjNGVDNKbC1iTnh3UHZFdDZtM2x6Z2hydnlzT1NGb1hwZGNsTFdiOXFlSFJNdl8xWFltbk1YTlprWGZUdlFsQ2FYZGJEX0lWVUw5Y2x3UHg4QUFIT21pU3llaUFiNk5ScW1KSkx1Wmxrc3hPcVlfWmpfcnlzUlJLVUhSUmh6RElzQWtJbi12V3FxVVQyd19UckxBd1lTYkUxN21zNGdvUWRPMkpiMEcxNm53Y29tZzlPM2tLMjNTT2thVmpid1p4QnZnQmVVTldGTkFaSHltLVBzOUhRekgtUW1wZTh3RGhZM1BBUVJU0gHCAkFVX3lxTFBHRFdNeGR5c29yaDF0QzZYZzJ1bWR6Wm5fRmI1NWVUYmFrOThSZUVwR1llQWFBRTIyc1Z0UEZTYXJjaEtraHBUZHRSelZrOHd5SUVISzNYQnhvcGl1dmNfbzRUbHpxSmQxdkJSS0xldVFWbERyUVV6bXdKNEt1Y0Z3Tnd0ZXFDbnloVWM5eU0wX2xlcU5JYldXN21vWV9xQ0JHYWN0VWFOelhtYmZDeDNxZVEtZHlOaWNUajExRWdTVVhuVmZadzUtX19Jb09oLXZ4YXdXd19uQ01HWG9yRGFRMTBQQkJ0WGF4N0t4c2xoWkRPcFFvY2ZhcGstMVd3UWFCUS13YXJ6Qi11QlladFVOYjNKY0M2WXhuZkM0ZjcxTjFjVmlqT1E4eFBZZEh3R1VIYm5jRHZsZjdYUXdRQmN0T3c?oc=5",
-        "sourceName": "The Economic Times"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 8201781,
-        "hasVoiceover": false,
-        "image": {
-          "query": "container ship strait hormuz",
-          "source": "pexels",
-          "photographer": "Sunny Li",
-          "sourcePage": "https://www.pexels.com/photo/colorful-containers-at-taiwan-s-busy-seaport-39730185/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 4.4,
-          "text": "SAILORS STRANDED IN HORMUZ"
-        },
-        {
-          "start": 4.4,
-          "end": 10,
-          "text": "UN WARNS AGAINST PASSAGE"
-        },
-        {
-          "start": 10,
-          "end": 15,
-          "text": "RISING SHIP ATTACKS"
-        },
-        {
-          "start": 15,
-          "end": 20,
-          "text": "GLOBAL TRADE AT RISK"
         }
       ],
       "publish": {
