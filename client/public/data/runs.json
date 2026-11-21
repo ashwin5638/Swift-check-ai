@@ -1,6 +1,129 @@
 {
-  "generatedAt": "2026-11-20T15:33:20.813Z",
+  "generatedAt": "2026-11-21T14:44:32.731Z",
   "runs": [
+    {
+      "id": "2026-11-21T14-44-01",
+      "startedAt": "2026-11-21T14:44:01.124Z",
+      "status": "dry-run",
+      "dry": true,
+      "steps": [
+        {
+          "agent": "newsScout",
+          "llmCalls": 0,
+          "ms": 717,
+          "detail": "15 candidates"
+        },
+        {
+          "agent": "eventRanker",
+          "llmCalls": 1,
+          "ms": 1080,
+          "detail": "Strait Of Hormuz Traffic Stays 65% Below Pre-War Levels As 6 Tankers Are Attacked In A Week"
+        },
+        {
+          "agent": "scriptWriter",
+          "llmCalls": 1,
+          "ms": 3290,
+          "detail": "4 beats"
+        },
+        {
+          "agent": "visualBuilder",
+          "llmCalls": 0,
+          "ms": 24109,
+          "detail": "20s"
+        },
+        {
+          "agent": "publisher",
+          "llmCalls": 0,
+          "ms": 1,
+          "detail": "dry-run"
+        }
+      ],
+      "llm": {
+        "calls": 2,
+        "promptTokens": 1407,
+        "completionTokens": 319
+      },
+      "finishedAt": "2026-11-21T14:44:30.326Z",
+      "durationMs": 29202,
+      "event": {
+        "title": "Strait Of Hormuz Traffic Stays 65% Below Pre-War Levels As 6 Tankers Are Attacked In A Week",
+        "source": "Marine Insight",
+        "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQTFFDVTU4SDloWU1OV0hGc2xiX2pKM2ZmRVRKclU2bHg0UXRJUFdBbHpUV1F4RVduT0lGcVFuZG5zZElZc0o5TktrVnh6cTJTNGlIYXFlMEhqOHY0WTFkUE5VazVMZXBiYlI4d25BS21mRW1ZOFA4N2lWV2xfbDNoUkthbw?oc=5",
+        "reason": "Sustained 65% traffic drop and weekly tanker attacks in the Strait of Hormuz signal severe supply-chain disruption and rising marine insurance premiums."
+      },
+      "script": {
+        "headline": "Hormuz Traffic Crisis",
+        "voiceover": "Strait of Hormuz traffic remains sixty-five percent below pre-war levels. Six tankers were attacked in just one week. This sustained disruption is driving marine insurance premiums to historic highs for global shippers.",
+        "beats": [
+          "TRAFFIC DOWN SIXTY-FIVE PERCENT",
+          "SIX TANKERS ATTACKED WEEKLY",
+          "INSURANCE PREMIUMS SPIKE",
+          "SUPPLY CHAIN AT RISK"
+        ],
+        "facebookCaption": "Traffic in the Strait of Hormuz is still down by nearly two-thirds. With six tankers attacked in a week, how are you adjusting your shipping routes right now?",
+        "linkedinCaption": "The Strait of Hormuz continues to operate at thirty-five percent of pre-war capacity. Recent tanker attacks have accelerated the rise in marine insurance costs. Enhanced risk assessment is now mandatory for voyages through this corridor.",
+        "hashtags": [
+          "#shipping",
+          "#maritime",
+          "#StraitOfHormuz",
+          "#logistics",
+          "#maritimeinsurance",
+          "#energy"
+        ],
+        "imageQuery": "oil tanker strait water",
+        "sourceUrl": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQTFFDVTU4SDloWU1OV0hGc2xiX2pKM2ZmRVRKclU2bHg0UXRJUFdBbHpUV1F4RVduT0lGcVFuZG5zZElZc0o5TktrVnh6cTJTNGlIYXFlMEhqOHY0WTFkUE5VazVMZXBiYlI4d25BS21mRW1ZOFA4N2lWV2xfbDNoUkthbw?oc=5",
+        "sourceName": "Marine Insight"
+      },
+      "media": {
+        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-21T14-44-01.mp4",
+        "durationSeconds": 20,
+        "sizeBytes": 8325270,
+        "hasVoiceover": false,
+        "image": {
+          "query": "oil tanker strait water",
+          "source": "pexels",
+          "photographer": "Doğan Alpaslan  Demir",
+          "sourcePage": "https://www.pexels.com/photo/oil-tanker-in-bosphorus-with-istanbul-skyline-40325834/"
+        }
+      },
+      "beats": [
+        {
+          "start": 0,
+          "end": 4.4,
+          "text": "TRAFFIC DOWN SIXTY-FIVE PERCENT"
+        },
+        {
+          "start": 4.4,
+          "end": 10,
+          "text": "SIX TANKERS ATTACKED WEEKLY"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "text": "INSURANCE PREMIUMS SPIKE"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "text": "SUPPLY CHAIN AT RISK"
+        }
+      ],
+      "publish": {
+        "status": "dry-run",
+        "results": [
+          {
+            "platform": "facebook",
+            "status": "skipped",
+            "reason": "dry-run"
+          },
+          {
+            "platform": "linkedin",
+            "status": "skipped",
+            "reason": "dry-run"
+          }
+        ]
+      }
+    },
     {
       "id": "2026-11-20T15-32-47",
       "startedAt": "2026-11-20T15:32:47.213Z",
@@ -586,7 +709,7 @@
         "sourceName": "TradingView"
       },
       "media": {
-        "videoUrl": "https://19adjspl1sku2nbz.public.blob.vercel-storage.com/reels/2026-11-16T15-55-02.mp4",
+        "videoUrl": null,
         "durationSeconds": 20,
         "sizeBytes": 9121324,
         "hasVoiceover": false,
@@ -3686,136 +3809,6 @@
           "start": 16,
           "end": 20,
           "text": "GLOBAL SHIPWATCH ALERT"
-        }
-      ],
-      "publish": {
-        "status": "dry-run",
-        "results": [
-          {
-            "platform": "facebook",
-            "status": "skipped",
-            "reason": "dry-run"
-          },
-          {
-            "platform": "linkedin",
-            "status": "skipped",
-            "reason": "dry-run"
-          }
-        ]
-      }
-    },
-    {
-      "id": "2026-10-20T11-45-39",
-      "startedAt": "2026-10-20T11:45:39.241Z",
-      "status": "dry-run",
-      "dry": true,
-      "steps": [
-        {
-          "agent": "newsScout",
-          "llmCalls": 0,
-          "ms": 668,
-          "detail": "15 candidates"
-        },
-        {
-          "agent": "eventRanker",
-          "llmCalls": 1,
-          "ms": 511,
-          "detail": "One in five dry bulk cargo tonnes routed via Cape of Good Hope in H1 2026"
-        },
-        {
-          "agent": "scriptWriter",
-          "llmCalls": 1,
-          "ms": 2628,
-          "detail": "5 beats"
-        },
-        {
-          "agent": "visualBuilder",
-          "llmCalls": 0,
-          "ms": 24815,
-          "detail": "20s"
-        },
-        {
-          "agent": "publisher",
-          "llmCalls": 0,
-          "ms": 0,
-          "detail": "dry-run"
-        }
-      ],
-      "llm": {
-        "calls": 2,
-        "promptTokens": 1371,
-        "completionTokens": 351
-      },
-      "finishedAt": "2026-10-20T11:46:07.879Z",
-      "durationMs": 28638,
-      "event": {
-        "title": "One in five dry bulk cargo tonnes routed via Cape of Good Hope in H1 2026",
-        "source": "safety4sea",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQWDltNV9vSjJpdFpTYUZWTDJHRmNQYTVBSmxBSUxiQUFCT3hWSElmVzVDV3FsRXJxLVNRYWFfUzhFUjVEY0s5VnFWOFVMaDhVQjF4U0h0cEJsZXYtOGZoc2NTR3RXcEhZNWR1RmpUNE81a2FwNDlRTmVtMUJvVmpCWTNFT29yOHNidmM1OVBrU3JCZEJKOHRVYTFEd2U5QQ?oc=5",
-        "reason": "Rerouting one-fifth of global dry bulk via the Cape significantly increases voyage times, fuel consumption, and insurance exposure."
-      },
-      "script": {
-        "headline": "Cape Route Surge",
-        "voiceover": "One in five dry bulk tonnes now routes via the Cape of Good Hope. This detour significantly extends voyage times and fuel costs. For operators, the key takeaway is that insurance exposure has risen sharply in the first half of twenty twenty-six.",
-        "beats": [
-          "ONE IN FIVE TONNES",
-          "CAPE OF GOOD HOPE",
-          "H1 2026 REEL",
-          "LONGER VOYAGES",
-          "HIGHER INSURANCE EXPOSURE"
-        ],
-        "facebookCaption": "Imagine one fifth of the world's dry bulk cargo taking a longer way around the Cape. How is your supply chain handling the increased fuel costs? Let us know in the comments.",
-        "linkedinCaption": "Recent data indicates a significant shift in global trade patterns, with one in five dry bulk tonnes routing via the Cape of Good Hope in H1 2026. This rerouting extends transit times and increases operational costs. The primary takeaway is the immediate impact on insurance exposure and voyage planning.",
-        "hashtags": [
-          "#shipping",
-          "#maritime",
-          "#drybulk",
-          "#capegoodhope",
-          "#logistics",
-          "#seafreight",
-          "#trade"
-        ],
-        "imageQuery": "large bulk carrier ocean",
-        "sourceUrl": "https://news.google.com/rss/articles/CBMingFBVV95cUxQWDltNV9vSjJpdFpTYUZWTDJHRmNQYTVBSmxBSUxiQUFCT3hWSElmVzVDV3FsRXJxLVNRYWFfUzhFUjVEY0s5VnFWOFVMaDhVQjF4U0h0cEJsZXYtOGZoc2NTR3RXcEhZNWR1RmpUNE81a2FwNDlRTmVtMUJvVmpCWTNFT29yOHNidmM1OVBrU3JCZEJKOHRVYTFEd2U5QQ?oc=5",
-        "sourceName": "safety4sea"
-      },
-      "media": {
-        "videoUrl": null,
-        "durationSeconds": 20,
-        "sizeBytes": 13623844,
-        "hasVoiceover": false,
-        "image": {
-          "query": "large bulk carrier ocean",
-          "source": "pexels",
-          "photographer": "Paulo gustavo Modesto",
-          "sourcePage": "https://www.pexels.com/photo/a-black-and-white-photo-of-a-cargo-ship-27471401/"
-        }
-      },
-      "beats": [
-        {
-          "start": 0,
-          "end": 3.6,
-          "text": "ONE IN FIVE TONNES"
-        },
-        {
-          "start": 3.6,
-          "end": 8,
-          "text": "CAPE OF GOOD HOPE"
-        },
-        {
-          "start": 8,
-          "end": 12,
-          "text": "H1 2026 REEL"
-        },
-        {
-          "start": 12,
-          "end": 16,
-          "text": "LONGER VOYAGES"
-        },
-        {
-          "start": 16,
-          "end": 20,
-          "text": "HIGHER INSURANCE EXPOSURE"
         }
       ],
       "publish": {
